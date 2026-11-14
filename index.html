@@ -1,3790 +1,920 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escape Room Digital: Misi Menyelamat Grid — Matematik Tingkatan 2</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escape Room Grid — Misi Sistem Koordinat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      color-scheme: dark;
-
-      /* Page and surfaces */
-      --background: #0a0a12;
-      --surface-container-low: #111118;
-      --surface-container: #141422;
-      --surface-container-high: #1e1e30;
-
-      /* Text */
-      --on-surface: #e8e0f0;
-      --on-surface-variant: #a098b0;
-
-      /* Lines */
-      --outline: #5a5068;
-      --outline-variant: #302840;
-
-      /* Neon accents */
-      --primary: #ff2d78;
-      --on-primary: #1a0010;
-      --primary-container: #b3004e;
-      --on-primary-container: #ffe0ec;
-      --secondary: #00ffcc;
-      --tertiary: #ffe04a;
-      --error: #ff4444;
-      --on-error: #1a0000;
-
-      /* Semantic */
-      --positive: #00ffcc;
-      --warning: #ffe04a;
-      --focus: #ff2d78;
-
-      /* Fonts */
-      --font-headline: 'Sora', sans-serif;
-      --font-body: 'Inter', sans-serif;
-      --font-label: 'Space Mono', monospace;
-
-      /* Shape */
-      --rounded: 0.125rem;
-      --rounded-lg: 0.25rem;
-      --rounded-full: 0.75rem;
-
-      /* Style effects */
-      --glow-text: 0 0 8px currentColor;
-      --glow-primary: 0 0 16px color-mix(in srgb, var(--primary) 40%, transparent);
-      --glow-secondary: 0 0 16px color-mix(in srgb, var(--secondary) 35%, transparent);
-      --glow-tertiary: 0 0 14px color-mix(in srgb, var(--tertiary) 35%, transparent);
-      --neon-border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
-      --neon-border-lit: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
-      --cyan-border: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
-      --cyan-border-lit: 1px solid color-mix(in srgb, var(--secondary) 60%, transparent);
-      --neon-inset: inset 0 0 12px color-mix(in srgb, var(--primary) 10%, transparent);
-      --cyan-inset: inset 0 0 12px color-mix(in srgb, var(--secondary) 10%, transparent);
-      --glow-line: drop-shadow(0 0 4px currentColor);
-      --scanlines: repeating-linear-gradient(to bottom, transparent 0 3px, color-mix(in srgb, var(--on-surface) 3%, transparent) 3px 4px);
-
-      /* Type scale */
-      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
-      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
-      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
-      --label-size: 0.75rem;
-
-      /* Spacing scale */
-      --space-xs: 0.25rem;
-      --space-sm: 0.5rem;
-      --space-md: 1rem;
-      --space-lg: 1.5rem;
-      --space-xl: 2.5rem;
-
-      /* Motion */
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --dur-micro: 120ms;
-      --dur-short: 220ms;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      overflow-x: clip;
-      margin: 0;
-      padding: 0;
-      background-color: var(--background);
-      background-image: var(--scanlines);
-      color: var(--on-surface);
-      font-family: var(--font-body);
-      font-size: var(--body-size);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    header {
-      position: static !important;
-    }
-
-    button, input, select, textarea {
-      font-family: inherit;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 2px;
-    }
-
-    .page-grid {
-      display: grid;
-      gap: var(--space-lg);
-      padding: var(--space-lg);
-      max-width: 1260px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .page-grid * {
-      min-width: 0;
-    }
-
-    /* Header */
-    .mission-header {
-      display: grid;
-      gap: var(--space-sm);
-      border-bottom: 1px solid var(--outline-variant);
-      padding-bottom: var(--space-lg);
-    }
-
-    .header-top-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-md);
-    }
-
-    .kicker {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-      margin: 0;
-    }
-
-    .header-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      align-items: center;
-    }
-
-    .mission-title {
-      font-family: var(--font-headline);
-      font-size: var(--display-size);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-      color: var(--on-surface);
-      margin: 0;
-    }
-
-    .mission-subtitle {
-      color: var(--on-surface-variant);
-      max-width: 68ch;
-      margin: 0;
-    }
-
-    /* Student Identity Bar */
-    .student-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-md);
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-left: 3px solid var(--secondary);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-sm) var(--space-md);
-    }
-
-    .student-info-group {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-md);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-    }
-
-    .student-info-item strong {
-      color: var(--secondary);
-    }
-
-    .sync-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      padding: 0.25rem 0.6rem;
-      border-radius: var(--rounded);
-      border: 1px solid var(--outline-variant);
-      background: var(--surface-container);
-      color: var(--on-surface-variant);
-    }
-
-    .sync-pill.is-synced {
-      border-color: var(--secondary);
-      color: var(--secondary);
-    }
-
-    .sync-pill.is-sending {
-      border-color: var(--tertiary);
-      color: var(--tertiary);
-    }
-
-    .sync-pill.is-error {
-      border-color: var(--error);
-      color: var(--error);
-    }
-
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* HUD Metrics Row */
-    .hud-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--space-md);
-    }
-
-    .hud-tile {
-      background: var(--surface-container);
-      border: var(--neon-border);
-      box-shadow: var(--neon-inset);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-md);
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    .hud-tile.is-cyan {
-      border: var(--cyan-border);
-      box-shadow: var(--cyan-inset);
-    }
-
-    .hud-label {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--on-surface-variant);
-    }
-
-    .hud-value {
-      font-family: var(--font-headline);
-      font-size: var(--headline-size);
-      font-weight: 700;
-      line-height: 1.15;
-      color: var(--on-surface);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .hud-value.is-pink {
-      color: var(--primary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-value.is-cyan {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-value.is-yellow {
-      color: var(--tertiary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-caption {
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    /* Sector Selector & PIN Node Strip */
-    .sector-bar {
-      display: grid;
-      gap: var(--space-md);
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-md);
-    }
-
-    .level-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-sm);
-    }
-
-    .level-btn {
-      background: var(--surface-container);
-      color: var(--on-surface-variant);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      padding: var(--space-sm) var(--space-md);
-      min-height: 48px;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
-    }
-
-    .level-btn:hover {
-      border-color: var(--primary);
-      color: var(--on-surface);
-      box-shadow: var(--glow-primary);
-    }
-
-    .level-btn.is-active {
-      background: var(--surface-container-high);
-      border-color: var(--primary);
-      color: var(--on-surface);
-      box-shadow: var(--glow-primary);
-    }
-
-    .level-btn-code {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-    }
-
-    .level-btn.is-active .level-btn-code {
-      text-shadow: var(--glow-text);
-    }
-
-    .level-btn-title {
-      font-family: var(--font-headline);
-      font-weight: 700;
-      font-size: var(--body-size);
-      color: var(--on-surface);
-    }
-
-    .level-btn-meta {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    .pin-strip-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-sm);
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-sm);
-    }
-
-    .pin-nodes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
-    .pin-node {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      min-height: 44px;
-      min-width: 84px;
-      padding: var(--space-xs) var(--space-md);
-      background: var(--surface-container);
-      color: var(--on-surface-variant);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
-    }
-
-    .pin-node:hover {
-      border-color: var(--secondary);
-      color: var(--on-surface);
-    }
-
-    .pin-node.is-current {
-      background: var(--surface-container-high);
-      border-color: var(--primary);
-      color: var(--primary);
-      box-shadow: var(--glow-primary);
-    }
-
-    .pin-node.is-solved {
-      border-color: var(--secondary);
-      color: var(--secondary);
-    }
-
-    .pin-node.is-current.is-solved {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-    }
-
-    /* Main Asymmetric Workspace */
-    .workspace-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-      gap: var(--space-lg);
-      align-items: start;
-    }
-
-    .neon-panel {
-      background: var(--surface-container);
-      border: var(--neon-border);
-      box-shadow: var(--neon-inset);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .neon-panel.is-cyan {
-      border: var(--cyan-border);
-      box-shadow: var(--cyan-inset);
-    }
-
-    .panel-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-sm);
-    }
-
-    .panel-title {
-      font-family: var(--font-headline);
-      font-size: var(--subhead-size);
-      font-weight: 700;
-      margin: 0;
-      color: var(--on-surface);
-    }
-
-    .badge-tag {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: var(--space-xs) var(--space-sm);
-      border-radius: var(--rounded);
-      border: 1px solid var(--secondary);
-      color: var(--secondary);
-      background: transparent;
-      white-space: nowrap;
-    }
-
-    .badge-tag.is-pink {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .badge-tag.is-yellow {
-      border-color: var(--tertiary);
-      color: var(--tertiary);
-    }
-
-    /* Cartesian Grid Container */
-    .cartesian-frame {
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      padding: var(--space-sm);
-      min-height: 400px;
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-sm);
-    }
-
-    .scanner-readout {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--space-sm);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-      padding: 0 var(--space-xs);
-    }
-
-    .scanner-coords {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .cartesian-svg {
-      width: 100%;
-      height: auto;
-      min-height: 360px;
-      display: block;
-      cursor: crosshair;
-      touch-action: manipulation;
-      user-select: none;
-    }
-
-    .grid-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-md);
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-      padding-top: var(--space-xs);
-      border-top: 1px solid var(--outline-variant);
-    }
-
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: var(--rounded);
-      display: inline-block;
-    }
-
-    .legend-dot.is-cyan {
-      background: var(--secondary);
-      box-shadow: var(--glow-secondary);
-    }
-
-    .legend-dot.is-pink {
-      background: var(--primary);
-      box-shadow: var(--glow-primary);
-    }
-
-    .legend-dot.is-yellow {
-      background: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-    }
-
-    /* Formula Drawer */
-    .formula-toggle-wrap {
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-sm);
-      display: grid;
-      gap: var(--space-sm);
-    }
-
-    .formula-box {
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-left: 2px solid var(--secondary);
-      border-radius: var(--rounded);
-      padding: var(--space-md);
-      display: grid;
-      gap: var(--space-xs);
-    }
-
-    .formula-math {
-      font-family: var(--font-label);
-      font-size: var(--body-size);
-      color: var(--secondary);
-      word-break: break-word;
-    }
-
-    /* Right Column: Terminal & Keypad */
-    .question-scenario {
-      color: var(--on-surface);
-      margin: 0;
-      font-size: var(--body-size);
-    }
-
-    .coords-pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
-    .coord-chip {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      padding: var(--space-xs) var(--space-sm);
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      color: var(--on-surface);
-    }
-
-    .coord-chip strong {
-      color: var(--secondary);
-    }
-
-    /* Buttons */
-    .btn-neon {
-      background: var(--surface-container-low);
-      color: var(--primary);
-      border: var(--neon-border-lit);
-      border-radius: var(--rounded);
-      padding: var(--space-sm) var(--space-md);
-      min-height: 44px;
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      transition: box-shadow var(--dur-short) var(--ease-out),
-                  border-color var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
-    }
-
-    .btn-neon:hover:not(:disabled) {
-      border-color: var(--primary);
-      box-shadow: var(--glow-primary);
-      text-shadow: var(--glow-text);
-      background: var(--surface-container-high);
-    }
-
-    .btn-neon:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .btn-neon.is-cyan {
-      color: var(--secondary);
-      border: var(--cyan-border-lit);
-    }
-
-    .btn-neon.is-cyan:hover:not(:disabled) {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .btn-neon.is-yellow {
-      color: var(--tertiary);
-      border-color: color-mix(in srgb, var(--tertiary) 55%, transparent);
-    }
-
-    .btn-neon.is-yellow:hover:not(:disabled) {
-      border-color: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-      text-shadow: var(--glow-text);
-    }
-
-    .btn-neon.is-sm {
-      min-height: 36px;
-      padding: 0.35rem 0.75rem;
-    }
-
-    /* Hint Panel */
-    .hint-box {
-      background: var(--surface-container-low);
-      border: 1px solid color-mix(in srgb, var(--tertiary) 45%, transparent);
-      border-radius: var(--rounded);
-      padding: var(--space-md);
-      display: grid;
-      gap: var(--space-xs);
-      animation: fadeSlide var(--dur-short) var(--ease-out);
-    }
-
-    .hint-title {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--tertiary);
-      margin: 0;
-    }
-
-    .hint-text {
-      color: var(--on-surface);
-      margin: 0;
-      font-size: var(--body-size);
-    }
-
-    /* PIN Input & Digital Keypad */
-    .pin-form {
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .input-group {
-      display: grid;
-      gap: var(--space-xs);
-    }
-
-    .input-label {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--on-surface-variant);
-    }
-
-    .pin-input-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--space-sm);
-      align-items: end;
-    }
-
-    .pin-input, .text-input {
-      width: 100%;
-      min-height: 46px;
-      padding: var(--space-sm) var(--space-md);
-      background: var(--surface-container-low);
-      color: var(--secondary);
-      border: 1px solid var(--outline-variant);
-      border-bottom: 2px solid var(--primary);
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: var(--body-size);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out);
-    }
-
-    .text-input:disabled {
-      opacity: 0.75;
-      color: var(--on-surface-variant);
-      border-bottom-color: var(--outline);
-    }
-
-    .pin-input {
-      font-size: var(--subhead-size);
-      letter-spacing: 0.08em;
-    }
-
-    .pin-input:focus, .text-input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: var(--glow-primary);
-    }
-
-    .keypad-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--space-sm);
-    }
-
-    .key-btn {
-      min-height: 46px;
-      background: var(--surface-container-low);
-      color: var(--on-surface);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: var(--subhead-size);
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color var(--dur-micro) var(--ease-out),
-                  box-shadow var(--dur-micro) var(--ease-out),
-                  background-color var(--dur-micro) var(--ease-out);
-    }
-
-    .key-btn:hover {
-      border-color: var(--secondary);
-      background: var(--surface-container-high);
-      color: var(--secondary);
-    }
-
-    .key-btn:active {
-      transform: translateY(1px);
-    }
-
-    .key-btn.is-action {
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--primary);
-      border-color: color-mix(in srgb, var(--primary) 40%, transparent);
-    }
-
-    .key-btn.is-submit {
-      grid-column: span 2;
-      background: var(--surface-container-high);
-      color: var(--secondary);
-      border: var(--cyan-border-lit);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .key-btn.is-submit:hover {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    /* Feedback & Step-by-Step Solution */
-    .feedback-banner {
-      padding: var(--space-md);
-      border-radius: var(--rounded);
-      border: 1px solid var(--outline-variant);
-      background: var(--surface-container-low);
-      display: grid;
-      gap: var(--space-xs);
-      animation: fadeSlide var(--dur-short) var(--ease-out);
-    }
-
-    .feedback-banner.is-success {
-      border-color: var(--secondary);
-      box-shadow: var(--cyan-inset);
-    }
-
-    .feedback-banner.is-error {
-      border-color: var(--error);
-    }
-
-    .feedback-heading {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .feedback-banner.is-success .feedback-heading {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .feedback-banner.is-error .feedback-heading {
-      color: var(--error);
-    }
-
-    .solution-card {
-      background: var(--surface-container-low);
-      border: var(--cyan-border);
-      border-radius: var(--rounded);
-      padding: var(--space-md);
-      display: grid;
-      gap: var(--space-sm);
-      animation: fadeSlide var(--dur-short) var(--ease-out);
-    }
-
-    .solution-title {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--secondary);
-      margin: 0;
-    }
-
-    .solution-steps {
-      margin: 0;
-      padding-left: var(--space-lg);
-      display: grid;
-      gap: var(--space-xs);
-      font-family: var(--font-body);
-      color: var(--on-surface);
-    }
-
-    .solution-steps code {
-      font-family: var(--font-label);
-      color: var(--secondary);
-      background: var(--surface-container);
-      padding: 0.1rem 0.35rem;
-      border-radius: var(--rounded);
-    }
-
-    .nav-actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--space-sm);
-      padding-top: var(--space-xs);
-    }
-
-    /* Completion Report Card */
-    .report-panel {
-      background: var(--surface-container);
-      border: var(--cyan-border-lit);
-      box-shadow: var(--cyan-inset);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .report-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: var(--space-md);
-    }
-
-    /* Modals & Teacher Dashboard */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 8, 16, 0.92);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-md);
-      z-index: 1000;
-      overflow-y: auto;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 540px;
-      background: var(--surface-container);
-      border: var(--cyan-border-lit);
-      box-shadow: var(--glow-secondary);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-      display: grid;
-      gap: var(--space-md);
-      animation: fadeSlide var(--dur-short) var(--ease-out);
-    }
-
-    .modal-card.is-wide {
-      max-width: 1080px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-xs);
-      background: var(--surface-container-low);
-      padding: 4px;
-      border-radius: var(--rounded);
-      border: 1px solid var(--outline-variant);
-    }
-
-    .modal-tab-btn {
-      background: transparent;
-      color: var(--on-surface-variant);
-      border: none;
-      padding: 0.55rem;
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: var(--rounded);
-      transition: all var(--dur-micro) var(--ease-out);
-    }
-
-    .modal-tab-btn.is-active {
-      background: var(--surface-container-high);
-      color: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-    }
-
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-      background: var(--surface-container-low);
-    }
-
-    .teacher-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--label-size);
-      text-align: left;
-    }
-
-    .teacher-table th {
-      font-family: var(--font-label);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--secondary);
-      background: var(--surface-container-high);
-      padding: 0.75rem 0.65rem;
-      border-bottom: 1px solid var(--outline-variant);
-      white-space: nowrap;
-    }
-
-    .teacher-table td {
-      padding: 0.65rem;
-      border-bottom: 1px solid var(--outline-variant);
-      color: var(--on-surface);
-      font-family: var(--font-body);
-    }
-
-    .teacher-table tr:hover td {
-      background: color-mix(in srgb, var(--surface-container-high) 65%, transparent);
-    }
-
-    .status-chip {
-      display: inline-block;
-      padding: 0.15rem 0.45rem;
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-    }
-
-    .status-chip.is-done {
-      background: color-mix(in srgb, var(--secondary) 15%, transparent);
-      color: var(--secondary);
-      border: 1px solid var(--secondary);
-    }
-
-    .status-chip.is-progress {
-      background: color-mix(in srgb, var(--tertiary) 15%, transparent);
-      color: var(--tertiary);
-      border: 1px solid var(--tertiary);
-    }
-
-    .teacher-toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: var(--space-md);
-      background: var(--surface-container-low);
-      padding: var(--space-md);
-      border: 1px solid var(--outline-variant);
-      border-radius: var(--rounded);
-    }
-
-    .toolbar-inputs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      align-items: flex-end;
-    }
-
-    .cloud-banner {
-      background: var(--surface-container-low);
-      border: 1px solid var(--outline-variant);
-      border-left: 3px solid var(--tertiary);
-      border-radius: var(--rounded);
-      padding: 0.65rem 0.9rem;
-      font-size: var(--label-size);
-      color: var(--on-surface);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-sm);
-    }
-
-    .cloud-banner.is-online {
-      border-left-color: var(--secondary);
-    }
-
-    /* Footer */
-    .mission-footer {
-      border-top: 1px solid var(--outline-variant);
-      padding-top: var(--space-md);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--space-md);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .svg-glow-line {
-      filter: var(--glow-line);
-    }
-
-    @keyframes fadeSlide {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 960px) {
-      .workspace-grid {
-        grid-template-columns: 1fr;
-      }
-      .hud-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page-grid {
-        padding: var(--space-md);
-        gap: var(--space-md);
-      }
-      .level-tabs {
-        grid-template-columns: 1fr;
-      }
-      .hud-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .cartesian-frame {
-        min-height: 320px;
-      }
-      .cartesian-svg {
-        min-height: 300px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #090d16;
+      color: #e2e8f0;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.08), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(56, 189, 248, 0.08), transparent 35%),
+        linear-gradient(to right, rgba(30, 41, 59, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 41, 59, 0.35) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glass {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+    }
+    .neon-border {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+    .animate-pulse-slow {
+      animation: pulseGlow 2.4s infinite ease-in-out;
     }
   </style>
 </head>
-<body>
-  <!-- SKRIN UTAMA MURID -->
-  <main class="page-grid" id="student-workspace-root">
-    <!-- Header -->
-    <header class="mission-header">
-      <div class="header-top-row">
-        <p class="kicker">MAKMAL GRID KSSM // MATEMATIK TINGKATAN 2 BAB 7 (SP 7.1.4)</p>
-        <div class="header-actions">
-          <button type="button" class="btn-neon is-cyan" id="btn-submit-teacher" onclick="submitReportToTeacher(true)">
-            Hantar Laporan ke Guru
-          </button>
-          <button type="button" class="btn-neon" id="btn-reset-mission" onclick="handleResetClick(this)">
-            Mula Semula Misi
-          </button>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- TOP NAVIGATION / STATUS BAR -->
+  <header class="border-b border-slate-800 bg-slate-950/90 sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-lg mono">
+          [X,Y]
         </div>
-      </div>
-      <h1 class="mission-title">Escape Room Digital: Misi Menyelamat Grid</h1>
-      <p class="mission-subtitle">
-        Anda ialah Pegawai Navigasi yang terperangkap di dalam Bilik Kawalan Grid. Selesaikan 15 kod PIN keselamatan berdasarkan jarak antara dua titik pada satah Cartes merentasi tiga aras sekuriti untuk menyahaktif pintu laser.
-      </p>
-    </header>
-
-    <!-- Student Profile Bar -->
-    <section class="student-bar" aria-label="Maklumat Calon Murid">
-      <div class="student-info-group">
-        <span class="student-info-item">MURID: <strong id="display-student-name">Belum Ditetapkan</strong></span>
-        <span class="student-info-item">KELAS: <strong id="display-student-class">—</strong></span>
-        <span class="student-info-item">KOD SESI: <strong id="display-session-code">—</strong></span>
-      </div>
-      <div class="header-actions">
-        <span class="sync-pill" id="sync-status-pill">
-          <span class="sync-dot"></span>
-          <span id="sync-status-text">Sedia diselaraskan</span>
-        </span>
-        <button type="button" class="btn-neon is-sm" id="btn-logout-student" onclick="logoutAndResetStudent(this)">
-          Log Keluar
-        </button>
-      </div>
-    </section>
-
-    <!-- HUD Status Metrics -->
-    <section class="hud-grid" aria-label="Status Misi Semasa">
-      <div class="hud-tile is-cyan">
-        <span class="hud-label">Penanda Masa</span>
-        <span class="hud-value is-cyan" id="hud-timer">00:00</span>
-        <span class="hud-caption" id="hud-timer-status">Pemasa aktif</span>
-      </div>
-      <div class="hud-tile">
-        <span class="hud-label">Skor Keselamatan</span>
-        <span class="hud-value is-pink" id="hud-score">0</span>
-        <span class="hud-caption">+100 mata setiap PIN tepat</span>
-      </div>
-      <div class="hud-tile is-cyan">
-        <span class="hud-label">PIN Berjaya Dibuka</span>
-        <span class="hud-value is-cyan" id="hud-progress">0 / 15</span>
-        <span class="hud-caption" id="hud-level-progress">Aras semasa: 0 / 5</span>
-      </div>
-      <div class="hud-tile">
-        <span class="hud-label">Status Pintu Laser</span>
-        <span class="hud-value is-yellow" id="hud-door-status">TERKUNCI</span>
-        <span class="hud-caption" id="hud-door-caption">Selesaikan semua PIN untuk keluar</span>
-      </div>
-    </section>
-
-    <!-- Level Selector & Node Navigator -->
-    <section class="sector-bar" aria-label="Pemilih Aras dan Soalan">
-      <div class="level-tabs" role="tablist" aria-label="Tiga Aras Kesukaran">
-        <button type="button" role="tab" aria-selected="true" class="level-btn is-active" id="tab-level-0" onclick="selectLevel(0)">
-          <span class="level-btn-code">Sektor 01 // Aras Asas</span>
-          <span class="level-btn-title">Kuantum</span>
-          <span class="level-btn-meta" id="meta-level-0">0/5 PIN — Selari paksi &amp; Sukuan I</span>
-        </button>
-        <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-1" onclick="selectLevel(1)">
-          <span class="level-btn-code">Sektor 02 // Aras Sederhana</span>
-          <span class="level-btn-title">Vektor</span>
-          <span class="level-btn-meta" id="meta-level-1">0/5 PIN — Rumus jarak positif</span>
-        </button>
-        <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-2" onclick="selectLevel(2)">
-          <span class="level-btn-code">Sektor 03 // Aras Tinggi</span>
-          <span class="level-btn-title">Matriks</span>
-          <span class="level-btn-meta" id="meta-level-2">0/5 PIN — 4 sukuan &amp; koordinat</span>
-        </button>
-      </div>
-
-      <div class="pin-strip-row">
-        <span class="hud-label" id="sector-label">NOD KUNCI SEKTOR KUANTUM:</span>
-        <div class="pin-nodes" id="pin-nodes-container"></div>
-      </div>
-    </section>
-
-    <!-- Main Interactive Workspace -->
-    <section class="workspace-grid" aria-label="Ruang Kerja Interaktif">
-      <!-- Left: Interactive Cartesian Plane -->
-      <div class="neon-panel is-cyan">
-        <div class="panel-header">
-          <h2 class="panel-title">Papan Satah Cartes Interaktif</h2>
-          <span class="badge-tag" id="grid-range-badge">SKALA: 1 UNIT / PETAK</span>
-        </div>
-
-        <div class="cartesian-frame">
-          <div class="scanner-readout">
-            <span>PENGIMBAS KURSOR GRID (KLIK / SENTUH PETAK):</span>
-            <span class="scanner-coords" id="scanner-coords">(x, y) = —</span>
-          </div>
-          <svg id="cartesian-svg" class="cartesian-svg" viewBox="0 0 560 440" role="img" aria-label="Papan satah Cartes interaktif memaparkan koordinat titik misi">
-            <g id="svg-grid-layer"></g>
-            <g id="svg-axes-layer"></g>
-            <g id="svg-hint-layer"></g>
-            <g id="svg-solution-layer"></g>
-            <g id="svg-points-layer"></g>
-            <g id="svg-cursor-layer"></g>
-          </svg>
-          <div class="grid-legend">
-            <span class="legend-item"><span class="legend-dot is-cyan"></span> Titik Mula / Rujukan</span>
-            <span class="legend-item"><span class="legend-dot is-pink"></span> Titik Sasaran</span>
-            <span class="legend-item"><span class="legend-dot is-yellow"></span> Unjuran Petunjuk (Δx, Δy)</span>
-          </div>
-        </div>
-
-        <div class="formula-toggle-wrap">
-          <button type="button" class="btn-neon is-cyan" id="btn-toggle-formula" onclick="toggleFormulaDrawer()">
-            Papar / Sembunyi Rumus Rujukan
-          </button>
-          <div class="formula-box hidden" id="formula-drawer">
-            <span class="hud-label">Rumus Jarak &amp; Teorem Pythagoras (Bab 7.1)</span>
-            <div class="formula-math">1. Selari paksi-x (y sama): Jarak = |x₂ − x₁|</div>
-            <div class="formula-math">2. Selari paksi-y (x sama): Jarak = |y₂ − y₁|</div>
-            <div class="formula-math">3. Jarak condong: d = √[(x₂ − x₁)² + (y₂ − y₁)²]</div>
-            <div class="formula-math">4. Teorem Pythagoras: c = √(a² + b²)</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Mission Brief & Digital PIN Pad -->
-      <div class="neon-panel">
-        <div class="panel-header">
-          <span class="badge-tag is-pink" id="question-code-badge">KUANTUM // PIN 01</span>
-          <span class="badge-tag is-yellow" id="question-status-badge">TERKUNCI</span>
-        </div>
-
-        <h2 class="panel-title" id="question-title">Isyarat Pemulihan Aras Mengufuk</h2>
-        <p class="question-scenario" id="question-text"></p>
-
-        <div class="coords-pill-row" id="coords-chips"></div>
-
-        <!-- Interactive Hint Control -->
         <div>
-          <button type="button" class="btn-neon is-yellow" id="btn-hint" onclick="toggleHint()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M9 18h6"></path>
-              <path d="M10 22h4"></path>
-              <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2v.3h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path>
-            </svg>
-            <span id="btn-hint-label">Aktifkan Petunjuk (Hint)</span>
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight">ESCAPE ROOM GRID: MISI KOORDINAT</h1>
+          <p class="text-xs text-slate-400">Sistem Latihan Interaktif Berasaskan Awan</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Cloud Status Pill -->
+        <div id="global-sync-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="global-sync-text">Awan Aktif (Sedia)</span>
+        </div>
+
+        <!-- Quick Switch to Teacher Mode -->
+        <button id="btn-open-teacher" onclick="openTeacherLogin()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+          Mod Guru
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-5xl w-full mx-auto px-4 py-8 flex-grow">
+
+    <!-- ========================================================= -->
+    <!-- VIEW 1: STUDENT ONBOARDING / REGISTRATION                 -->
+    <!-- ========================================================= -->
+    <section id="view-student-login" class="max-w-lg mx-auto">
+      <div class="glass rounded-2xl p-6 sm:p-8 neon-border">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-semibold mb-4">
+          <span>BILIK KAWALAN MISI</span>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-2">Selamat Datang, Ejen!</h2>
+        <p class="text-sm text-slate-300 mb-6 leading-relaxed">
+          Anda terperangkap di dalam Makmal Grid Digital. Selesaikan semua <strong>5 Stesen PIN Koordinat</strong> untuk menyahaktifkan kunci keselamatan dan keluar dengan jayanya.
+        </p>
+
+        <form id="student-start-form" onsubmit="startStudentMission(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Kod Sesi Kelas (Daripada Guru)</label>
+            <input type="text" id="input-session-code" required placeholder="Contoh: 4BESTARI atau UMUM"
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white mono uppercase focus:outline-none focus:border-emerald-400" />
+            <p id="session-hint-text" class="text-[11px] text-slate-400 mt-1">Jika guru memberikan pautan khas, kod sesi akan diisi secara automatik.</p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Nama Penuh Murid</label>
+            <input type="text" id="input-student-name" required placeholder="Masukkan nama penuh anda"
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white focus:outline-none focus:border-emerald-400" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Kelas / Tingkatan</label>
+            <input type="text" id="input-student-class" required placeholder="Contoh: 4 Arif / 2 Cemerlang"
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white focus:outline-none focus:border-emerald-400" />
+          </div>
+
+          <button type="submit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm tracking-wide transition shadow-lg shadow-emerald-500/20 mt-2">
+            MULA MISI SEKARANG &rarr;
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 2: STUDENT GAMEPLAY ARENA                            -->
+    <!-- ========================================================= -->
+    <section id="view-student-game" class="hidden space-y-6">
+      <!-- Student HUD Bar -->
+      <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-300 font-bold">
+            EJ
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="hud-student-name" class="font-bold text-white text-sm sm:text-base">Nama Murid</h3>
+              <span id="hud-student-class" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-xs">Kelas</span>
+            </div>
+            <p class="text-xs text-slate-400 mono">Sesi: <span id="hud-session-code" class="text-emerald-400 font-semibold">UMUM</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 sm:gap-5">
+          <div class="text-center">
+            <p class="text-[10px] uppercase tracking-wider text-slate-400">Masa</p>
+            <p id="hud-timer" class="mono font-bold text-amber-400 text-base sm:text-lg">00:00</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] uppercase tracking-wider text-slate-400">Skor</p>
+            <p id="hud-score" class="mono font-bold text-emerald-400 text-base sm:text-lg">0 / 500</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[10px] uppercase tracking-wider text-slate-400">PIN Dibuka</p>
+            <p id="hud-solved" class="mono font-bold text-sky-400 text-base sm:text-lg">0 / 5</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sync Feedback Banner -->
+      <div id="student-sync-banner" class="px-4 py-2 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center justify-between text-xs">
+        <span id="student-sync-msg" class="text-slate-300">Sedia merekod kemajuan ke pangkalan data sesi...</span>
+        <span class="mono text-slate-500" id="student-attempts-badge">Cubaan Salah: 0</span>
+      </div>
+
+      <!-- Station Selector Tabs -->
+      <div class="grid grid-cols-5 gap-2 sm:gap-3" id="station-tabs">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Active Station Card -->
+      <div id="station-card" class="glass rounded-2xl p-6 sm:p-8 neon-border">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Victory Banner (Shown when all 5 solved) -->
+      <div id="victory-panel" class="hidden glass rounded-2xl p-6 sm:p-8 border-2 border-emerald-500/60 bg-emerald-950/20 text-center space-y-4">
+        <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-2xl font-bold mono">
+          100%
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">TAHNIAH! PINTU MAKMAL BERJAYA DIBUKA!</h2>
+        <p class="text-sm text-slate-300 max-w-xl mx-auto">
+          Semua 5 kod keselamatan telah berjaya dinyahaktifkan. Rekod penuh dan masa larian anda telah dihantar secara rasmi ke Dashboard Guru.
+        </p>
+        <div class="grid grid-cols-3 gap-3 max-w-md mx-auto pt-2">
+          <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+            <p class="text-[11px] text-slate-400">Skor Akhir</p>
+            <p id="final-score" class="mono text-lg font-bold text-emerald-400">500</p>
+          </div>
+          <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+            <p class="text-[11px] text-slate-400">Masa Diambil</p>
+            <p id="final-time" class="mono text-lg font-bold text-amber-400">00:00</p>
+          </div>
+          <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+            <p class="text-[11px] text-slate-400">Cubaan Salah</p>
+            <p id="final-attempts" class="mono text-lg font-bold text-sky-400">0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 3: TEACHER LOGIN / SESSION CREATOR                   -->
+    <!-- ========================================================= -->
+    <section id="view-teacher-login" class="hidden max-w-xl mx-auto">
+      <div class="glass rounded-2xl p-6 sm:p-8 neon-border space-y-6">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+              PORTAL PEMANTAUAN GURU
+            </span>
+            <h2 class="text-2xl font-bold text-white mt-2">Akses Panel Pemantauan Guru</h2>
+            <p class="text-xs text-slate-400 mt-1">Cipta atau buka sesi kelas untuk memantau markah murid secara langsung merentas semua peranti.</p>
+          </div>
+          <button onclick="backToStudentMode()" class="text-xs text-slate-400 hover:text-white underline">
+            &larr; Mod Murid
           </button>
         </div>
 
-        <div class="hint-box hidden" id="hint-panel">
-          <p class="hint-title">Panduan Pengiraan &amp; Petunjuk Visual Grid</p>
-          <p class="hint-text" id="hint-text"></p>
-        </div>
+        <!-- Cloud Connection Status Box (Pre-configured!) -->
+        <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="text-xs">
+              <span class="text-slate-400">Status Pangkalan Data:</span>
+              <span id="teacher-db-status-label" class="ml-1 font-bold text-emerald-400">AWAN AKTIF (Segerak Merentas Semua Peranti)</span>
+            </div>
+            <button type="button" onclick="toggleAdvancedDbDrawer()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 text-xs font-medium border border-slate-700 transition">
+              Tetapan Pangkalan Data Awan
+            </button>
+          </div>
 
-        <!-- Digital PIN Pad -->
-        <form class="pin-form" id="pin-form" onsubmit="submitPinForm(event)">
-          <div class="input-group">
-            <label class="input-label" for="pin-input" id="pin-input-label">
-              MASUKKAN KOD PIN / NILAI JAWAPAN
+          <div id="advanced-db-drawer" class="hidden pt-2 border-t border-slate-800 space-y-2">
+            <label class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              SAMBUNGAN PANGKALAN DATA MERENTAS PERANTI (FIREBASE URL)
             </label>
-            <div class="pin-input-row">
-              <input
-                type="text"
-                inputmode="decimal"
-                id="pin-input"
-                class="pin-input"
-                autocomplete="off"
-                aria-describedby="input-format-note"
-              >
-              <button type="submit" class="btn-neon is-cyan" id="btn-verify-pin">
-                Sahkod
+            <div class="flex gap-2">
+              <input type="url" id="input-firebase-url"
+                class="flex-1 px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-xs mono text-slate-200 focus:outline-none focus:border-emerald-400" />
+              <button type="button" onclick="saveCustomFirebaseUrl()" class="px-3 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs">
+                Simpan URL
               </button>
             </div>
-            <span class="hud-caption" id="input-format-note">
-              Gunakan pad kekunci digital di bawah atau papan kekunci anda.
-            </span>
+            <p id="db-save-feedback" class="text-[11px] text-emerald-400">&#10003; Pangkalan data awan rasmi telah diprapasang secara automatik.</p>
+          </div>
+        </div>
+
+        <!-- Teacher Session Form -->
+        <form onsubmit="enterTeacherDashboard(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Kod Sesi Kelas Anda</label>
+            <input type="text" id="teacher-session-input" required placeholder="Contoh: 4BESTARI atau CIKGU-ALI"
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white mono uppercase focus:outline-none focus:border-emerald-400" />
+            <p class="text-[11px] text-slate-400 mt-1">Gunakan kod unik untuk kelas anda supaya rekod murid anda tidak bercampur dengan sekolah lain.</p>
           </div>
 
-          <div class="keypad-grid" aria-label="Pad PIN Keselamatan Digital">
-            <button type="button" class="key-btn" onclick="pressKey('7')">7</button>
-            <button type="button" class="key-btn" onclick="pressKey('8')">8</button>
-            <button type="button" class="key-btn" onclick="pressKey('9')">9</button>
-            <button type="button" class="key-btn is-action" onclick="backspacePin()">Padam</button>
-
-            <button type="button" class="key-btn" onclick="pressKey('4')">4</button>
-            <button type="button" class="key-btn" onclick="pressKey('5')">5</button>
-            <button type="button" class="key-btn" onclick="pressKey('6')">6</button>
-            <button type="button" class="key-btn is-action" onclick="clearPinInput()">Kosong</button>
-
-            <button type="button" class="key-btn" onclick="pressKey('1')">1</button>
-            <button type="button" class="key-btn" onclick="pressKey('2')">2</button>
-            <button type="button" class="key-btn" onclick="pressKey('3')">3</button>
-            <button type="button" class="key-btn" onclick="pressKey('-')">−</button>
-
-            <button type="button" class="key-btn" onclick="pressKey('0')">0</button>
-            <button type="button" class="key-btn" onclick="pressKey('.')">.</button>
-            <button type="button" class="key-btn is-submit" onclick="verifyCurrentPin()">Sahkan PIN</button>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Kata Laluan / PIN Sesi (Pilihan)</label>
+            <input type="password" id="teacher-pin-input" placeholder="Biarkan kosong jika tiada atau tetapkan PIN baharu"
+              class="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-white focus:outline-none focus:border-emerald-400" />
           </div>
+
+          <button type="submit" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-emerald-500/20">
+            BUKA DASHBOARD PRESTASI MURID &rarr;
+          </button>
         </form>
-
-        <!-- Instant Feedback -->
-        <div class="feedback-banner hidden" id="feedback-banner" role="status" aria-live="polite">
-          <p class="feedback-heading" id="feedback-heading"></p>
-          <p class="hint-text" id="feedback-message"></p>
-        </div>
-
-        <!-- Complete Step-by-Step Solution -->
-        <div class="solution-card hidden" id="solution-card">
-          <p class="solution-title">Langkah Penyelesaian Lengkap</p>
-          <ol class="solution-steps" id="solution-steps"></ol>
-        </div>
-
-        <!-- Prev / Next Navigation -->
-        <div class="nav-actions-row">
-          <button type="button" class="btn-neon" id="btn-prev-q" onclick="navigateQuestion(-1)">
-            ← PIN Sebelumnya
-          </button>
-          <button type="button" class="btn-neon is-cyan" id="btn-next-q" onclick="navigateQuestion(1)">
-            PIN Seterusnya →
-          </button>
-        </div>
       </div>
     </section>
 
-    <!-- Mission Complete / Summary Panel -->
-    <section class="report-panel hidden" id="mission-complete-panel" aria-label="Ringkasan Misi Tamat">
-      <div class="panel-header">
+    <!-- ========================================================= -->
+    <!-- VIEW 4: TEACHER LIVE DASHBOARD                            -->
+    <!-- ========================================================= -->
+    <section id="view-teacher-dashboard" class="hidden space-y-6">
+      <!-- Top Control Card -->
+      <div class="glass rounded-2xl p-5 sm:p-6 flex flex-wrap items-center justify-between gap-4 border border-emerald-500/30">
         <div>
-          <p class="kicker">AKSES PENUH DIBERIKAN // REKOD DIHANTAR KE GURU</p>
-          <h2 class="panel-title">Tahniah! Anda Berjaya Menyelamatkan Diri dari Bilik Kawalan Grid</h2>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold mono">DASHBOARD GURU</span>
+            <span class="text-xs text-slate-400">Kod Sesi Aktif: <strong id="dash-session-label" class="text-white mono">---</strong></span>
+          </div>
+          <h2 class="text-xl font-bold text-white mt-1">Pemantauan Masa Nyata Escape Room Grid</h2>
         </div>
-        <span class="badge-tag">15 / 15 PIN SELESAI</span>
-      </div>
-      <p class="mission-subtitle" id="completion-subtext">
-        Semua kunci keselamatan merentasi Sektor Kuantum, Vektor, dan Matriks telah berjaya dibuka dan laporan prestasi anda telah direkodkan. Sila tekan butang Log Keluar di bawah setelah selesai.
-      </p>
-      <div class="report-stats" id="report-stats"></div>
-      <div class="header-actions">
-        <button type="button" class="btn-neon is-cyan" onclick="finishAndLogoutStudent()">
-          Hantar Laporan &amp; Log Keluar
-        </button>
-        <button type="button" class="btn-neon" onclick="handleResetClick(this)">
-          Main Semula Misi
-        </button>
-      </div>
-    </section>
 
-    <footer class="mission-footer">
-      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) &amp; Modul Kit Detektif Grid.</span>
-      <span>Makmal Grid Digital // KSSM Matematik Tingkatan 2.</span>
-    </footer>
-  </main>
-
-  <!-- Modal 1: Pendaftaran Profil Murid -->
-  <div class="modal-backdrop hidden" id="student-modal" role="dialog" aria-modal="true" aria-labelledby="student-modal-title">
-    <div class="modal-card">
-      <p class="kicker">PENGESAHAN IDENTITI PEGAWAI NAVIGASI</p>
-      <h2 class="panel-title" id="student-modal-title">Daftar Maklumat Murid Sebelum Mula</h2>
-      <p class="mission-subtitle">
-        Masukkan nama penuh, kelas, dan Kod Sesi yang diberikan oleh guru anda.
-      </p>
-      <form class="pin-form" id="student-register-form" onsubmit="saveStudentProfile(event)">
-        <div class="input-group">
-          <label class="input-label" for="input-student-name">Nama Penuh Murid</label>
-          <input type="text" id="input-student-name" class="text-input" placeholder="Contoh: Ahmad Daniel bin Roslan" autocomplete="off" required>
-        </div>
-        <div class="input-group">
-          <label class="input-label" for="input-student-class">Kelas</label>
-          <input type="text" id="input-student-class" class="text-input" placeholder="Contoh: 2 Amanah" autocomplete="off" required>
-        </div>
-        <div class="input-group">
-          <label class="input-label" for="input-session-code">Kod Sesi Guru</label>
-          <input type="text" id="input-session-code" class="text-input" placeholder="Masukkan kod sesi daripada guru anda" autocomplete="off" required>
-          <span class="hud-caption" id="session-lock-note">Pastikan ejaan Kod Sesi tepat seperti yang diberikan oleh guru anda.</span>
-        </div>
-        <div class="header-actions" style="justify-content: flex-end;">
-          <button type="submit" class="btn-neon is-cyan">Mula Misi Sekarang</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 2: Akses Guru (?mod=guru) -->
-  <div class="modal-backdrop hidden" id="teacher-login-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-login-title">
-    <div class="modal-card">
-      <p class="kicker">PORTAL GURU // PENGURUSAN SESI SEKOLAH</p>
-      <h2 class="panel-title" id="teacher-login-title">Akses Panel Pemantauan Guru</h2>
-
-      <div class="cloud-banner" id="login-cloud-status-banner">
-        <span>Mod Pangkalan Data: <strong id="login-cloud-mode-label">Menyemak sambungan awan...</strong></span>
-        <button type="button" class="btn-neon is-cyan is-sm" onclick="toggleCloudConfigDrawer()">Tetapan Pangkalan Data Awan</button>
-      </div>
-
-      <!-- Laci Tetapan Firebase URL (Boleh ditetapkan terus tanpa edit kod) -->
-      <div class="formula-box hidden" id="cloud-config-drawer" style="border-left-color: var(--secondary);">
-        <span class="hud-label" style="color: var(--secondary);">SAMBUNGAN PANGKALAN DATA MERENTAS PERANTI (FIREBASE URL)</span>
-        <p class="hud-caption" style="margin: 0;">
-          Masukkan URL <strong>Firebase Realtime Database</strong> anda (contoh: <code>https://nama-projek-default-rtdb.asia-southeast1.firebasedatabase.app</code>) supaya jawapan murid dari telefon/laptop lain terus masuk ke Dashboard ini. Pautan khas murid akan menyertakan alamat ini secara automatik!
-        </p>
-        <div class="pin-input-row" style="margin-top: 0.4rem;">
-          <input type="url" id="input-firebase-url" class="text-input" style="min-height: 38px;" placeholder="https://projek-anda-default-rtdb.firebaseio.com">
-          <button type="button" class="btn-neon is-cyan is-sm" onclick="saveCloudUrlFromUi()">Simpan URL</button>
-        </div>
-        <p class="hint-text hidden" id="cloud-url-feedback" style="margin-top: 0.3rem; font-size: var(--label-size);"></p>
-      </div>
-
-      <div class="modal-tabs" role="tablist">
-        <button type="button" class="modal-tab-btn is-active" id="tab-teacher-login" onclick="switchTeacherAuthTab('login')">
-          Log Masuk Sesi
-        </button>
-        <button type="button" class="modal-tab-btn" id="tab-teacher-create" onclick="switchTeacherAuthTab('create')">
-          Cipta Sesi Baharu
-        </button>
-      </div>
-
-      <!-- Form A: Log Masuk Sesi Sedia Ada -->
-      <form class="pin-form" id="form-teacher-login" onsubmit="verifyTeacherLogin(event)">
-        <p class="hud-caption" style="margin: 0;">
-          Masukkan Kod Sesi sekolah/kelas anda dan kata laluan rahsia yang anda tetapkan semasa pendaftaran sesi.
-        </p>
-        <div class="input-group">
-          <label class="input-label" for="teacher-session-input">Kod Sesi Kelas / Sekolah</label>
-          <input type="text" id="teacher-session-input" class="text-input" placeholder="Contoh: SMKTP-2A" required>
-        </div>
-        <div class="input-group">
-          <label class="input-label" for="teacher-pin-input">Kata Laluan / PIN Guru</label>
-          <input type="password" id="teacher-pin-input" class="text-input" placeholder="Masukkan kata laluan rahsia anda" autocomplete="off" required>
-        </div>
-        <p class="hint-text hidden" id="teacher-login-error" style="color: var(--error);"></p>
-        <div class="header-actions" style="justify-content: flex-end;">
-          <button type="button" class="btn-neon" onclick="exitTeacherModeToStudent()">Kembali ke Mod Murid</button>
-          <button type="submit" class="btn-neon is-yellow" id="btn-teacher-login-submit">Buka Dashboard</button>
-        </div>
-      </form>
-
-      <!-- Form B: Cipta Bilik Sesi Sekolah Baharu -->
-      <form class="pin-form hidden" id="form-teacher-create" onsubmit="createTeacherRoom(event)">
-        <p class="hud-caption" style="margin: 0;">
-          Cipta kod sesi khas untuk sekolah atau kelas anda. Data murid anda hanya akan dipaparkan di bawah kod sesi ini.
-        </p>
-        <div class="input-group">
-          <label class="input-label" for="create-school-name">Nama Sekolah &amp; Guru</label>
-          <input type="text" id="create-school-name" class="text-input" placeholder="Contoh: SMK Taman Permai (Cikgu Aminah)" required>
-        </div>
-        <div class="input-group">
-          <label class="input-label" for="create-session-code">Cipta Kod Sesi Unik (Tanpa Jarak)</label>
-          <input type="text" id="create-session-code" class="text-input" placeholder="Contoh: SMKTP-2AMANAH" pattern="[A-Za-z0-9_-]{4,24}" required>
-          <span class="hud-caption">4–24 aksara (huruf, nombor, tanda sempang - atau _).</span>
-        </div>
-        <div class="input-group">
-          <label class="input-label" for="create-teacher-pin">Tetapkan Kata Laluan / PIN Rahsia Anda</label>
-          <input type="password" id="create-teacher-pin" class="text-input" placeholder="Minimum 4 aksara" minlength="4" autocomplete="new-password" required>
-        </div>
-        <p class="hint-text hidden" id="teacher-create-error" style="color: var(--error);"></p>
-        <div class="header-actions" style="justify-content: flex-end;">
-          <button type="button" class="btn-neon" onclick="exitTeacherModeToStudent()">Kembali ke Mod Murid</button>
-          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar &amp; Masuk Dashboard</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal 3: Dashboard Laporan Guru -->
-  <div class="modal-backdrop hidden" id="teacher-dashboard-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-dash-title">
-    <div class="modal-card is-wide">
-      <div class="panel-header">
-        <div>
-          <p class="kicker" id="dash-school-kicker">SISTEM ANALITIK GURU // PAPARAN REKOD MURID</p>
-          <h2 class="panel-title" id="teacher-dash-title">Dashboard Prestasi Murid</h2>
-        </div>
-        <div class="header-actions">
-          <button type="button" class="btn-neon is-cyan is-sm" id="btn-copy-student-link" onclick="copyStudentMagicLink()">
-            Salin Pautan Khas Murid
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="copyStudentInviteLink()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center gap-1.5 shadow-md shadow-emerald-500/20">
+            <span>Salin Pautan Khas Murid</span>
           </button>
-          <button type="button" class="btn-neon is-sm" onclick="toggleChangePinDrawer()">
-            Tukar Kata Laluan Guru
-          </button>
-          <button type="button" class="btn-neon is-cyan is-sm" onclick="refreshTeacherSubmissions()">
+          <button onclick="fetchTeacherData(true)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition">
             Segar Semula
           </button>
-          <button type="button" class="btn-neon is-yellow is-sm" onclick="exportTeacherCsv()">
-            Eksport CSV (Excel)
+          <button onclick="exportResultsCSV()" class="px-3.5 py-2 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 font-semibold text-xs border border-sky-500/30 transition">
+            Muat Turun CSV
           </button>
-          <button type="button" class="btn-neon is-sm" onclick="closeTeacherDashboard()">
-            Log Keluar
+          <button onclick="logoutTeacher()" class="px-3 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-xs border border-rose-500/30 transition">
+            Keluar
           </button>
         </div>
       </div>
 
-      <!-- Status Segerak Awan Dalam Dashboard -->
-      <div class="cloud-banner" id="dash-cloud-banner">
-        <span id="dash-cloud-text">Status Segerak Awan: Menyemak...</span>
-        <span class="hud-caption" id="dash-auto-refresh-label">Auto-segar setiap 10 saat</span>
-      </div>
-
-      <!-- Laci Tukar Kata Laluan / PIN Guru -->
-      <div class="formula-box hidden" id="change-pin-drawer" style="border-left-color: var(--primary);">
-        <div class="panel-header">
-          <span class="hud-label" style="color: var(--primary);">TETAPAN KESELAMATAN // TUKAR KATA LALUAN GURU</span>
-          <button type="button" class="btn-neon is-sm" onclick="toggleChangePinDrawer()">Tutup</button>
-        </div>
-        <form class="toolbar-inputs" onsubmit="handleChangeTeacherPin(event)">
-          <div class="input-group">
-            <label class="input-label" for="old-teacher-pin">Kata Laluan Semasa</label>
-            <input type="password" id="old-teacher-pin" class="text-input" style="min-height: 38px;" required>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="new-teacher-pin">Kata Laluan Baharu (Min 4 aksara)</label>
-            <input type="password" id="new-teacher-pin" class="text-input" style="min-height: 38px;" minlength="4" required>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="confirm-teacher-pin">Sahkan Kata Laluan Baharu</label>
-            <input type="password" id="confirm-teacher-pin" class="text-input" style="min-height: 38px;" minlength="4" required>
-          </div>
-          <button type="submit" class="btn-neon is-cyan is-sm" id="btn-save-new-pin">Simpan Kata Laluan</button>
-        </form>
-        <p class="hint-text hidden" id="change-pin-status" style="margin-top: 0.5rem;"></p>
-      </div>
-
-      <!-- Summary KPI for Teacher -->
-      <div class="report-stats" id="teacher-kpi-row"></div>
-
-      <!-- Filter Toolbar -->
-      <div class="teacher-toolbar">
-        <div class="toolbar-inputs">
-          <div class="input-group">
-            <label class="input-label" for="dash-session-display">Kod Sesi Aktif (Terkunci)</label>
-            <input type="text" id="dash-session-display" class="text-input" style="min-height: 38px; width: 180px;" disabled>
-          </div>
-          <div class="input-group">
-            <label class="input-label" for="dash-class-filter">Tapis Ikut Kelas / Nama</label>
-            <input type="text" id="dash-class-filter" class="text-input" style="min-height: 38px; width: 200px;" placeholder="Cari kelas atau murid..." oninput="renderTeacherTable()">
-          </div>
-        </div>
+      <!-- Copy Link Toast Notification -->
+      <div id="copy-link-banner" class="hidden p-3.5 rounded-xl bg-emerald-950/70 border border-emerald-500/50 text-xs text-emerald-200 flex flex-wrap items-center justify-between gap-2">
         <div>
-          <button type="button" class="btn-neon is-sm" id="btn-clear-session-records" onclick="handleClearTeacherRecords(this)">
-            Padam Rekod Sesi Ini
-          </button>
+          <strong class="text-emerald-300">&#10003; Pautan khas murid berjaya disalin!</strong> Kongsikan pautan ini ke WhatsApp / Telegram / Google Classroom murid anda:
+          <div id="copied-url-preview" class="mono text-[11px] text-white mt-1 break-all bg-slate-950/70 px-2.5 py-1.5 rounded border border-emerald-500/30"></div>
         </div>
       </div>
 
-      <!-- Student Records Table -->
-      <div class="table-wrap">
-        <table class="teacher-table">
-          <thead>
-            <tr>
-              <th>Bil</th>
-              <th>Nama Murid</th>
-              <th>Kelas</th>
-              <th>Status</th>
-              <th>Skor</th>
-              <th>PIN Selesai</th>
-              <th>Kuantum / Vektor / Matriks</th>
-              <th>Masa</th>
-              <th>Petunjuk / Cubaan</th>
-              <th>Masa Hantar</th>
-            </tr>
-          </thead>
-          <tbody id="teacher-table-body">
-            <tr>
-              <td colspan="10" style="text-align: center; padding: 1.5rem; color: var(--on-surface-variant);">
-                Memuatkan rekod murid...
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div class="glass rounded-xl p-4">
+          <p class="text-xs text-slate-400">Jumlah Murid Sertai</p>
+          <p id="kpi-total-students" class="mono text-2xl font-bold text-white mt-1">0</p>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <p class="text-xs text-slate-400">Tamat Semua 5 PIN</p>
+          <p id="kpi-completed-students" class="mono text-2xl font-bold text-emerald-400 mt-1">0</p>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <p class="text-xs text-slate-400">Purata Skor Kelas</p>
+          <p id="kpi-avg-score" class="mono text-2xl font-bold text-sky-400 mt-1">0</p>
+        </div>
+        <div class="glass rounded-xl p-4">
+          <p class="text-xs text-slate-400">Kemas Kini Terakhir</p>
+          <p id="kpi-last-updated" class="mono text-sm font-semibold text-amber-300 mt-2">Menunggu...</p>
+        </div>
       </div>
-    </div>
-  </div>
 
+      <!-- Student Leaderboard & Progress Table -->
+      <div class="glass rounded-2xl overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <h3 class="font-bold text-white text-sm">Senarai Prestasi & Kedudukan Murid (Auto-Segerak Setiap 8 Saat)</h3>
+          <span class="text-xs text-slate-400" id="table-status-note">Menyambung ke awan...</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-900/90 text-[11px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                <th class="py-3 px-4">Ked.</th>
+                <th class="py-3 px-4">Nama Murid</th>
+                <th class="py-3 px-4">Kelas</th>
+                <th class="py-3 px-4">Kemajuan PIN</th>
+                <th class="py-3 px-4">Skor</th>
+                <th class="py-3 px-4">Masa</th>
+                <th class="py-3 px-4">Salah</th>
+                <th class="py-3 px-4">Status</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-table-body" class="divide-y divide-slate-800/70 text-sm">
+              <tr>
+                <td colspan="8" class="py-8 text-center text-slate-400 text-xs">
+                  Belum ada rekod murid untuk sesi ini. Kongsikan <strong>Pautan Khas Murid</strong> di atas untuk mula menerima markah!
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-900 py-4 text-center text-xs text-slate-500">
+    Escape Room Grid &bull; Sistem Pembelajaran Interaktif &bull; Sedia Digunakan di Seluruh Malaysia
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT APPLICATION LOGIC                              -->
+  <!-- ========================================================= -->
   <script>
-    // =========================================================================
-    // KONFIGURASI PANGKALAN DATA AWAN (FIREBASE REALTIME DATABASE)
-    // Anda boleh menampal URL Firebase di bawah ATAU terus masukkan melalui
-    // butang "Tetapan Pangkalan Data Awan" dalam skrin log masuk guru (?mod=guru).
-    // =========================================================================
-    const DEFAULT_FIREBASE_DB_URL = "";
+    // 1. DEFAULT FIREBASE REALTIME DATABASE URL (HARDCODED FOR NATIONWIDE USE)
+    const DEFAULT_FIREBASE_DB_URL = "https://kit-media-aaa06-default-rtdb.asia-southeast1.firebasedatabase.app";
 
-    const CLOUD_URL_STORAGE_KEY = "kssm_grid_firebase_db_url_v1";
-    const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v2";
-    const LOCAL_ROOMS_KEY = "kssm_grid_escape_rooms_v2";
-    const LEGACY_STATE_KEY = "kssm_grid_escape_player_state_v2";
-    const LOCKOUT_STORAGE_KEY = "kssm_grid_teacher_lockout_v1";
-    const MAX_LOGIN_ATTEMPTS = 3;
-    const LOCKOUT_DURATION_MS = 5 * 60 * 1000;
-
-    function getActiveCloudUrl() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const dbFromUrl = urlParams.get(`db`);
-      if (dbFromUrl && dbFromUrl.trim().startsWith(`http`)) {
-        const clean = dbFromUrl.trim().replace(/\/+$/, ``);
-        try { localStorage.setItem(CLOUD_URL_STORAGE_KEY, clean); } catch (e) {}
-        return clean;
-      }
-      if (DEFAULT_FIREBASE_DB_URL && DEFAULT_FIREBASE_DB_URL.trim().startsWith(`http`)) {
-        return DEFAULT_FIREBASE_DB_URL.trim().replace(/\/+$/, ``);
-      }
-      try {
-        const saved = localStorage.getItem(CLOUD_URL_STORAGE_KEY);
-        if (saved && saved.trim().startsWith(`http`)) {
-          return saved.trim().replace(/\/+$/, ``);
-        }
-      } catch (e) {}
-      return ``;
+    // Resolve active Firebase URL (URL param ?db= > localStorage > Hardcoded Default)
+    const urlParams = new URLSearchParams(window.location.search);
+    function getFirebaseBaseUrl() {
+      const paramDb = urlParams.get("db");
+      const savedDb = localStorage.getItem("erg_firebase_url");
+      const raw = (paramDb || savedDb || DEFAULT_FIREBASE_DB_URL).trim();
+      return raw.replace(/\/+$/, "");
     }
 
-    function updateCloudStatusIndicators() {
-      const cloudUrl = getActiveCloudUrl();
-      const loginBanner = document.getElementById(`login-cloud-status-banner`);
-      const loginLabel = document.getElementById(`login-cloud-mode-label`);
-      const urlInput = document.getElementById(`input-firebase-url`);
-      const dashBanner = document.getElementById(`dash-cloud-banner`);
-      const dashText = document.getElementById(`dash-cloud-text`);
-
-      if (urlInput && cloudUrl && !urlInput.value) {
-        urlInput.value = cloudUrl;
-      }
-
-      if (cloudUrl) {
-        if (loginBanner) loginBanner.classList.add(`is-online`);
-        if (loginLabel) {
-          loginLabel.style.color = `var(--secondary)`;
-          loginLabel.textContent = `AWAN AKTIF (Segerak Merentas Semua Peranti)`;
-        }
-        if (dashBanner) dashBanner.classList.add(`is-online`);
-        if (dashText) {
-          dashText.innerHTML = `<strong style="color: var(--secondary);">✓ SEGERAK AWAN AKTIF:</strong> Semua peranti murid yang menggunakan Pautan Khas akan menghantar markah ke sini secara automatik.`;
-        }
-      } else {
-        if (loginBanner) loginBanner.classList.remove(`is-online`);
-        if (loginLabel) {
-          loginLabel.style.color = `var(--tertiary)`;
-          loginLabel.textContent = `MOD LOKAL SAHAJA (Peranti Ini Sahaja)`;
-        }
-        if (dashBanner) dashBanner.classList.remove(`is-online`);
-        if (dashText) {
-          dashText.innerHTML = `<strong style="color: var(--tertiary);">⚠ MOD LOKAL SAHAJA:</strong> Rekod hanya disimpan dalam pelayar ini. Untuk terima rekod dari peranti lain, tetapkan URL Firebase di skrin log masuk guru.`;
-        }
-      }
-    }
-
-    function toggleCloudConfigDrawer() {
-      const drawer = document.getElementById(`cloud-config-drawer`);
-      const fbEl = document.getElementById(`cloud-url-feedback`);
-      if (fbEl) fbEl.classList.add(`hidden`);
-      if (drawer) drawer.classList.toggle(`hidden`);
-    }
-
-    async function saveCloudUrlFromUi() {
-      const inp = document.getElementById(`input-firebase-url`);
-      const fbEl = document.getElementById(`cloud-url-feedback`);
-      if (!inp || !fbEl) return;
-
-      const raw = inp.value.trim().replace(/\/+$/, ``);
-      fbEl.classList.remove(`hidden`);
-
-      if (!raw) {
-        try { localStorage.removeItem(CLOUD_URL_STORAGE_KEY); } catch (e) {}
-        fbEl.style.color = `var(--tertiary)`;
-        fbEl.textContent = `URL Awan dipadam. Sistem kembali ke Mod Lokal.`;
-        updateCloudStatusIndicators();
-        return;
-      }
-
-      if (!raw.startsWith(`https://`)) {
-        fbEl.style.color = `var(--error)`;
-        fbEl.textContent = `Ralat: URL mestilah bermula dengan https:// (contoh: https://projek-anda-default-rtdb.firebaseio.com)`;
-        return;
-      }
-
-      fbEl.style.color = `var(--tertiary)`;
-      fbEl.textContent = `Menguji sambungan ke pangkalan data awan...`;
-
-      try {
-        const testRes = await fetch(`${raw}/ping_test.json`, {
-          method: `PUT`,
-          headers: { 'Content-Type': `application/json` },
-          body: JSON.stringify({ ok: true, ts: Date.now() })
-        });
-        if (!testRes.ok) {
-          throw new Error(`HTTP ` + testRes.status);
-        }
-        try { localStorage.setItem(CLOUD_URL_STORAGE_KEY, raw); } catch (e) {}
-        fbEl.style.color = `var(--secondary)`;
-        fbEl.textContent = `✓ Berjaya disambungkan! Semua peranti murid kini boleh menghantar rekod ke pangkalan data awan ini.`;
-        updateCloudStatusIndicators();
-      } catch (err) {
-        fbEl.style.color = `var(--error)`;
-        fbEl.textContent = `Gagal menyambung (${err.message}). Pastikan Rules Firebase Realtime Database ditetapkan kepada ".read": true dan ".write": true.`;
-      }
-    }
-
-    const LEVELS = [
+    // 2. ESCAPE ROOM STATIONS DATA (5 COORDINATE MISSIONS)
+    const STATIONS = [
       {
-        id: `kuantum`,
-        name: `Kuantum`,
-        label: `Aras Asas`,
-        gridMin: 0,
-        gridMax: 14,
-        step: 1,
-        showQuadrants: false,
-        questions: [
-          {
-            id: `Q1`,
-            title: `Isyarat Pemulihan Aras Mengufuk`,
-            scenario: `Pegawai Navigasi di stesen kawalan A(2, 3) perlu menghantar isyarat pemulihan ke panel suis B(9, 3) pada aras mengufuk yang sama. Tentukan jarak antara titik A dengan titik B (dalam unit).`,
-            coords: [`A(2, 3)`, `B(9, 3)`],
-            points: [
-              { label: `A`, x: 2, y: 3, role: `start` },
-              { label: `B`, x: 9, y: 3, role: `target` }
-            ],
-            hintVisual: { type: `horizontal`, x1: 2, y1: 3, x2: 9, y2: 3 },
-            hintText: `Perhatikan kedua-dua titik berkongsi koordinat-y yang sama (y = 3). Ini bermakna garis AB selari dengan paksi-x. Kira perbezaan koordinat-x: |x₂ − x₁| atau bilang petak grid secara mengufuk dari x = 2 ke x = 9.`,
-            answer: 7,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>y = 3</code>.`,
-              `Oleh itu, jarak AB ialah jarak mengufuk selari dengan paksi-x.`,
-              `Kira jarak mengufuk: <code>|x₂ − x₁| = |9 − 2| = 7 unit</code>.`,
-              `Kod PIN Keselamatan ialah <code>7</code>.`
-            ]
-          },
-          {
-            id: `Q2`,
-            title: `Sensor Pengesan Aras Mencancang`,
-            scenario: `Pintu laser kedua memerlukan nilai ketinggian tegak dari nod bawah P(5, 1) ke pengesan atas Q(5, 9). Kira jarak mencancang antara P dengan Q (dalam unit).`,
-            coords: [`P(5, 1)`, `Q(5, 9)`],
-            points: [
-              { label: `P`, x: 5, y: 1, role: `start` },
-              { label: `Q`, x: 5, y: 9, role: `target` }
-            ],
-            hintVisual: { type: `vertical`, x1: 5, y1: 1, x2: 5, y2: 9 },
-            hintText: `Koordinat-x bagi P dan Q adalah sama (x = 5), jadi laluan ini selari dengan paksi-y. Hitung jarak mencancang dengan menolak nilai y yang lebih kecil daripada nilai y yang lebih besar.`,
-            answer: 8,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>x = 5</code>.`,
-              `Oleh itu, jarak PQ ialah jarak mencancang selari dengan paksi-y.`,
-              `Kira jarak mencancang: <code>|y₂ − y₁| = |9 − 1| = 8 unit</code>.`,
-              `Kod PIN Keselamatan ialah <code>8</code>.`
-            ]
-          },
-          {
-            id: `Q3`,
-            title: `Terowong Kecemasan Detektif Grid`,
-            scenario: `Token Detektif A(1, 2) mesti bergerak mengikut laluan terus paling singkat untuk menyelamatkan mangsa di B(4, 6). Tentukan jarak terpendek antara A dengan B.`,
-            coords: [`A(1, 2)`, `B(4, 6)`],
-            points: [
-              { label: `A`, x: 1, y: 2, role: `start` },
-              { label: `B`, x: 4, y: 6, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 4, y2: 6, cx: 4, cy: 2 },
-            hintText: `Bina sebuah segi tiga bersudut tegak dengan bucu sudut tegak C(4, 2). Hitung panjang tapak mengufuk (4 − 1) dan tinggi mencancang (6 − 2), kemudian gunakan Teorem Pythagoras c = √(a² + b²).`,
-            answer: 5,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Hitung jarak mengufuk: <code>a = 4 − 1 = 3 unit</code>.`,
-              `Hitung jarak mencancang: <code>b = 6 − 2 = 4 unit</code>.`,
-              `Gunakan Teorem Pythagoras: <code>AB = √(3² + 4²) = √(9 + 16) = √25</code>.`,
-              `Maka, jarak <code>AB = 5 unit</code>.`
-            ]
-          },
-          {
-            id: `Q4`,
-            title: `Lintasan Dron Peninjau Sektor I`,
-            scenario: `Dron peninjau berlepas dari pad pelancaran J(2, 1) menuju terus ke menara pemancar K(8, 9). Berapakah jarak penerbangan lurus dron tersebut?`,
-            coords: [`J(2, 1)`, `K(8, 9)`],
-            points: [
-              { label: `J`, x: 2, y: 1, role: `start` },
-              { label: `K`, x: 8, y: 9, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 2, y1: 1, x2: 8, y2: 9, cx: 8, cy: 1 },
-            hintText: `Cari beza koordinat-x (8 − 2) dan beza koordinat-y (9 − 1) terlebih dahulu. Jumlah kuasa dua kedua-dua sisi ini akan menghasilkan nombor kuasa dua sempurna.`,
-            answer: 10,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Jarak mengufuk: <code>x₂ − x₁ = 8 − 2 = 6 unit</code>.`,
-              `Jarak mencancang: <code>y₂ − y₁ = 9 − 1 = 8 unit</code>.`,
-              `Kira hipotenus: <code>JK = √(6² + 8²) = √(36 + 64) = √100</code>.`,
-              `Maka, jarak <code>JK = 10 unit</code>.`
-            ]
-          },
-          {
-            id: `Q5`,
-            title: `Kabel Kuasa dari Titik Asalan`,
-            scenario: `Untuk menyahaktif Kunci Kuantum terakhir, kabel kuasa perlu ditarik terus dari titik asalan M(0, 0) ke terminal utama N(5, 12). Kira panjang kabel minimum yang diperlukan.`,
-            coords: [`M(0, 0)`, `N(5, 12)`],
-            points: [
-              { label: `M`, x: 0, y: 0, role: `start` },
-              { label: `N`, x: 5, y: 12, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 5, y2: 12, cx: 5, cy: 0 },
-            hintText: `Titik M ialah asalan (0, 0), jadi jarak mengufuk ialah 5 unit dan jarak mencancang ialah 12 unit. Hitung √(5² + 12²) menggunakan Teorem Pythagoras.`,
-            answer: 13,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Jarak mengufuk dari asalan: <code>5 − 0 = 5 unit</code>.`,
-              `Jarak mencancang dari asalan: <code>12 − 0 = 12 unit</code>.`,
-              `Gunakan Teorem Pythagoras: <code>MN = √(5² + 12²) = √(25 + 144) = √169</code>.`,
-              `Maka, panjang kabel minimum ialah <code>13 unit</code>.`
-            ]
-          }
-        ]
+        id: 1,
+        code: "PIN-01",
+        title: "Stesen 1: Titik Asalan & Paksi-X",
+        story: "Kamera keselamatan mengesan pergerakan bermula dari titik asalan O(0, 0). Drone bergerak 7 unit ke kanan selari dengan paksi-X, kemudian 0 unit ke atas.",
+        question: "Berapakah nilai koordinat-x bagi kedudukan akhir drone tersebut? (Masukkan nombor sahaja)",
+        hint: "Pergerakan ke kanan dari asalan (0, 0) menambah nilai pada paksi mengufuk (paksi-X).",
+        answer: "7",
+        points: 100
       },
       {
-        id: `vektor`,
-        name: `Vektor`,
-        label: `Aras Sederhana`,
-        gridMin: 0,
-        gridMax: 12,
-        step: 1,
-        showQuadrants: false,
-        questions: [
-          {
-            id: `Q6`,
-            title: `Lintasan Laser Cermin Vektor`,
-            scenario: `Sektor Vektor memerlukan panjang tepat lintasan laser antara cermin P(2, 3) dengan penerima Q(7, 6). Gunakan rumus jarak dan bundarkan jawapan kepada 2 tempat perpuluhan.`,
-            coords: [`P(2, 3)`, `Q(7, 6)`],
-            points: [
-              { label: `P`, x: 2, y: 3, role: `start` },
-              { label: `Q`, x: 7, y: 6, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 2, y1: 3, x2: 7, y2: 6, cx: 7, cy: 3 },
-            hintText: `Gantikan (x₁, y₁) = (2, 3) dan (x₂, y₂) = (7, 6) ke dalam rumus d = √[(x₂ − x₁)² + (y₂ − y₁)²]. Anda akan memperoleh punca kuasa dua bagi 34; bundarkan kepada 2 tempat perpuluhan.`,
-            answer: 5.83,
-            tolerance: 0.02,
-            inputNote: `Bundarkan kepada 2 tempat perpuluhan (cth: 5.83).`,
-            solutionSteps: [
-              `Gunakan rumus jarak: <code>d = √[(x₂ − x₁)² + (y₂ − y₁)²]</code>.`,
-              `Gantikan nilai: <code>PQ = √[(7 − 2)² + (6 − 3)²] = √(5² + 3²)</code>.`,
-              `Ringkaskan: <code>PQ = √(25 + 9) = √34</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 5.83 unit</code>.`
-            ]
-          },
-          {
-            id: `Q7`,
-            title: `Laluan Kapsul Kecemasan`,
-            scenario: `Kapsul kecemasan bergerak secara terus dari stesen A(3, 8) ke pintu keluar B(8, 6). Hitung jarak laluan kapsul tersebut (bundarkan kepada 2 tempat perpuluhan).`,
-            coords: [`A(3, 8)`, `B(8, 6)`],
-            points: [
-              { label: `A`, x: 3, y: 8, role: `start` },
-              { label: `B`, x: 8, y: 6, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 3, y1: 8, x2: 8, y2: 6, cx: 8, cy: 8 },
-            hintText: `Perhatikan koordinat-y menurun dari 8 ke 6, jadi (y₂ − y₁) = 6 − 8 = −2. Apabila dikuasa duakan, (−2)² bernilai positif (+4). Hitung √(5² + (−2)²).`,
-            answer: 5.39,
-            tolerance: 0.02,
-            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
-            solutionSteps: [
-              `Kira beza koordinat: <code>x₂ − x₁ = 8 − 3 = 5</code> dan <code>y₂ − y₁ = 6 − 8 = −2</code>.`,
-              `Gantikan ke dalam rumus jarak: <code>AB = √[5² + (−2)²]</code>.`,
-              `Ringkaskan: <code>AB = √(25 + 4) = √29</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>AB ≈ 5.39 unit</code>.`
-            ]
-          },
-          {
-            id: `Q8`,
-            title: `Pengesanan Nod Tenaga Berganda`,
-            scenario: `Radar mengesan dua nod tenaga pada kedudukan R(1, 9) dan S(7, 3). Kira jarak antara kedua-dua nod tersebut dalam unit (2 tempat perpuluhan).`,
-            coords: [`R(1, 9)`, `S(7, 3)`],
-            points: [
-              { label: `R`, x: 1, y: 9, role: `start` },
-              { label: `S`, x: 7, y: 3, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 1, y1: 9, x2: 7, y2: 3, cx: 7, cy: 9 },
-            hintText: `Hitung (7 − 1) untuk jarak mengufuk dan (3 − 9) untuk jarak mencancang. Kedua-dua beza ini memberi magnitud 6 unit. Maka, hitungkan √(6² + (−6)²).`,
-            answer: 8.49,
-            tolerance: 0.02,
-            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
-            solutionSteps: [
-              `Kira beza koordinat: <code>x₂ − x₁ = 7 − 1 = 6</code>, <code>y₂ − y₁ = 3 − 9 = −6</code>.`,
-              `Gantikan ke dalam rumus: <code>RS = √[6² + (−6)²] = √(36 + 36)</code>.`,
-              `Maka <code>RS = √72</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>RS ≈ 8.49 unit</code>.`
-            ]
-          },
-          {
-            id: `Q9`,
-            title: `Optimasi Laluan Robot Penyelamat`,
-            scenario: `Robot boleh bergerak melalui sudut C(10, 2) dari T(2, 2) ke U(10, 8), atau bergerak terus secara condong dari T ke U. Berapakah beza jarak (penjimatan laluan) apabila menggunakan laluan terus TU berbanding melalui C?`,
-            coords: [`T(2, 2)`, `C(10, 2)`, `U(10, 8)`],
-            points: [
-              { label: `T`, x: 2, y: 2, role: `start` },
-              { label: `C`, x: 10, y: 2, role: `helper` },
-              { label: `U`, x: 10, y: 8, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 2, y1: 2, x2: 10, y2: 8, cx: 10, cy: 2 },
-            hintText: `Langkah 1: Jumlahkan jarak mengufuk TC dan jarak mencancang CU. Langkah 2: Hitung jarak terus TU menggunakan rumus jarak. Langkah 3: Tolakkan jarak terus daripada jumlah jarak melalui C.`,
-            answer: 4,
-            tolerance: 0.01,
-            inputNote: `Masukkan beza jarak dalam unit (integer tepat).`,
-            solutionSteps: [
-              `Jarak melalui C: <code>TC = 10 − 2 = 8 unit</code>, <code>CU = 8 − 2 = 6 unit</code>.`,
-              `Jumlah jarak melalui C ialah <code>8 + 6 = 14 unit</code>.`,
-              `Jarak terus TU: <code>TU = √[(10 − 2)² + (8 − 2)²] = √(8² + 6²) = √100 = 10 unit</code>.`,
-              `Beza jarak (penjimatan) = <code>14 − 10 = 4 unit</code>.`
-            ]
-          },
-          {
-            id: `Q10`,
-            title: `Penyahaktifan Teras Sektor Vektor`,
-            scenario: `Kunci terakhir Sektor Vektor akan terbuka apabila jarak antara teras tenaga X(1, 2) dengan penerima Y(9, 7) dimasukkan. Kira jarak XY (2 tempat perpuluhan).`,
-            coords: [`X(1, 2)`, `Y(9, 7)`],
-            points: [
-              { label: `X`, x: 1, y: 2, role: `start` },
-              { label: `Y`, x: 9, y: 7, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 9, y2: 7, cx: 9, cy: 2 },
-            hintText: `Hitung Δx = 9 − 1 dan Δy = 7 − 2. Kuasa duakan kedua-dua nilai tersebut, jumlahkan untuk mendapat 89, kemudian cari punca kuasa dua √89.`,
-            answer: 9.43,
-            tolerance: 0.02,
-            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
-            solutionSteps: [
-              `Hitung beza koordinat: <code>x₂ − x₁ = 9 − 1 = 8</code>, <code>y₂ − y₁ = 7 − 2 = 5</code>.`,
-              `Gantikan ke dalam rumus: <code>XY = √(8² + 5²) = √(64 + 25)</code>.`,
-              `Maka <code>XY = √89</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>XY ≈ 9.43 unit</code>.`
-            ]
-          }
-        ]
+        id: 2,
+        code: "PIN-02",
+        title: "Stesen 2: Jarak Mengufuk Antara Dua Titik",
+        story: "Pintu kebal kedua memerlukan jarak tepat antara dua pemancar isyarat yang terletak pada koordinat A(2, 5) dan B(11, 5).",
+        question: "Hitung jarak mengufuk (dalam unit) di antara pemancar A(2, 5) dan pemancar B(11, 5).",
+        hint: "Oleh sebab koordinat-y adalah sama (5), tolakkan nilai x yang lebih kecil daripada nilai x yang lebih besar: 11 - 2.",
+        answer: "9",
+        points: 100
       },
       {
-        id: `matriks`,
-        name: `Matriks`,
-        label: `Aras Tinggi`,
-        gridMin: -8,
-        gridMax: 8,
-        step: 1,
-        showQuadrants: true,
-        questions: [
-          {
-            id: `Q11`,
-            title: `Isyarat Rentas Sukuan II ke Sukuan I`,
-            scenario: `Isyarat kecemasan dipancarkan dari titik P(−2, 6) di Sukuan II ke stesen penerimaan Q(4, 1) di Sukuan I. Tentukan jarak PQ dalam unit (2 tempat perpuluhan).`,
-            coords: [`P(−2, 6)`, `Q(4, 1)`],
-            points: [
-              { label: `P`, x: -2, y: 6, role: `start` },
-              { label: `Q`, x: 4, y: 1, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: -2, y1: 6, x2: 4, y2: 1, cx: 4, cy: 6 },
-            hintText: `Berhati-hati dengan tanda negatif! Untuk beza koordinat-x: [4 − (−2)] = 4 + 2 = 6. Untuk beza koordinat-y: (1 − 6) = −5. Gantikan ke dalam rumus √[6² + (−5)²].`,
-            answer: 7.81,
-            tolerance: 0.02,
-            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
-            solutionSteps: [
-              `Hitung beza koordinat-x: <code>4 − (−2) = 4 + 2 = 6</code>.`,
-              `Hitung beza koordinat-y: <code>1 − 6 = −5</code>.`,
-              `Gantikan ke dalam rumus jarak: <code>PQ = √[6² + (−5)²] = √(36 + 25) = √61</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 7.81 unit</code>.`
-            ]
-          },
-          {
-            id: `Q12`,
-            title: `Terowong Matriks Sukuan III ke Sukuan I`,
-            scenario: `Terowong matriks bawah tanah menghubungkan bilik kuasa di A(−4, −3) pada Sukuan III ke pintu keluar di B(8, 2) pada Sukuan I. Berapakah panjang tepat terowong AB?`,
-            coords: [`A(−4, −3)`, `B(8, 2)`],
-            points: [
-              { label: `A`, x: -4, y: -3, role: `start` },
-              { label: `B`, x: 8, y: 2, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: -4, y1: -3, x2: 8, y2: 2, cx: 8, cy: -3 },
-            hintText: `Menolak nombor negatif bersamaan dengan menambah! Hitung [8 − (−4)] = 12 dan [2 − (−3)] = 5. Kemudian gunakan Teorem Pythagoras √(12² + 5²).`,
-            answer: 13,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Beza koordinat-x: <code>8 − (−4) = 8 + 4 = 12 unit</code>.`,
-              `Beza koordinat-y: <code>2 − (−3) = 2 + 3 = 5 unit</code>.`,
-              `Gunakan rumus jarak: <code>AB = √(12² + 5²) = √(144 + 25) = √169</code>.`,
-              `Maka, panjang terowong ialah <code>13 unit</code>.`
-            ]
-          },
-          {
-            id: `Q13`,
-            title: `Menjejak Koordinat-x Tersembunyi`,
-            scenario: `Jarak antara kunci magnetik A(2, −3) dengan sasaran B(x, 5) ialah 10 unit. Diberi titik B berada di Sukuan I (nilai x positif). Cari nilai koordinat-x tersebut untuk membuka kod PIN!`,
-            coords: [`A(2, −3)`, `B(x, 5)`, `Jarak AB = 10`],
-            points: [
-              { label: `A`, x: 2, y: -3, role: `start` }
-            ],
-            solvedPoints: [
-              { label: `B`, x: 8, y: 5, role: `target` }
-            ],
-            hintVisual: { type: `locus-x`, fixedX: 2, fixedY: -3, targetY: 5 },
-            hintText: `Gunakan rumus jarak dan kuasa duakan kedua-dua belah persamaan: 10² = (x − 2)² + [5 − (−3)]². Oleh sebab [5 − (−3)] = 8, anda akan mendapat (x − 2)² = 100 − 64 = 36. Pilih nilai x yang positif (Sukuan I).`,
-            answer: 8,
-            tolerance: 0.01,
-            inputNote: `Masukkan nilai koordinat-x (integer).`,
-            solutionSteps: [
-              `Susun persamaan jarak: <code>10 = √[(x − 2)² + (5 − (−3))²]</code>.`,
-              `Kuasa duakan kedua-dua belah: <code>100 = (x − 2)² + 8²</code> → <code>100 = (x − 2)² + 64</code>.`,
-              `Selesaikan: <code>(x − 2)² = 36</code> → <code>x − 2 = ±6</code>, maka <code>x = 8</code> atau <code>x = −4</code>.`,
-              `Oleh sebab B di Sukuan I (x &gt; 0), nilai koordinat-x ialah <code>8</code>.`
-            ]
-          },
-          {
-            id: `Q14`,
-            title: `Menjejak Koordinat-y Negatif (Sukuan IV)`,
-            scenario: `Penderia laser di K(−2, 1) berjarak tepat 10 unit dari nod keselamatan L(4, y) yang terletak di Sukuan IV (y < 0). Masukkan nilai koordinat-y (termasuk tanda negatif) sebagai kod PIN.`,
-            coords: [`K(−2, 1)`, `L(4, y)`, `Jarak KL = 10`],
-            points: [
-              { label: `K`, x: -2, y: 1, role: `start` }
-            ],
-            solvedPoints: [
-              { label: `L`, x: 4, y: -7, role: `target` }
-            ],
-            hintVisual: { type: `locus-y`, fixedX: -2, fixedY: 1, targetX: 4 },
-            hintText: `Bentukkan persamaan 10² = [4 − (−2)]² + (y − 1)². Beza x ialah 6, jadi 100 = 36 + (y − 1)², memberikan (y − 1)² = 64. Maka y − 1 = +8 atau −8. Pilih nilai y yang negatif (Sukuan IV).`,
-            answer: -7,
-            tolerance: 0.01,
-            inputNote: `Masukkan nilai integer negatif (gunakan butang −).`,
-            solutionSteps: [
-              `Bentukkan persamaan jarak: <code>10² = [4 − (−2)]² + (y − 1)²</code>.`,
-              `Ringkaskan: <code>100 = 6² + (y − 1)²</code> → <code>(y − 1)² = 100 − 36 = 64</code>.`,
-              `Ambil punca kuasa dua: <code>y − 1 = ±8</code>, maka <code>y = 9</code> atau <code>y = −7</code>.`,
-              `Oleh sebab L di Sukuan IV (y &lt; 0), nilai koordinat-y ialah <code>−7</code>.`
-            ]
-          },
-          {
-            id: `Q15`,
-            title: `Misi Akhir: Kapsul Penyelamat Terdekat`,
-            scenario: `Pintu Utama Bilik Kawalan terletak di titik asalan O(0, 0). Dua kapsul penyelamat dikesan di P(−6, 8) dan Q(3, −8). Kira jarak dari O ke kapsul yang lebih dekat (bundarkan kepada 2 tempat perpuluhan).`,
-            coords: [`O(0, 0)`, `P(−6, 8)`, `Q(3, −8)`],
-            points: [
-              { label: `O`, x: 0, y: 0, role: `start` },
-              { label: `P`, x: -6, y: 8, role: `helper` },
-              { label: `Q`, x: 3, y: -8, role: `target` }
-            ],
-            hintVisual: { type: `dual-origin`, p1: { x: -6, y: 8 }, p2: { x: 3, y: -8 } },
-            hintText: `Hitung jarak setiap kapsul dari asalan O(0, 0) menggunakan d = √(x² + y²): kira jarak OP = √[(−6)² + 8²] dan jarak OQ = √[3² + (−8)²]. Bandingkan kedua-duanya dan masukkan jarak yang lebih pendek.`,
-            answer: 8.54,
-            tolerance: 0.02,
-            inputNote: `Bundarkan jarak terdekat kepada 2 tempat perpuluhan.`,
-            solutionSteps: [
-              `Jarak kapsul P dari asalan O(0, 0): <code>OP = √[(−6)² + 8²] = √(36 + 64) = √100 = 10 unit</code>.`,
-              `Jarak kapsul Q dari asalan O(0, 0): <code>OQ = √[3² + (−8)²] = √(9 + 64) = √73 ≈ 8.54 unit</code>.`,
-              `Bandingkan jarak: <code>8.54 &lt; 10</code>, maka kapsul Q lebih dekat.`,
-              `Kod PIN Pembebasan Utama ialah <code>8.54</code>.`
-            ]
-          }
-        ]
+        id: 3,
+        code: "PIN-03",
+        title: "Stesen 3: Jarak Mencancang dalam Grid",
+        story: "Lif kecemasan bergerak turun dari aras kawalan P(4, 14) ke aras bawah tanah Q(4, 3).",
+        question: "Berapakah jumlah unit pergerakan mencancang lif tersebut dari P ke Q?",
+        hint: "Koordinat-x tidak berubah (4). Cari perbezaan antara koordinat-y: 14 - 3.",
+        answer: "11",
+        points: 100
+      },
+      {
+        id: 4,
+        code: "PIN-04",
+        title: "Stesen 4: Titik Tengah Laluan Rahsia",
+        story: "Suis utama tersembunyi tepat di titik tengah M(x, y) di antara terminal K(2, 4) dan terminal L(10, 12).",
+        question: "Apakah nilai koordinat-y bagi titik tengah M tersebut?",
+        hint: "Gunakan rumus titik tengah untuk y: (y1 + y2) / 2 = (4 + 12) / 2.",
+        answer: "8",
+        points: 100
+      },
+      {
+        id: 5,
+        code: "PIN-05",
+        title: "Stesen 5: Kod Gabungan Pintu Keluar",
+        story: "Pintu keluar utama memerlukan jumlah hasil tambah bagi kedua-dua koordinat (x + y) bagi titik R(6, 9).",
+        question: "Masukkan nilai hasil tambah (x + y) bagi koordinat R(6, 9) untuk membuka pintu keluar!",
+        hint: "Tambahkan nilai x = 6 dan nilai y = 9.",
+        answer: "15",
+        points: 100
       }
     ];
 
-    const appState = {
-      studentId: ``,
-      studentName: ``,
-      studentClass: ``,
-      sessionCode: ``,
-      sessionLockedFromUrl: false,
-      isTeacherPortalUrl: false,
-      currentLevel: 0,
-      currentQ: 0,
-      solved: {},
-      hintsUsed: {},
-      attempts: {},
+    // 3. STUDENT STATE
+    let studentState = {
+      studentId: "",
+      sessionCode: "",
+      name: "",
+      className: "",
+      solvedIds: [],
       score: 0,
+      wrongAttempts: 0,
+      startTimeMs: 0,
       elapsedSeconds: 0,
-      hintVisible: false,
-      formulaVisible: false,
-      cursorCoord: null
+      completed: false,
+      currentStationIdx: 0
     };
-
     let timerInterval = null;
-    let teacherAutoRefreshInterval = null;
-    let activeTeacherSession = null;
-    let teacherSubmissionsCache = [];
+    let teacherPollInterval = null;
+    let activeTeacherSession = "";
+    let latestRecordsCache = [];
 
-    function generateStudentId() {
-      return `STU_` + Date.now().toString(36) + `_` + Math.random().toString(36).slice(2, 6).toUpperCase();
-    }
+    // 4. INITIALIZATION ON PAGE LOAD
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("input-firebase-url").value = getFirebaseBaseUrl();
 
-    async function hashSecretPin(sessionCode, rawPin) {
-      const saltAndText = `${sessionCode.toUpperCase()}::KSSM_GRID::${rawPin.trim()}`;
-      if (window.crypto && window.crypto.subtle) {
-        const msgUint8 = new TextEncoder().encode(saltAndText);
-        const hashBuffer = await crypto.subtle.digest(`SHA-256`, msgUint8);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(function (b) { return b.toString(16).padStart(2, `0`); }).join(``);
+      // Check if ?sesi= is provided in URL
+      const paramSesi = urlParams.get("sesi");
+      if (paramSesi) {
+        const cleanSesi = sanitizeKey(paramSesi);
+        document.getElementById("input-session-code").value = cleanSesi;
+        document.getElementById("session-hint-text").innerHTML =
+          `<span class="text-emerald-400 font-semibold">&#10003; Kod sesi dikunci daripada pautan guru (${cleanSesi}).</span>`;
       }
-      let hash = 0;
-      for (let i = 0; i < saltAndText.length; i++) {
-        hash = ((hash << 5) - hash) + saltAndText.charCodeAt(i);
-        hash |= 0;
+
+      // Check if ?mod=guru is provided
+      const mod = urlParams.get("mod");
+      if (mod && mod.toLowerCase() === "guru") {
+        openTeacherLogin();
       }
-      return `FALLBACK_` + String(hash);
+    });
+
+    function sanitizeKey(str) {
+      return (str || "UMUM")
+        .toUpperCase()
+        .trim()
+        .replace(/[^A-Z0-9_-]/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "") || "UMUM";
     }
 
-    function getQuestionKey(levelIdx, qIdx) {
-      return `${levelIdx}-${qIdx}`;
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, "0");
+      const s = (sec % 60).toString().padStart(2, "0");
+      return `${m}:${s}`;
     }
 
-    function getCurrentLevel() {
-      return LEVELS[appState.currentLevel];
-    }
+    // 5. STUDENT MISSION FLOW
+    function startStudentMission(e) {
+      e.preventDefault();
+      const rawSession = document.getElementById("input-session-code").value;
+      const name = document.getElementById("input-student-name").value.trim();
+      const className = document.getElementById("input-student-class").value.trim();
 
-    function getCurrentQuestion() {
-      return LEVELS[appState.currentLevel].questions[appState.currentQ];
-    }
+      if (!name || !className) return;
 
-    function formatTime(totalSec) {
-      const mins = Math.floor(totalSec / 60);
-      const secs = totalSec % 60;
-      const mStr = String(mins).padStart(2, `0`);
-      const sStr = String(secs).padStart(2, `0`);
-      return `${mStr}:${sStr}`;
+      const sessionCode = sanitizeKey(rawSession);
+      const studentId = "STU_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6).toUpperCase();
+
+      studentState = {
+        studentId,
+        sessionCode,
+        name,
+        className,
+        solvedIds: [],
+        score: 0,
+        wrongAttempts: 0,
+        startTimeMs: Date.now(),
+        elapsedSeconds: 0,
+        completed: false,
+        currentStationIdx: 0
+      };
+
+      // Update HUD
+      document.getElementById("hud-student-name").textContent = name;
+      document.getElementById("hud-student-class").textContent = className;
+      document.getElementById("hud-session-code").textContent = sessionCode;
+
+      // Switch views
+      document.getElementById("view-student-login").classList.add("hidden");
+      document.getElementById("view-student-game").classList.remove("hidden");
+
+      renderStationTabs();
+      renderActiveStation();
+      startTimer();
+
+      // Initial cloud registration so teacher sees student joined immediately
+      syncStudentProgressToCloud("Mendaftarkan penyertaan ke awan sesi...");
     }
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(function () {
-        if (!appState.studentName || appState.isTeacherPortalUrl) return;
-        if (getTotalSolvedCount() < 15) {
-          appState.elapsedSeconds += 1;
-          const timerEl = document.getElementById(`hud-timer`);
-          if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
-        } else {
-          const statusEl = document.getElementById(`hud-timer-status`);
-          if (statusEl) statusEl.textContent = `Misi tamat`;
+      timerInterval = setInterval(() => {
+        if (!studentState.completed) {
+          studentState.elapsedSeconds = Math.floor((Date.now() - studentState.startTimeMs) / 1000);
+          document.getElementById("hud-timer").textContent = formatTime(studentState.elapsedSeconds);
         }
       }, 1000);
     }
 
-    function getTotalSolvedCount() {
-      let count = 0;
-      LEVELS.forEach(function (lvl, lIdx) {
-        lvl.questions.forEach(function (_, qIdx) {
-          if (appState.solved[getQuestionKey(lIdx, qIdx)]) count += 1;
-        });
-      });
-      return count;
-    }
-
-    function getLevelSolvedCount(lIdx) {
-      let count = 0;
-      LEVELS[lIdx].questions.forEach(function (_, qIdx) {
-        if (appState.solved[getQuestionKey(lIdx, qIdx)]) count += 1;
-      });
-      return count;
-    }
-
-    // =========================================================================
-    // PENGURUSAN BILIK SESI SEKOLAH & KESELAMATAN LOG MASUK GURU
-    // =========================================================================
-    function getLoginGuardState() {
-      try {
-        return JSON.parse(localStorage.getItem(LOCKOUT_STORAGE_KEY) || `{"fails":0,"lockedUntil":0}`);
-      } catch (e) {
-        return { fails: 0, lockedUntil: 0 };
-      }
-    }
-
-    function setLoginGuardState(state) {
-      try {
-        localStorage.setItem(LOCKOUT_STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {}
-    }
-
-    async function getRoomMetadata(sessionCode) {
-      const cleanCode = sessionCode.trim().toUpperCase();
-      const cloudBase = getActiveCloudUrl();
-      if (cloudBase) {
-        try {
-          const res = await fetch(`${cloudBase}/rooms/${encodeURIComponent(cleanCode)}.json`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data && data.pinHash) return data;
-          }
-        } catch (e) {}
-      }
-      try {
-        const localRooms = JSON.parse(localStorage.getItem(LOCAL_ROOMS_KEY) || `{}`);
-        if (localRooms[cleanCode]) return localRooms[cleanCode];
-      } catch (e) {}
-      return null;
-    }
-
-    async function saveRoomMetadata(roomObj) {
-      const cleanCode = roomObj.sessionCode.trim().toUpperCase();
-      try {
-        const localRooms = JSON.parse(localStorage.getItem(LOCAL_ROOMS_KEY) || `{}`);
-        localRooms[cleanCode] = roomObj;
-        localStorage.setItem(LOCAL_ROOMS_KEY, JSON.stringify(localRooms));
-      } catch (e) {}
-
-      const cloudBase = getActiveCloudUrl();
-      if (cloudBase) {
-        try {
-          await fetch(`${cloudBase}/rooms/${encodeURIComponent(cleanCode)}.json`, {
-            method: `PUT`,
-            headers: { 'Content-Type': `application/json` },
-            body: JSON.stringify(roomObj)
-          });
-        } catch (e) {}
-      }
-    }
-
-    function switchTeacherAuthTab(mode) {
-      const tabLogin = document.getElementById(`tab-teacher-login`);
-      const tabCreate = document.getElementById(`tab-teacher-create`);
-      const formLogin = document.getElementById(`form-teacher-login`);
-      const formCreate = document.getElementById(`form-teacher-create`);
-
-      document.getElementById(`teacher-login-error`).classList.add(`hidden`);
-      document.getElementById(`teacher-create-error`).classList.add(`hidden`);
-
-      if (mode === `create`) {
-        tabCreate.classList.add(`is-active`);
-        tabLogin.classList.remove(`is-active`);
-        formCreate.classList.remove(`hidden`);
-        formLogin.classList.add(`hidden`);
-      } else {
-        tabLogin.classList.add(`is-active`);
-        tabCreate.classList.remove(`is-active`);
-        formLogin.classList.remove(`hidden`);
-        formCreate.classList.add(`hidden`);
-      }
-    }
-
-    async function createTeacherRoom(evt) {
-      evt.preventDefault();
-      const schoolInput = document.getElementById(`create-school-name`);
-      const codeInput = document.getElementById(`create-session-code`);
-      const pinInput = document.getElementById(`create-teacher-pin`);
-      const errEl = document.getElementById(`teacher-create-error`);
-      const submitBtn = document.getElementById(`btn-teacher-create-submit`);
-
-      const schoolName = schoolInput.value.trim();
-      const sessionCode = codeInput.value.trim().toUpperCase();
-      const rawPin = pinInput.value.trim();
-
-      if (!schoolName || !sessionCode || rawPin.length < 4) return;
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = `Menyemak Kod...`;
-      errEl.classList.add(`hidden`);
-
-      const existing = await getRoomMetadata(sessionCode);
-      if (existing) {
-        errEl.textContent = `Kod Sesi "${sessionCode}" telah didaftarkan. Sila pilih kod unik lain (contohnya tambah nama kelas atau tahun).`;
-        errEl.classList.remove(`hidden`);
-        submitBtn.disabled = false;
-        submitBtn.textContent = `Daftar & Masuk Dashboard`;
-        return;
-      }
-
-      const pinHash = await hashSecretPin(sessionCode, rawPin);
-      const roomData = {
-        sessionCode: sessionCode,
-        schoolName: schoolName,
-        pinHash: pinHash,
-        createdAt: new Date().toISOString()
-      };
-
-      await saveRoomMetadata(roomData);
-
-      submitBtn.disabled = false;
-      submitBtn.textContent = `Daftar & Masuk Dashboard`;
-      pinInput.value = ``;
-
-      openAuthenticatedDashboard(roomData);
-    }
-
-    async function verifyTeacherLogin(evt) {
-      evt.preventDefault();
-      const sessionInp = document.getElementById(`teacher-session-input`);
-      const pinInp = document.getElementById(`teacher-pin-input`);
-      const errEl = document.getElementById(`teacher-login-error`);
-      const submitBtn = document.getElementById(`btn-teacher-login-submit`);
-
-      const guard = getLoginGuardState();
-      const now = Date.now();
-      if (guard.lockedUntil && now < guard.lockedUntil) {
-        const minsLeft = Math.ceil((guard.lockedUntil - now) / 60000);
-        errEl.textContent = `Akses disekat sementara atas faktor keselamatan. Sila cuba lagi dalam ${minsLeft} minit.`;
-        errEl.classList.remove(`hidden`);
-        return;
-      }
-
-      const sessionCode = sessionInp.value.trim().toUpperCase();
-      const rawPin = pinInp.value.trim();
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = `Mengesahkan...`;
-      errEl.classList.add(`hidden`);
-
-      const roomData = await getRoomMetadata(sessionCode);
-      const enteredHash = await hashSecretPin(sessionCode, rawPin);
-
-      if (!roomData || enteredHash !== roomData.pinHash) {
-        const newFails = (guard.fails || 0) + 1;
-        if (newFails >= MAX_LOGIN_ATTEMPTS) {
-          setLoginGuardState({ fails: 0, lockedUntil: Date.now() + LOCKOUT_DURATION_MS });
-          errEl.textContent = `Terlalu banyak cubaan gagal. Akses dikunci selama 5 minit.`;
+    function renderStationTabs() {
+      const container = document.getElementById("station-tabs");
+      container.innerHTML = STATIONS.map((st, idx) => {
+        const isSolved = studentState.solvedIds.includes(st.id);
+        const isActive = idx === studentState.currentStationIdx;
+        let classes = "py-2.5 px-2 rounded-xl text-center font-bold text-xs mono transition border ";
+        if (isSolved) {
+          classes += isActive
+            ? "bg-emerald-500 text-slate-950 border-emerald-300 shadow-lg shadow-emerald-500/20"
+            : "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
         } else {
-          setLoginGuardState({ fails: newFails, lockedUntil: 0 });
-          const baki = MAX_LOGIN_ATTEMPTS - newFails;
-          errEl.textContent = `Pengesahan gagal. Kod Sesi atau Kata Laluan tidak sah (Baki cubaan: ${baki}).`;
+          classes += isActive
+            ? "bg-sky-500 text-slate-950 border-sky-300 shadow-lg shadow-sky-500/20"
+            : "bg-slate-900/90 text-slate-400 border-slate-800 hover:border-slate-600";
         }
-        errEl.classList.remove(`hidden`);
-        submitBtn.disabled = false;
-        submitBtn.textContent = `Buka Dashboard`;
-        return;
-      }
-
-      setLoginGuardState({ fails: 0, lockedUntil: 0 });
-      submitBtn.disabled = false;
-      submitBtn.textContent = `Buka Dashboard`;
-      pinInp.value = ``;
-
-      openAuthenticatedDashboard(roomData);
-    }
-
-    function openAuthenticatedDashboard(roomData) {
-      activeTeacherSession = roomData;
-      closeTeacherLoginModal();
-
-      const kickerEl = document.getElementById(`dash-school-kicker`);
-      const titleEl = document.getElementById(`teacher-dash-title`);
-      const sessionDisp = document.getElementById(`dash-session-display`);
-
-      if (kickerEl) kickerEl.textContent = `SESI AKTIF: ${roomData.sessionCode} // ${roomData.schoolName.toUpperCase()}`;
-      if (titleEl) titleEl.textContent = `Dashboard Prestasi Murid — ${roomData.schoolName}`;
-      if (sessionDisp) sessionDisp.value = roomData.sessionCode;
-
-      updateCloudStatusIndicators();
-
-      const dashModal = document.getElementById(`teacher-dashboard-modal`);
-      if (dashModal) dashModal.classList.remove(`hidden`);
-
-      refreshTeacherSubmissions();
-
-      // Auto-segar setiap 10 saat supaya markah murid dari peranti lain muncul secara masa nyata
-      if (teacherAutoRefreshInterval) clearInterval(teacherAutoRefreshInterval);
-      teacherAutoRefreshInterval = setInterval(function () {
-        if (activeTeacherSession) {
-          refreshTeacherSubmissions(true);
-        }
-      }, 10000);
-    }
-
-    function toggleChangePinDrawer() {
-      const drawer = document.getElementById(`change-pin-drawer`);
-      const statusEl = document.getElementById(`change-pin-status`);
-      if (statusEl) statusEl.classList.add(`hidden`);
-      if (drawer) drawer.classList.toggle(`hidden`);
-    }
-
-    async function handleChangeTeacherPin(evt) {
-      evt.preventDefault();
-      if (!activeTeacherSession) return;
-
-      const oldPinInp = document.getElementById(`old-teacher-pin`);
-      const newPinInp = document.getElementById(`new-teacher-pin`);
-      const confirmPinInp = document.getElementById(`confirm-teacher-pin`);
-      const statusEl = document.getElementById(`change-pin-status`);
-      const saveBtn = document.getElementById(`btn-save-new-pin`);
-
-      const oldPin = oldPinInp.value.trim();
-      const newPin = newPinInp.value.trim();
-      const confirmPin = confirmPinInp.value.trim();
-
-      statusEl.classList.remove(`hidden`);
-
-      if (newPin !== confirmPin) {
-        statusEl.style.color = `var(--error)`;
-        statusEl.textContent = `Ralat: Kata laluan baharu dan pengesahan tidak sepadan.`;
-        return;
-      }
-
-      saveBtn.disabled = true;
-      saveBtn.textContent = `Menyimpan...`;
-
-      const currentHash = await hashSecretPin(activeTeacherSession.sessionCode, oldPin);
-      if (currentHash !== activeTeacherSession.pinHash) {
-        statusEl.style.color = `var(--error)`;
-        statusEl.textContent = `Ralat: Kata laluan semasa tidak tepat.`;
-        saveBtn.disabled = false;
-        saveBtn.textContent = `Simpan Kata Laluan`;
-        return;
-      }
-
-      const updatedHash = await hashSecretPin(activeTeacherSession.sessionCode, newPin);
-      activeTeacherSession.pinHash = updatedHash;
-      activeTeacherSession.updatedAt = new Date().toISOString();
-
-      await saveRoomMetadata(activeTeacherSession);
-
-      oldPinInp.value = ``;
-      newPinInp.value = ``;
-      confirmPinInp.value = ``;
-      saveBtn.disabled = false;
-      saveBtn.textContent = `Simpan Kata Laluan`;
-
-      statusEl.style.color = `var(--secondary)`;
-      statusEl.textContent = `✓ Kata laluan guru berjaya dikemaskini.`;
-    }
-
-    function copyStudentMagicLink() {
-      if (!activeTeacherSession) return;
-      const baseUrl = window.location.href.split(`?`)[0].split(`#`)[0];
-      const cloudUrl = getActiveCloudUrl();
-
-      // Sertakan sekali parameter &db= jika URL Firebase dikonfigurasikan supaya
-      // peranti murid terus bersambung ke pangkalan data awan yang sama
-      let magicUrl = `${baseUrl}?sesi=${encodeURIComponent(activeTeacherSession.sessionCode)}`;
-      if (cloudUrl) {
-        magicUrl += `&db=${encodeURIComponent(cloudUrl)}`;
-      }
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(magicUrl).then(function () {
-          const btn = document.getElementById(`btn-copy-student-link`);
-          if (btn) {
-            const orig = btn.textContent;
-            btn.textContent = `✓ Pautan Murid Disalin!`;
-            setTimeout(function () { btn.textContent = orig; }, 3500);
-          }
-        });
-      } else {
-        prompt(`Salin pautan ini dan kongsikan kepada murid kelas anda:`, magicUrl);
-      }
-    }
-
-    function exitTeacherModeToStudent() {
-      appState.isTeacherPortalUrl = false;
-      closeTeacherLoginModal();
-      closeTeacherDashboard();
-      const cleanUrl = window.location.href.split(`?`)[0];
-      if (window.history && window.history.replaceState) {
-        window.history.replaceState({}, document.title, cleanUrl);
-      }
-      resetFullStudentSession();
-      openStudentModal();
-    }
-
-    // =========================================================================
-    // PENYIMPANAN & LOG KELUAR / RESET AUTOMATIK PROFIL MURID
-    // =========================================================================
-    function setSyncBadge(status, label) {
-      const pill = document.getElementById(`sync-status-pill`);
-      const text = document.getElementById(`sync-status-text`);
-      if (!pill || !text) return;
-      pill.className = `sync-pill` + (status === `synced` ? ` is-synced` : (status === `sending` ? ` is-sending` : (status === `error` ? ` is-error` : ``)));
-      text.textContent = label;
-    }
-
-    function resetFullStudentSession() {
-      try {
-        localStorage.removeItem(LEGACY_STATE_KEY);
-        sessionStorage.removeItem(LEGACY_STATE_KEY);
-      } catch (e) {}
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlSession = urlParams.get(`sesi`);
-
-      appState.studentId = generateStudentId();
-      appState.studentName = ``;
-      appState.studentClass = ``;
-      appState.sessionCode = (urlSession && urlSession.trim()) ? urlSession.trim().toUpperCase() : ``;
-      appState.sessionLockedFromUrl = Boolean(urlSession && urlSession.trim());
-      appState.currentLevel = 0;
-      appState.currentQ = 0;
-      appState.solved = {};
-      appState.hintsUsed = {};
-      appState.attempts = {};
-      appState.score = 0;
-      appState.elapsedSeconds = 0;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-
-      setSyncBadge(`idle`, `Menunggu pendaftaran murid`);
-      refreshAll();
-    }
-
-    function initializeFreshPageSession() {
-      // Simpan parameter ?db= daripada URL jika murid membuka pautan khas guru
-      getActiveCloudUrl();
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlMod = urlParams.get(`mod`);
-
-      if (urlMod && urlMod.trim().toLowerCase() === `guru`) {
-        appState.isTeacherPortalUrl = true;
-      }
-
-      resetFullStudentSession();
-    }
-
-    function buildSubmissionPayload() {
-      const totalSolved = getTotalSolvedCount();
-      const hintsCount = Object.keys(appState.hintsUsed).filter(function (k) {
-        return appState.hintsUsed[k];
-      }).length;
-      const totalAttempts = Object.values(appState.attempts).reduce(function (acc, n) {
-        return acc + (Number(n) || 0);
-      }, 0);
-
-      return {
-        studentId: appState.studentId,
-        studentName: appState.studentName || `Murid Tanpa Nama`,
-        studentClass: appState.studentClass || `Tiada Kelas`,
-        sessionCode: (appState.sessionCode || ``).trim().toUpperCase(),
-        score: appState.score,
-        solvedCount: totalSolved,
-        totalQuestions: 15,
-        level0Solved: getLevelSolvedCount(0),
-        level1Solved: getLevelSolvedCount(1),
-        level2Solved: getLevelSolvedCount(2),
-        elapsedSeconds: appState.elapsedSeconds,
-        elapsedFormatted: formatTime(appState.elapsedSeconds),
-        hintsUsed: hintsCount,
-        totalAttempts: totalAttempts,
-        status: totalSolved === 15 ? `SELESAI` : `SEDANG MENJAWAB`,
-        submittedAt: new Date().toLocaleString(`ms-MY`, { hour12: true }),
-        updatedTimestamp: Date.now()
-      };
-    }
-
-    async function submitReportToTeacher(isManualClick) {
-      if (!appState.studentName || !appState.sessionCode) {
-        openStudentModal();
-        return;
-      }
-
-      const payload = buildSubmissionPayload();
-      const sessionKey = payload.sessionCode;
-      setSyncBadge(`sending`, `Menghantar ke sistem guru...`);
-
-      // 1. Simpan sandaran dalam pelayar semasa
-      try {
-        const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
-        if (!allLocal[sessionKey]) allLocal[sessionKey] = {};
-        allLocal[sessionKey][payload.studentId] = payload;
-        localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
-      } catch (e) {}
-
-      // 2. Hantar ke Pangkalan Data Awan supaya masuk ke peranti guru
-      const cloudBase = getActiveCloudUrl();
-      let cloudSuccess = false;
-
-      if (cloudBase) {
-        try {
-          const endpoint = `${cloudBase}/submissions/${encodeURIComponent(sessionKey)}/${encodeURIComponent(payload.studentId)}.json`;
-          const res = await fetch(endpoint, {
-            method: `PUT`,
-            headers: { 'Content-Type': `application/json` },
-            body: JSON.stringify(payload)
-          });
-          if (res.ok) {
-            cloudSuccess = true;
-          }
-        } catch (err) {
-          console.warn(`Gagal hantar ke awan:`, err);
-        }
-      }
-
-      const timeNow = new Date().toLocaleTimeString(`ms-MY`, { hour: `2-digit`, minute: `2-digit` });
-      if (cloudBase && cloudSuccess) {
-        setSyncBadge(`synced`, `Direkod ke awan sesi ${sessionKey} (${timeNow})`);
-      } else if (cloudBase && !cloudSuccess) {
-        setSyncBadge(`error`, `Ralat awan — disimpan lokal (${timeNow})`);
-      } else {
-        setSyncBadge(`synced`, `Direkod lokal sesi ${sessionKey} (${timeNow})`);
-      }
-
-      if (isManualClick) {
-        const btn = document.getElementById(`btn-submit-teacher`);
-        if (btn) {
-          const orig = btn.textContent;
-          btn.textContent = cloudSuccess ? `✓ Dihantar ke Awan Guru` : `✓ Laporan Disimpan`;
-          setTimeout(function () {
-            btn.textContent = orig;
-          }, 3000);
-        }
-      }
-    }
-
-    async function fetchSubmissionsForSession(sessionCode) {
-      const cleanSession = (sessionCode || ``).trim().toUpperCase();
-      const mergedMap = {};
-
-      try {
-        const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
-        if (allLocal[cleanSession]) {
-          Object.assign(mergedMap, allLocal[cleanSession]);
-        }
-      } catch (e) {}
-
-      const cloudBase = getActiveCloudUrl();
-      if (cloudBase) {
-        try {
-          const endpoint = `${cloudBase}/submissions/${encodeURIComponent(cleanSession)}.json`;
-          const res = await fetch(endpoint);
-          if (res.ok) {
-            const cloudData = await res.json();
-            if (cloudData && typeof cloudData === `object`) {
-              Object.assign(mergedMap, cloudData);
-            }
-          }
-        } catch (err) {
-          console.warn(`Gagal muat turun rekod awan:`, err);
-        }
-      }
-
-      return Object.values(mergedMap).sort(function (a, b) {
-        if (b.score !== a.score) return b.score - a.score;
-        return a.elapsedSeconds - b.elapsedSeconds;
-      });
-    }
-
-    function updateStudentHeaderBar() {
-      const nameEl = document.getElementById(`display-student-name`);
-      const classEl = document.getElementById(`display-student-class`);
-      const codeEl = document.getElementById(`display-session-code`);
-      if (nameEl) nameEl.textContent = appState.studentName || `Belum Ditetapkan`;
-      if (classEl) classEl.textContent = appState.studentClass || `—`;
-      if (codeEl) codeEl.textContent = appState.sessionCode || `—`;
-    }
-
-    function openStudentModal() {
-      const modal = document.getElementById(`student-modal`);
-      const nameInput = document.getElementById(`input-student-name`);
-      const classInput = document.getElementById(`input-student-class`);
-      const codeInput = document.getElementById(`input-session-code`);
-      const lockNote = document.getElementById(`session-lock-note`);
-      if (!modal) return;
-
-      if (nameInput) nameInput.value = ``;
-      if (classInput) classInput.value = ``;
-      if (codeInput) {
-        codeInput.value = appState.sessionLockedFromUrl ? appState.sessionCode : ``;
-        codeInput.disabled = appState.sessionLockedFromUrl;
-      }
-      if (lockNote) {
-        lockNote.textContent = appState.sessionLockedFromUrl
-          ? `Kod sesi telah ditetapkan secara automatik melalui pautan guru anda.`
-          : `Pastikan ejaan Kod Sesi tepat seperti yang diberikan oleh guru anda.`;
-      }
-
-      modal.classList.remove(`hidden`);
-      if (nameInput) nameInput.focus();
-    }
-
-    function closeStudentModal() {
-      const modal = document.getElementById(`student-modal`);
-      if (modal) modal.classList.add(`hidden`);
-    }
-
-    function saveStudentProfile(evt) {
-      evt.preventDefault();
-      const nameInput = document.getElementById(`input-student-name`);
-      const classInput = document.getElementById(`input-student-class`);
-      const codeInput = document.getElementById(`input-session-code`);
-
-      const newName = nameInput.value.trim();
-      const newClass = classInput.value.trim();
-      const newCode = codeInput.value.trim().toUpperCase();
-
-      if (!newName || !newClass || !newCode) return;
-
-      appState.studentId = generateStudentId();
-      appState.studentName = newName;
-      appState.studentClass = newClass;
-      appState.sessionCode = newCode;
-
-      updateStudentHeaderBar();
-      closeStudentModal();
-      submitReportToTeacher(false);
-    }
-
-    async function logoutAndResetStudent(btn) {
-      if (btn && btn.dataset.armed !== `true`) {
-        btn.dataset.armed = `true`;
-        btn.textContent = `Sahkan Log Keluar?`;
-        setTimeout(function () {
-          if (btn.dataset.armed === `true`) {
-            btn.dataset.armed = `false`;
-            btn.textContent = `Log Keluar`;
-          }
-        }, 3500);
-        return;
-      }
-      if (btn) {
-        btn.dataset.armed = `false`;
-        btn.textContent = `Log Keluar`;
-      }
-
-      if (appState.studentName && appState.sessionCode) {
-        await submitReportToTeacher(false);
-      }
-
-      resetFullStudentSession();
-      openStudentModal();
-    }
-
-    async function finishAndLogoutStudent() {
-      if (appState.studentName && appState.sessionCode) {
-        await submitReportToTeacher(false);
-      }
-      resetFullStudentSession();
-      openStudentModal();
-    }
-
-    function openTeacherLoginModal() {
-      const modal = document.getElementById(`teacher-login-modal`);
-      const sessionInp = document.getElementById(`teacher-session-input`);
-      const pinInp = document.getElementById(`teacher-pin-input`);
-      updateCloudStatusIndicators();
-      switchTeacherAuthTab(`login`);
-      if (sessionInp && appState.sessionCode) sessionInp.value = appState.sessionCode;
-      if (pinInp) pinInp.value = ``;
-      if (modal) modal.classList.remove(`hidden`);
-    }
-
-    function closeTeacherLoginModal() {
-      const modal = document.getElementById(`teacher-login-modal`);
-      if (modal) modal.classList.add(`hidden`);
-    }
-
-    function closeTeacherDashboard() {
-      activeTeacherSession = null;
-      if (teacherAutoRefreshInterval) clearInterval(teacherAutoRefreshInterval);
-      const dashModal = document.getElementById(`teacher-dashboard-modal`);
-      if (dashModal) dashModal.classList.add(`hidden`);
-      if (appState.isTeacherPortalUrl) {
-        openTeacherLoginModal();
-      }
-    }
-
-    async function refreshTeacherSubmissions(isSilent) {
-      if (!activeTeacherSession) return;
-      const sessionCode = activeTeacherSession.sessionCode;
-      const tbody = document.getElementById(`teacher-table-body`);
-      if (tbody && !isSilent) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Mengemas kini rekod bagi sesi ${escapeHtml(sessionCode)}...</td></tr>`;
-      }
-      teacherSubmissionsCache = await fetchSubmissionsForSession(sessionCode);
-      renderTeacherTable();
-    }
-
-    function renderTeacherTable() {
-      const classFilterInput = document.getElementById(`dash-class-filter`);
-      const filterText = classFilterInput ? classFilterInput.value.trim().toLowerCase() : ``;
-
-      const filtered = teacherSubmissionsCache.filter(function (item) {
-        if (!filterText) return true;
-        return (item.studentClass || ``).toLowerCase().includes(filterText) ||
-               (item.studentName || ``).toLowerCase().includes(filterText);
-      });
-
-      const kpiContainer = document.getElementById(`teacher-kpi-row`);
-      if (kpiContainer) {
-        const totalStudents = filtered.length;
-        const completedCount = filtered.filter(function (s) { return s.solvedCount === 15; }).length;
-        const avgScore = totalStudents
-          ? Math.round(filtered.reduce(function (acc, s) { return acc + (Number(s.score) || 0); }, 0) / totalStudents)
-          : 0;
-        const avgSec = totalStudents
-          ? Math.round(filtered.reduce(function (acc, s) { return acc + (Number(s.elapsedSeconds) || 0); }, 0) / totalStudents)
-          : 0;
-
-        kpiContainer.innerHTML = `
-          <div class="hud-tile is-cyan">
-            <span class="hud-label">Jumlah Murid Sesi Ini</span>
-            <span class="hud-value is-cyan">${totalStudents}</span>
-            <span class="hud-caption">${completedCount} orang tamat penuh</span>
-          </div>
-          <div class="hud-tile">
-            <span class="hud-label">Purata Skor Kelas</span>
-            <span class="hud-value is-pink">${avgScore}</span>
-            <span class="hud-caption">Daripada 1500 mata maksimum</span>
-          </div>
-          <div class="hud-tile is-cyan">
-            <span class="hud-label">Purata Masa Misi</span>
-            <span class="hud-value is-cyan">${formatTime(avgSec)}</span>
-            <span class="hud-caption">Minit : Saat</span>
-          </div>
-        `;
-      }
-
-      const tbody = document.getElementById(`teacher-table-body`);
-      if (!tbody) return;
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:var(--on-surface-variant);">Tiada rekod penghantaran murid ditemui bagi sesi ini. Klik "Salin Pautan Khas Murid" di atas dan kongsikan kepada kelas anda.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map(function (row, idx) {
-        const isDone = Number(row.solvedCount) === 15;
-        const badgeCls = isDone ? `is-done` : `is-progress`;
         return `
-          <tr>
-            <td>${idx + 1}</td>
-            <td><strong>${escapeHtml(row.studentName)}</strong></td>
-            <td>${escapeHtml(row.studentClass)}</td>
-            <td><span class="status-chip ${badgeCls}">${escapeHtml(row.status)}</span></td>
-            <td><strong style="color: var(--primary);">${row.score}</strong></td>
-            <td>${row.solvedCount} / 15</td>
-            <td>K:${row.level0Solved}/5 | V:${row.level1Solved}/5 | M:${row.level2Solved}/5</td>
-            <td>${escapeHtml(row.elapsedFormatted || formatTime(row.elapsedSeconds))}</td>
-            <td>${row.hintsUsed} hint / ${row.totalAttempts} cuba</td>
-            <td>${escapeHtml(row.submittedAt || `—`)}</td>
-          </tr>
+          <button type="button" onclick="selectStation(${idx})" class="${classes}">
+            <div>${st.code}</div>
+            <div class="text-[10px] font-normal mt-0.5">${isSolved ? "DIBUKA" : "TERKUNCI"}</div>
+          </button>
         `;
-      }).join(``);
+      }).join("");
     }
 
-    function escapeHtml(str) {
-      return String(str || ``)
-        .replace(/&/g, `&amp;`)
-        .replace(/</g, `&lt;`)
-        .replace(/>/g, `&gt;`)
-        .replace(/"/g, `&quot;`);
+    function selectStation(idx) {
+      studentState.currentStationIdx = idx;
+      renderStationTabs();
+      renderActiveStation();
     }
 
-    function exportTeacherCsv() {
-      if (!activeTeacherSession) return;
-      const sessionCode = activeTeacherSession.sessionCode;
+    function renderActiveStation() {
+      const st = STATIONS[studentState.currentStationIdx];
+      const isSolved = studentState.solvedIds.includes(st.id);
+      const card = document.getElementById("station-card");
 
-      const headers = [
-        `Bil`,
-        `Nama Murid`,
-        `Kelas`,
-        `Sekolah`,
-        `Kod Sesi`,
-        `Status`,
-        `Skor`,
-        `PIN Selesai`,
-        `Kuantum (Asas)`,
-        `Vektor (Sederhana)`,
-        `Matriks (Tinggi)`,
-        `Masa Misi`,
-        `Bilangan Petunjuk`,
-        `Jumlah Cubaan`,
-        `Masa Dihantar`
-      ];
-
-      const rows = teacherSubmissionsCache.map(function (r, idx) {
-        return [
-          idx + 1,
-          `"${String(r.studentName || ``).replace(/"/g, `""`)}"`,
-          `"${String(r.studentClass || ``).replace(/"/g, `""`)}"`,
-          `"${String(activeTeacherSession.schoolName || ``).replace(/"/g, `""`)}"`,
-          `"${sessionCode}"`,
-          `"${r.status}"`,
-          r.score,
-          `${r.solvedCount}/15`,
-          `${r.level0Solved}/5`,
-          `${r.level1Solved}/5`,
-          `${r.level2Solved}/5`,
-          `"${r.elapsedFormatted || formatTime(r.elapsedSeconds)}"`,
-          r.hintsUsed,
-          r.totalAttempts,
-          `"${r.submittedAt || ``}"`
-        ].join(`,`);
-      });
-
-      const csvContent = `﻿` + [headers.join(`,`)].concat(rows).join(`
-`);
-      const blob = new Blob([csvContent], { type: `text/csv;charset=utf-8;` });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement(`a`);
-      a.href = url;
-      a.download = `Laporan-Markah-Grid-${sessionCode}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    async function handleClearTeacherRecords(btn) {
-      if (!activeTeacherSession) return;
-      if (btn.dataset.armed !== `true`) {
-        btn.dataset.armed = `true`;
-        btn.textContent = `Sahkan Padam Rekod Sesi Ini?`;
-        setTimeout(function () {
-          if (btn.dataset.armed === `true`) {
-            btn.dataset.armed = `false`;
-            btn.textContent = `Padam Rekod Sesi Ini`;
-          }
-        }, 4000);
-        return;
-      }
-      btn.dataset.armed = `false`;
-      btn.textContent = `Padam Rekod Sesi Ini`;
-
-      const sessionCode = activeTeacherSession.sessionCode;
-
-      try {
-        const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
-        delete allLocal[sessionCode];
-        localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
-      } catch (e) {}
-
-      const cloudBase = getActiveCloudUrl();
-      if (cloudBase) {
-        try {
-          await fetch(`${cloudBase}/submissions/${encodeURIComponent(sessionCode)}.json`, {
-            method: `DELETE`
-          });
-        } catch (e) {}
-      }
-
-      refreshTeacherSubmissions();
-    }
-
-    // =========================================================================
-    // KAWALAN PERMAINAN & PAPARAN INTERAKTIF MURID
-    // =========================================================================
-    function updateHud() {
-      const totalSolved = getTotalSolvedCount();
-      const levelSolved = getLevelSolvedCount(appState.currentLevel);
-
-      const timerEl = document.getElementById(`hud-timer`);
-      if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
-
-      const scoreEl = document.getElementById(`hud-score`);
-      if (scoreEl) scoreEl.textContent = String(appState.score);
-
-      const progEl = document.getElementById(`hud-progress`);
-      if (progEl) progEl.textContent = `${totalSolved} / 15`;
-
-      const lvlProgEl = document.getElementById(`hud-level-progress`);
-      if (lvlProgEl) lvlProgEl.textContent = `Aras semasa: ${levelSolved} / 5`;
-
-      const doorEl = document.getElementById(`hud-door-status`);
-      const doorCapEl = document.getElementById(`hud-door-caption`);
-      if (doorEl && doorCapEl) {
-        if (totalSolved === 15) {
-          doorEl.textContent = `TERBUKA`;
-          doorEl.className = `hud-value is-cyan`;
-          doorCapEl.textContent = `Semua 15 pintu laser dinyahaktif`;
-        } else if (levelSolved === 5) {
-          doorEl.textContent = `SEKTOR BEBAS`;
-          doorEl.className = `hud-value is-cyan`;
-          doorCapEl.textContent = `Teruskan ke sektor seterusnya`;
-        } else {
-          doorEl.textContent = `TERKUNCI`;
-          doorEl.className = `hud-value is-yellow`;
-          doorCapEl.textContent = `${15 - totalSolved} lagi PIN diperlukan`;
-        }
-      }
-
-      LEVELS.forEach(function (lvl, idx) {
-        const metaEl = document.getElementById(`meta-level-${idx}`);
-        const solvedInLvl = getLevelSolvedCount(idx);
-        const descriptions = [
-          `Selari paksi & Sukuan I`,
-          `Rumus jarak positif`,
-          `4 sukuan & koordinat`
-        ];
-        if (metaEl) {
-          metaEl.textContent = `${solvedInLvl}/5 PIN — ${descriptions[idx]}`;
-        }
-
-        const tabBtn = document.getElementById(`tab-level-${idx}`);
-        if (tabBtn) {
-          const active = idx === appState.currentLevel;
-          tabBtn.classList.toggle(`is-active`, active);
-          tabBtn.setAttribute(`aria-selected`, active ? `true` : `false`);
-        }
-      });
-
-      const completePanel = document.getElementById(`mission-complete-panel`);
-      if (completePanel) {
-        if (totalSolved === 15) {
-          completePanel.classList.remove(`hidden`);
-          renderCompletionStats();
-        } else {
-          completePanel.classList.add(`hidden`);
-        }
-      }
-    }
-
-    function renderCompletionStats() {
-      const container = document.getElementById(`report-stats`);
-      if (!container) return;
-      const hintsCount = Object.keys(appState.hintsUsed).filter(function (k) {
-        return appState.hintsUsed[k];
-      }).length;
-      const totalAttempts = Object.values(appState.attempts).reduce(function (acc, n) {
-        return acc + (Number(n) || 0);
-      }, 0);
-      container.innerHTML = `
-        <div class="hud-tile is-cyan">
-          <span class="hud-label">Skor Akhir</span>
-          <span class="hud-value is-cyan">${appState.score}</span>
-          <span class="hud-caption">Maksimum 1500 mata</span>
+      card.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <span class="px-3 py-1 rounded-lg bg-slate-800 text-sky-300 mono text-xs font-bold">${st.code} &bull; ${st.points} MARKAH</span>
+          <span class="text-xs font-semibold ${isSolved ? 'text-emerald-400' : 'text-amber-400'}">
+            ${isSolved ? '&#10003; STATUS: BERJAYA DISAHKAN' : '&#128274; STATUS: MENUNGGU KOD PIN'}
+          </span>
         </div>
-        <div class="hud-tile">
-          <span class="hud-label">Masa Diambil</span>
-          <span class="hud-value is-pink">${formatTime(appState.elapsedSeconds)}</span>
-          <span class="hud-caption">Masa penyahaktifan penuh</span>
+
+        <h3 class="text-xl font-bold text-white mb-2">${st.title}</h3>
+        <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-sm text-slate-300 leading-relaxed mb-5">
+          ${st.story}
         </div>
-        <div class="hud-tile is-cyan">
-          <span class="hud-label">Petunjuk Digunakan</span>
-          <span class="hud-value is-cyan">${hintsCount} / 15</span>
-          <span class="hud-caption">Panduan visual &amp; teks</span>
-        </div>
-        <div class="hud-tile">
-          <span class="hud-label">Jumlah Cubaan PIN</span>
-          <span class="hud-value is-yellow">${totalAttempts}</span>
-          <span class="hud-caption">Ketepatan penyelesaian</span>
-        </div>
+
+        <p class="font-semibold text-white text-sm sm:text-base mb-4">${st.question}</p>
+
+        ${isSolved ? `
+          <div class="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-sm flex items-center justify-between">
+            <span><strong>Kod Diterima!</strong> Jawapan tepat: <span class="mono font-bold text-white">${st.answer}</span></span>
+            ${studentState.currentStationIdx < STATIONS.length - 1 ? `
+              <button type="button" onclick="selectStation(${studentState.currentStationIdx + 1})" class="px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs">
+                Stesen Seterusnya &rarr;
+              </button>
+            ` : ''}
+          </div>
+        ` : `
+          <form onsubmit="submitStationAnswer(event, ${st.id})" class="flex flex-col sm:flex-row gap-3">
+            <input type="text" id="station-answer-input" required autocomplete="off" placeholder="Taip jawapan PIN di sini..."
+              class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white mono text-base focus:outline-none focus:border-emerald-400" />
+            <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition">
+              SAHKAN KOD
+            </button>
+          </form>
+
+          <div id="station-feedback-msg" class="mt-3 text-xs font-medium hidden"></div>
+
+          <div class="mt-5 pt-4 border-t border-slate-800/80">
+            <button type="button" onclick="document.getElementById('station-hint-box').classList.toggle('hidden')" class="text-xs text-sky-400 hover:text-sky-300 underline">
+              Perlukan Petunjuk (Hint)?
+            </button>
+            <div id="station-hint-box" class="hidden mt-2 p-3 rounded-lg bg-sky-950/40 border border-sky-500/30 text-xs text-sky-200">
+              <strong>Petunjuk:</strong> ${st.hint}
+            </div>
+          </div>
+        `}
       `;
     }
 
-    function renderPinNodes() {
-      const container = document.getElementById(`pin-nodes-container`);
-      const sectorLabel = document.getElementById(`sector-label`);
-      const lvl = getCurrentLevel();
-      if (sectorLabel) {
-        sectorLabel.textContent = `NOD KUNCI SEKTOR ${lvl.name.toUpperCase()}:`;
-      }
-      if (!container) return;
-      container.innerHTML = ``;
+    function submitStationAnswer(e, stationId) {
+      e.preventDefault();
+      const st = STATIONS.find(s => s.id === stationId);
+      const inputEl = document.getElementById("station-answer-input");
+      const feedbackEl = document.getElementById("station-feedback-msg");
+      const userVal = (inputEl.value || "").trim().toUpperCase();
 
-      lvl.questions.forEach(function (q, idx) {
-        const key = getQuestionKey(appState.currentLevel, idx);
-        const isSolved = Boolean(appState.solved[key]);
-        const isCurrent = idx === appState.currentQ;
-
-        const btn = document.createElement(`button`);
-        btn.type = `button`;
-        btn.className = `pin-node` + (isCurrent ? ` is-current` : ``) + (isSolved ? ` is-solved` : ``);
-        btn.onclick = function () {
-          selectQuestion(idx);
-        };
-        const statusIcon = isSolved ? `✓` : `🔒`;
-        btn.innerHTML = `<span aria-hidden="true">${statusIcon}</span> <span>PIN ${idx + 1}</span>`;
-        btn.setAttribute(`aria-label`, `Soalan ${idx + 1}: ${q.title}${isSolved ? ` (Selesai)` : ``}`);
-        container.appendChild(btn);
-      });
-    }
-
-    function renderQuestionPanel() {
-      const lvl = getCurrentLevel();
-      const q = getCurrentQuestion();
-      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
-      const isSolved = Boolean(appState.solved[key]);
-
-      const codeBadge = document.getElementById(`question-code-badge`);
-      if (codeBadge) codeBadge.textContent = `${lvl.name.toUpperCase()} // PIN 0${appState.currentQ + 1}`;
-
-      const statusBadge = document.getElementById(`question-status-badge`);
-      if (statusBadge) {
-        if (isSolved) {
-          statusBadge.textContent = `TERBUKA`;
-          statusBadge.className = `badge-tag`;
-        } else {
-          statusBadge.textContent = `TERKUNCI`;
-          statusBadge.className = `badge-tag is-yellow`;
+      if (userVal === st.answer.toUpperCase()) {
+        if (!studentState.solvedIds.includes(st.id)) {
+          studentState.solvedIds.push(st.id);
+          studentState.score += st.points;
         }
-      }
+        document.getElementById("hud-score").textContent = `${studentState.score} / 500`;
+        document.getElementById("hud-solved").textContent = `${studentState.solvedIds.length} / 5`;
 
-      const titleEl = document.getElementById(`question-title`);
-      if (titleEl) titleEl.textContent = q.title;
-
-      const textEl = document.getElementById(`question-text`);
-      if (textEl) textEl.textContent = q.scenario;
-
-      const chipsEl = document.getElementById(`coords-chips`);
-      if (chipsEl) {
-        chipsEl.innerHTML = q.coords.map(function (c) {
-          return `<span class="coord-chip"><strong>DATA:</strong> ${c}</span>`;
-        }).join(``);
-      }
-
-      const hintTextEl = document.getElementById(`hint-text`);
-      if (hintTextEl) hintTextEl.textContent = q.hintText;
-
-      const hintPanel = document.getElementById(`hint-panel`);
-      const hintBtnLabel = document.getElementById(`btn-hint-label`);
-      if (hintPanel && hintBtnLabel) {
-        if (appState.hintVisible) {
-          hintPanel.classList.remove(`hidden`);
-          hintBtnLabel.textContent = `Sembunyikan Petunjuk`;
-        } else {
-          hintPanel.classList.add(`hidden`);
-          hintBtnLabel.textContent = `Aktifkan Petunjuk (Hint)`;
+        if (studentState.solvedIds.length === STATIONS.length) {
+          studentState.completed = true;
+          studentState.elapsedSeconds = Math.floor((Date.now() - studentState.startTimeMs) / 1000);
+          clearInterval(timerInterval);
+          showVictoryScreen();
         }
-      }
 
-      const noteEl = document.getElementById(`input-format-note`);
-      if (noteEl) noteEl.textContent = q.inputNote;
-
-      const pinInput = document.getElementById(`pin-input`);
-      if (pinInput) {
-        pinInput.value = isSolved ? String(q.answer) : ``;
-        pinInput.disabled = isSolved;
-      }
-
-      const verifyBtn = document.getElementById(`btn-verify-pin`);
-      if (verifyBtn) verifyBtn.disabled = isSolved;
-
-      const feedbackBanner = document.getElementById(`feedback-banner`);
-      const solutionCard = document.getElementById(`solution-card`);
-      const solutionSteps = document.getElementById(`solution-steps`);
-
-      if (isSolved) {
-        if (feedbackBanner) {
-          feedbackBanner.className = `feedback-banner is-success`;
-          const fh = document.getElementById(`feedback-heading`);
-          const fm = document.getElementById(`feedback-message`);
-          if (fh) fh.textContent = `AKSES DIBENARKAN // KOD PIN ${q.answer} SAH`;
-          if (fm) fm.textContent = `Kunci keselamatan bagi nod ini telah berjaya dibuka. Semak langkah penyelesaian lengkap di bawah.`;
-        }
-        if (solutionCard && solutionSteps) {
-          solutionSteps.innerHTML = q.solutionSteps.map(function (s) {
-            return `<li>${s}</li>`;
-          }).join(``);
-          solutionCard.classList.remove(`hidden`);
-        }
+        renderStationTabs();
+        renderActiveStation();
+        syncStudentProgressToCloud("Direkod ke awan sesi...");
       } else {
-        if (feedbackBanner) feedbackBanner.classList.add(`hidden`);
-        if (solutionCard) solutionCard.classList.add(`hidden`);
+        studentState.wrongAttempts += 1;
+        document.getElementById("student-attempts-badge").textContent = `Cubaan Salah: ${studentState.wrongAttempts}`;
+        feedbackEl.classList.remove("hidden");
+        feedbackEl.className = "mt-3 text-xs font-semibold text-rose-400";
+        feedbackEl.textContent = "✗ Kod PIN tidak tepat! Semak semula pengiraan koordinat anda dan cuba lagi.";
+        inputEl.value = "";
+        inputEl.focus();
+        syncStudentProgressToCloud("Mengemas kini rekod cubaan...");
       }
-
-      const prevBtn = document.getElementById(`btn-prev-q`);
-      const nextBtn = document.getElementById(`btn-next-q`);
-      if (prevBtn) prevBtn.disabled = (appState.currentLevel === 0 && appState.currentQ === 0);
-      if (nextBtn) nextBtn.disabled = (appState.currentLevel === 2 && appState.currentQ === 4);
     }
 
-    // SVG Coordinate Mapping
-    const SVG_W = 560;
-    const SVG_H = 440;
-    const PAD_L = 48;
-    const PAD_R = 28;
-    const PAD_T = 26;
-    const PAD_B = 42;
+    function showVictoryScreen() {
+      const vp = document.getElementById("victory-panel");
+      vp.classList.remove("hidden");
+      document.getElementById("final-score").textContent = studentState.score;
+      document.getElementById("final-time").textContent = formatTime(studentState.elapsedSeconds);
+      document.getElementById("final-attempts").textContent = studentState.wrongAttempts;
+    }
 
-    function getPlotBounds() {
-      const lvl = getCurrentLevel();
-      const plotW = SVG_W - PAD_L - PAD_R;
-      const plotH = SVG_H - PAD_T - PAD_B;
-      const units = lvl.gridMax - lvl.gridMin;
-      const size = Math.min(plotW, plotH);
-      const offsetX = PAD_L + (plotW - size) / 2;
-      const offsetY = PAD_T + (plotH - size) / 2;
-      const unitPx = size / units;
-      return {
-        min: lvl.gridMin,
-        max: lvl.gridMax,
-        offsetX: offsetX,
-        offsetY: offsetY,
-        size: size,
-        unitPx: unitPx
+    // 6. FIREBASE REALTIME DATABASE SYNC (STUDENT -> CLOUD)
+    async function syncStudentProgressToCloud(statusLabel) {
+      const bannerMsg = document.getElementById("student-sync-msg");
+      const globalText = document.getElementById("global-sync-text");
+      bannerMsg.className = "text-amber-300";
+      bannerMsg.textContent = statusLabel || "Menghantar data ke awan...";
+
+      const baseUrl = getFirebaseBaseUrl();
+      const endpoint = `${baseUrl}/sessions/${encodeURIComponent(studentState.sessionCode)}/submissions/${encodeURIComponent(studentState.studentId)}.json`;
+
+      const payload = {
+        studentId: studentState.studentId,
+        sessionCode: studentState.sessionCode,
+        name: studentState.name,
+        className: studentState.className,
+        solvedCount: studentState.solvedIds.length,
+        solvedIds: studentState.solvedIds,
+        score: studentState.score,
+        wrongAttempts: studentState.wrongAttempts,
+        elapsedSeconds: studentState.elapsedSeconds,
+        completed: studentState.completed,
+        updatedAt: Date.now()
       };
-    }
 
-    function toSvgX(x, b) {
-      return b.offsetX + (x - b.min) * b.unitPx;
-    }
-
-    function toSvgY(y, b) {
-      return b.offsetY + (b.max - y) * b.unitPx;
-    }
-
-    function svgEl(tag, attrs) {
-      const el = document.createElementNS(`http://www.w3.org/2000/svg`, tag);
-      Object.keys(attrs).forEach(function (k) {
-        el.setAttribute(k, attrs[k]);
-      });
-      return el;
-    }
-
-    function renderCartesianPlane() {
-      const lvl = getCurrentLevel();
-      const q = getCurrentQuestion();
-      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
-      const isSolved = Boolean(appState.solved[key]);
-      const b = getPlotBounds();
-
-      const gridLayer = document.getElementById(`svg-grid-layer`);
-      const axesLayer = document.getElementById(`svg-axes-layer`);
-      const hintLayer = document.getElementById(`svg-hint-layer`);
-      const solLayer = document.getElementById(`svg-solution-layer`);
-      const ptsLayer = document.getElementById(`svg-points-layer`);
-
-      if (!gridLayer || !axesLayer || !hintLayer || !solLayer || !ptsLayer) return;
-
-      gridLayer.innerHTML = ``;
-      axesLayer.innerHTML = ``;
-      hintLayer.innerHTML = ``;
-      solLayer.innerHTML = ``;
-      ptsLayer.innerHTML = ``;
-
-      const rangeBadge = document.getElementById(`grid-range-badge`);
-      if (rangeBadge) {
-        rangeBadge.textContent = lvl.showQuadrants
-          ? `4 SUKUAN (${lvl.gridMin} HINGGA +${lvl.gridMax})`
-          : `SUKUAN I (0 HINGGA ${lvl.gridMax})`;
-      }
-
-      for (let v = b.min; v <= b.max; v += 1) {
-        const sx = toSvgX(v, b);
-        const sy = toSvgY(v, b);
-
-        gridLayer.appendChild(svgEl(`line`, {
-          x1: sx, y1: b.offsetY, x2: sx, y2: b.offsetY + b.size,
-          stroke: `var(--outline-variant)`,
-          'stroke-width': v === 0 ? `0` : `1`
-        }));
-
-        gridLayer.appendChild(svgEl(`line`, {
-          x1: b.offsetX, y1: sy, x2: b.offsetX + b.size, y2: sy,
-          stroke: `var(--outline-variant)`,
-          'stroke-width': v === 0 ? `0` : `1`
-        }));
-
-        const showTick = v % 2 === 0;
-        if (showTick) {
-          const xAxisY = toSvgY(0, b);
-          const xTickLbl = svgEl(`text`, {
-            x: sx,
-            y: xAxisY + 15,
-            fill: `var(--on-surface-variant)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`,
-            'text-anchor': `middle`
-          });
-          xTickLbl.textContent = String(v);
-          axesLayer.appendChild(xTickLbl);
-
-          if (v !== 0) {
-            const yAxisX = toSvgX(0, b);
-            const yTickLbl = svgEl(`text`, {
-              x: yAxisX - 8,
-              y: sy + 3.5,
-              fill: `var(--on-surface-variant)`,
-              'font-family': `var(--font-label)`,
-              'font-size': `10`,
-              'text-anchor': `end`
-            });
-            yTickLbl.textContent = String(v);
-            axesLayer.appendChild(yTickLbl);
-          }
-        }
-      }
-
-      const axisX0 = toSvgX(0, b);
-      const axisY0 = toSvgY(0, b);
-
-      axesLayer.appendChild(svgEl(`line`, {
-        x1: b.offsetX, y1: axisY0, x2: b.offsetX + b.size, y2: axisY0,
-        stroke: `var(--outline)`,
-        'stroke-width': `2`
-      }));
-      axesLayer.appendChild(svgEl(`line`, {
-        x1: axisX0, y1: b.offsetY, x2: axisX0, y2: b.offsetY + b.size,
-        stroke: `var(--outline)`,
-        'stroke-width': `2`
-      }));
-
-      const xLabel = svgEl(`text`, {
-        x: b.offsetX + b.size + 12,
-        y: axisY0 + 4,
-        fill: `var(--secondary)`,
-        'font-family': `var(--font-label)`,
-        'font-size': `12`,
-        'font-weight': `700`
-      });
-      xLabel.textContent = `x`;
-      axesLayer.appendChild(xLabel);
-
-      const yLabel = svgEl(`text`, {
-        x: axisX0,
-        y: b.offsetY - 10,
-        fill: `var(--secondary)`,
-        'font-family': `var(--font-label)`,
-        'font-size': `12`,
-        'font-weight': `700`,
-        'text-anchor': `middle`
-      });
-      yLabel.textContent = `y`;
-      axesLayer.appendChild(yLabel);
-
-      if (lvl.showQuadrants) {
-        const quads = [
-          { txt: `SUKUAN I (+,+)`, x: b.offsetX + b.size * 0.76, y: b.offsetY + 18 },
-          { txt: `SUKUAN II (−,+)`, x: b.offsetX + b.size * 0.24, y: b.offsetY + 18 },
-          { txt: `SUKUAN III (−,−)`, x: b.offsetX + b.size * 0.24, y: b.offsetY + b.size - 10 },
-          { txt: `SUKUAN IV (+,−)`, x: b.offsetX + b.size * 0.76, y: b.offsetY + b.size - 10 }
-        ];
-        quads.forEach(function (qd) {
-          const qt = svgEl(`text`, {
-            x: qd.x,
-            y: qd.y,
-            fill: `var(--outline)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`,
-            'text-anchor': `middle`
-          });
-          qt.textContent = qd.txt;
-          axesLayer.appendChild(qt);
+      try {
+        const res = await fetch(endpoint, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        bannerMsg.className = "text-emerald-400 font-medium";
+        bannerMsg.textContent = "✓ Direkod ke awan sesi (Dashboard Guru dikemaskini)";
+        globalText.textContent = "Awan Aktif (Tersegerak)";
+      } catch (err) {
+        console.error("Firebase sync error:", err);
+        bannerMsg.className = "text-rose-400 font-medium";
+        bannerMsg.textContent = "⚠ Ralat sambungan awan — semak sambungan internet anda.";
+        globalText.textContent = "Gangguan Awan";
       }
+    }
 
-      if (appState.hintVisible || isSolved) {
-        const hv = q.hintVisual;
-        if (hv.type === `horizontal` || hv.type === `vertical`) {
-          hintLayer.appendChild(svgEl(`line`, {
-            x1: toSvgX(hv.x1, b), y1: toSvgY(hv.y1, b),
-            x2: toSvgX(hv.x2, b), y2: toSvgY(hv.y2, b),
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2.5`,
-            'stroke-dasharray': `6 4`
-          }));
-        } else if (hv.type === `triangle`) {
-          const sx1 = toSvgX(hv.x1, b);
-          const sy1 = toSvgY(hv.y1, b);
-          const sx2 = toSvgX(hv.x2, b);
-          const sy2 = toSvgY(hv.y2, b);
-          const scx = toSvgX(hv.cx, b);
-          const scy = toSvgY(hv.cy, b);
+    // 7. TEACHER PORTAL & DASHBOARD LOGIC
+    function openTeacherLogin() {
+      document.getElementById("view-student-login").classList.add("hidden");
+      document.getElementById("view-student-game").classList.add("hidden");
+      document.getElementById("view-teacher-dashboard").classList.add("hidden");
+      document.getElementById("view-teacher-login").classList.remove("hidden");
 
-          hintLayer.appendChild(svgEl(`line`, {
-            x1: sx1, y1: sy1, x2: scx, y2: scy,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2`,
-            'stroke-dasharray': `5 4`
-          }));
-          hintLayer.appendChild(svgEl(`line`, {
-            x1: scx, y1: scy, x2: sx2, y2: sy2,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2`,
-            'stroke-dasharray': `5 4`
-          }));
-          hintLayer.appendChild(svgEl(`circle`, {
-            cx: scx, cy: scy, r: `4`,
-            fill: `var(--tertiary)`
-          }));
-          const cLbl = svgEl(`text`, {
-            x: scx + 8,
-            y: scy + (sy2 > scy ? -8 : 14),
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `11`,
-            'font-weight': `700`
-          });
-          cLbl.textContent = `C(${hv.cx}, ${hv.cy})`;
-          hintLayer.appendChild(cLbl);
+      const paramSesi = urlParams.get("sesi");
+      if (paramSesi) {
+        document.getElementById("teacher-session-input").value = sanitizeKey(paramSesi);
+      }
+    }
 
-          if (!isSolved) {
-            hintLayer.appendChild(svgEl(`line`, {
-              x1: sx1, y1: sy1, x2: sx2, y2: sy2,
-              stroke: `var(--primary)`,
-              'stroke-width': `1.5`,
-              'stroke-dasharray': `3 4`
-            }));
-          }
-        } else if (hv.type === `locus-x`) {
-          const syTarget = toSvgY(hv.targetY, b);
-          hintLayer.appendChild(svgEl(`line`, {
-            x1: b.offsetX, y1: syTarget, x2: b.offsetX + b.size, y2: syTarget,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `1.5`,
-            'stroke-dasharray': `5 4`
-          }));
-          const lLbl = svgEl(`text`, {
-            x: b.offsetX + 8,
-            y: syTarget - 6,
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`
-          });
-          lLbl.textContent = `Garis y = ${hv.targetY} (B terletak pada garis ini)`;
-          hintLayer.appendChild(lLbl);
-        } else if (hv.type === `locus-y`) {
-          const sxTarget = toSvgX(hv.targetX, b);
-          hintLayer.appendChild(svgEl(`line`, {
-            x1: sxTarget, y1: b.offsetY, x2: sxTarget, y2: b.offsetY + b.size,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `1.5`,
-            'stroke-dasharray': `5 4`
-          }));
-          const lLbl = svgEl(`text`, {
-            x: sxTarget + 6,
-            y: b.offsetY + 34,
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`
-          });
-          lLbl.textContent = `x = ${hv.targetX}`;
-          hintLayer.appendChild(lLbl);
-        } else if (hv.type === `dual-origin`) {
-          const ox = toSvgX(0, b);
-          const oy = toSvgY(0, b);
-          [hv.p1, hv.p2].forEach(function (pt) {
-            hintLayer.appendChild(svgEl(`line`, {
-              x1: ox, y1: oy, x2: toSvgX(pt.x, b), y2: toSvgY(pt.y, b),
-              stroke: `var(--tertiary)`,
-              'stroke-width': `2`,
-              'stroke-dasharray': `5 4`
-            }));
+    function backToStudentMode() {
+      if (teacherPollInterval) clearInterval(teacherPollInterval);
+      document.getElementById("view-teacher-login").classList.add("hidden");
+      document.getElementById("view-teacher-dashboard").classList.add("hidden");
+      document.getElementById("view-student-login").classList.remove("hidden");
+    }
+
+    function toggleAdvancedDbDrawer() {
+      document.getElementById("advanced-db-drawer").classList.toggle("hidden");
+    }
+
+    function saveCustomFirebaseUrl() {
+      const val = document.getElementById("input-firebase-url").value.trim().replace(/\/+$/, "");
+      if (!val.startsWith("https://")) {
+        alert("Sila masukkan URL Firebase yang sah bermula dengan https://");
+        return;
+      }
+      localStorage.setItem("erg_firebase_url", val);
+      const fb = document.getElementById("db-save-feedback");
+      fb.textContent = "✓ Berjaya disambungkan! URL awan baharu telah disimpan.";
+      document.getElementById("teacher-db-status-label").textContent = "AWAN AKTIF (Segerak Merentas Semua Peranti)";
+    }
+
+    async function enterTeacherDashboard(e) {
+      e.preventDefault();
+      const rawSession = document.getElementById("teacher-session-input").value;
+      const pin = document.getElementById("teacher-pin-input").value.trim();
+      const sessionCode = sanitizeKey(rawSession);
+
+      const baseUrl = getFirebaseBaseUrl();
+      const metaEndpoint = `${baseUrl}/sessions/${encodeURIComponent(sessionCode)}/meta.json`;
+
+      try {
+        const res = await fetch(metaEndpoint);
+        const existingMeta = await res.json();
+
+        if (existingMeta && existingMeta.pin && existingMeta.pin !== pin) {
+          alert("Kata laluan / PIN sesi tidak sepadan bagi kod sesi ini. Sila masukkan PIN yang betul atau guna Kod Sesi yang lain.");
+          return;
+        }
+
+        if (!existingMeta) {
+          await fetch(metaEndpoint, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sessionCode,
+              pin: pin || "",
+              createdAt: Date.now()
+            })
           });
         }
+      } catch (err) {
+        console.warn("Meta check warning:", err);
       }
 
-      if (isSolved) {
-        const allPts = q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
-        if (q.id === `Q15`) {
-          const ox = toSvgX(0, b);
-          const oy = toSvgY(0, b);
-          const qx = toSvgX(3, b);
-          const qy = toSvgY(-8, b);
-          solLayer.appendChild(svgEl(`line`, {
-            x1: ox, y1: oy, x2: qx, y2: qy,
-            stroke: `var(--primary)`,
-            'stroke-width': `3`,
-            'class': `svg-glow-line`
-          }));
-        } else if (allPts.length >= 2) {
-          const pA = allPts[0];
-          const pB = allPts[allPts.length - 1];
-          solLayer.appendChild(svgEl(`line`, {
-            x1: toSvgX(pA.x, b), y1: toSvgY(pA.y, b),
-            x2: toSvgX(pB.x, b), y2: toSvgY(pB.y, b),
-            stroke: `var(--primary)`,
-            'stroke-width': `3`,
-            'class': `svg-glow-line`
-          }));
-        }
-      }
+      activeTeacherSession = sessionCode;
+      document.getElementById("dash-session-label").textContent = sessionCode;
+      document.getElementById("view-teacher-login").classList.add("hidden");
+      document.getElementById("view-teacher-dashboard").classList.remove("hidden");
 
-      const pointsToRender = isSolved && q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
-      pointsToRender.forEach(function (pt) {
-        const px = toSvgX(pt.x, b);
-        const py = toSvgY(pt.y, b);
-        const color = pt.role === `start` ? `var(--secondary)` : (pt.role === `helper` ? `var(--tertiary)` : `var(--primary)`);
+      fetchTeacherData(true);
+      if (teacherPollInterval) clearInterval(teacherPollInterval);
+      teacherPollInterval = setInterval(() => fetchTeacherData(false), 8000);
+    }
 
-        ptsLayer.appendChild(svgEl(`circle`, {
-          cx: px, cy: py, r: `8`,
-          fill: `var(--surface-container)`,
-          stroke: color,
-          'stroke-width': `2.5`
-        }));
-        ptsLayer.appendChild(svgEl(`circle`, {
-          cx: px, cy: py, r: `3.5`,
-          fill: color
-        }));
+    async function fetchTeacherData(isManual) {
+      if (!activeTeacherSession) return;
+      const statusNote = document.getElementById("table-status-note");
+      if (isManual) statusNote.textContent = "Memuat turun data terkini...";
 
-        const labelX = pt.x >= b.max - 2 ? px - 10 : px + 10;
-        const anchor = pt.x >= b.max - 2 ? `end` : `start`;
-        const labelY = pt.y >= b.max - 1 ? py + 16 : py - 10;
+      const baseUrl = getFirebaseBaseUrl();
+      const endpoint = `${baseUrl}/sessions/${encodeURIComponent(activeTeacherSession)}/submissions.json`;
 
-        const txt = svgEl(`text`, {
-          x: labelX,
-          y: labelY,
-          fill: color,
-          'font-family': `var(--font-label)`,
-          'font-size': `12`,
-          'font-weight': `700`,
-          'text-anchor': anchor
+      try {
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        const records = data ? Object.values(data) : [];
+        // Sort: Completed first, then highest score, then fastest time
+        records.sort((a, b) => {
+          if ((b.score || 0) !== (a.score || 0)) return (b.score || 0) - (a.score || 0);
+          return (a.elapsedSeconds || 99999) - (b.elapsedSeconds || 99999);
         });
-        txt.textContent = `${pt.label}(${pt.x}, ${pt.y})`;
-        ptsLayer.appendChild(txt);
+
+        latestRecordsCache = records;
+        renderTeacherDashboard(records);
+        statusNote.textContent = "Tersegerak secara langsung dengan Firebase";
+      } catch (err) {
+        console.error("Fetch error:", err);
+        statusNote.textContent = "Ralat memuat turun data awan. Cuba tekan Segar Semula.";
+      }
+    }
+
+    function renderTeacherDashboard(records) {
+      const total = records.length;
+      const completedCount = records.filter(r => r.completed || (r.solvedCount >= 5)).length;
+      const avgScore = total > 0
+        ? Math.round(records.reduce((acc, r) => acc + (r.score || 0), 0) / total)
+        : 0;
+
+      document.getElementById("kpi-total-students").textContent = total;
+      document.getElementById("kpi-completed-students").textContent = completedCount;
+      document.getElementById("kpi-avg-score").textContent = `${avgScore} / 500`;
+      document.getElementById("kpi-last-updated").textContent = new Date().toLocaleTimeString("ms-MY");
+
+      const tbody = document.getElementById("teacher-table-body");
+      if (total === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="py-8 text-center text-slate-400 text-xs">
+              Belum ada rekod murid untuk sesi <strong>${activeTeacherSession}</strong>. Tekan <strong>Salin Pautan Khas Murid</strong> di atas dan kongsikan kepada murid anda.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = records.map((r, index) => {
+        const solved = r.solvedCount || 0;
+        const isDone = r.completed || solved >= 5;
+        return `
+          <tr class="hover:bg-slate-900/60 transition">
+            <td class="py-3 px-4 mono font-bold text-slate-300">#${index + 1}</td>
+            <td class="py-3 px-4 font-semibold text-white">${escapeHtml(r.name || "Tanpa Nama")}</td>
+            <td class="py-3 px-4 text-slate-300 text-xs">${escapeHtml(r.className || "-")}</td>
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-1.5">
+                ${[1, 2, 3, 4, 5].map(n => `
+                  <span class="w-5 h-5 rounded text-[10px] mono font-bold flex items-center justify-center ${
+                    n <= solved ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-500'
+                  }">${n}</span>
+                `).join("")}
+              </div>
+            </td>
+            <td class="py-3 px-4 mono font-bold text-emerald-400">${r.score || 0}</td>
+            <td class="py-3 px-4 mono text-amber-300 text-xs">${formatTime(r.elapsedSeconds || 0)}</td>
+            <td class="py-3 px-4 mono text-slate-400 text-xs">${r.wrongAttempts || 0}</td>
+            <td class="py-3 px-4">
+              ${isDone
+                ? '<span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">SELESAI</span>'
+                : '<span class="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-semibold animate-pulse-slow">SEDANG BERMAIN</span>'
+              }
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function copyStudentInviteLink() {
+      const cleanBaseUrl = window.location.origin + window.location.pathname;
+      const inviteUrl = `${cleanBaseUrl}?sesi=${encodeURIComponent(activeTeacherSession)}`;
+
+      navigator.clipboard.writeText(inviteUrl).then(() => {
+        const banner = document.getElementById("copy-link-banner");
+        document.getElementById("copied-url-preview").textContent = inviteUrl;
+        banner.classList.remove("hidden");
+      }).catch(() => {
+        prompt("Salin pautan khas murid di bawah:", inviteUrl);
       });
-
-      renderCursorMarker();
     }
 
-    function renderCursorMarker() {
-      const cursorLayer = document.getElementById(`svg-cursor-layer`);
-      const readoutEl = document.getElementById(`scanner-coords`);
-      if (!cursorLayer || !readoutEl) return;
-      cursorLayer.innerHTML = ``;
-
-      if (!appState.cursorCoord) {
-        readoutEl.textContent = `(x, y) = —`;
+    function exportResultsCSV() {
+      if (!latestRecordsCache.length) {
+        alert("Tiada data murid untuk dimuat turun lagi.");
         return;
       }
+      const headers = ["Kedudukan", "Nama Murid", "Kelas", "PIN Selesai", "Skor", "Masa (Saat)", "Cubaan Salah", "Status"];
+      const rows = latestRecordsCache.map((r, i) => [
+        i + 1,
+        `"${(r.name || "").replace(/"/g, '""')}"`,
+        `"${(r.className || "").replace(/"/g, '""')}"`,
+        `${r.solvedCount || 0}/5`,
+        r.score || 0,
+        r.elapsedSeconds || 0,
+        r.wrongAttempts || 0,
+        (r.completed || (r.solvedCount >= 5)) ? "SELESAI" : "SEDANG BERMAIN"
+      ]);
 
-      const b = getPlotBounds();
-      const cx = appState.cursorCoord.x;
-      const cy = appState.cursorCoord.y;
-      const sx = toSvgX(cx, b);
-      const sy = toSvgY(cy, b);
-
-      readoutEl.textContent = `(x, y) = (${cx}, ${cy})`;
-
-      cursorLayer.appendChild(svgEl(`circle`, {
-        cx: sx, cy: sy, r: `6`,
-        fill: `none`,
-        stroke: `var(--secondary)`,
-        'stroke-width': `1.5`,
-        'stroke-dasharray': `2 2`
-      }));
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("
+");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Keputusan_EscapeRoom_${activeTeacherSession}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
-    function handleGridPointer(evt) {
-      const svg = document.getElementById(`cartesian-svg`);
-      if (!svg) return;
-      const rect = svg.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-
-      const svgX = ((evt.clientX - rect.left) / rect.width) * SVG_W;
-      const svgY = ((evt.clientY - rect.top) / rect.height) * SVG_H;
-      const b = getPlotBounds();
-
-      const gridX = Math.round((svgX - b.offsetX) / b.unitPx + b.min);
-      const gridY = Math.round(b.max - (svgY - b.offsetY) / b.unitPx);
-
-      if (gridX >= b.min && gridX <= b.max && gridY >= b.min && gridY <= b.max) {
-        appState.cursorCoord = { x: gridX, y: gridY };
-        renderCursorMarker();
-      }
+    function logoutTeacher() {
+      if (teacherPollInterval) clearInterval(teacherPollInterval);
+      activeTeacherSession = "";
+      document.getElementById("view-teacher-dashboard").classList.add("hidden");
+      document.getElementById("view-teacher-login").classList.remove("hidden");
     }
 
-    function selectLevel(levelIdx) {
-      appState.currentLevel = levelIdx;
-      appState.currentQ = 0;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-      refreshAll();
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
     }
-
-    function selectQuestion(qIdx) {
-      appState.currentQ = qIdx;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-      refreshAll();
-    }
-
-    function navigateQuestion(delta) {
-      let l = appState.currentLevel;
-      let q = appState.currentQ + delta;
-      if (q < 0) {
-        if (l > 0) {
-          l -= 1;
-          q = 4;
-        } else {
-          q = 0;
-        }
-      } else if (q > 4) {
-        if (l < 2) {
-          l += 1;
-          q = 0;
-        } else {
-          q = 4;
-        }
-      }
-      appState.currentLevel = l;
-      appState.currentQ = q;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-      refreshAll();
-    }
-
-    function toggleHint() {
-      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
-      appState.hintVisible = !appState.hintVisible;
-      if (appState.hintVisible) {
-        appState.hintsUsed[key] = true;
-      }
-      renderQuestionPanel();
-      renderCartesianPlane();
-    }
-
-    function toggleFormulaDrawer() {
-      appState.formulaVisible = !appState.formulaVisible;
-      const drawer = document.getElementById(`formula-drawer`);
-      if (drawer) {
-        drawer.classList.toggle(`hidden`, !appState.formulaVisible);
-      }
-    }
-
-    function pressKey(ch) {
-      const input = document.getElementById(`pin-input`);
-      if (!input || input.disabled) return;
-      if (ch === `-`) {
-        if (input.value.startsWith(`-`)) {
-          input.value = input.value.slice(1);
-        } else {
-          input.value = `-` + input.value;
-        }
-        return;
-      }
-      if (ch === `.` && input.value.includes(`.`)) return;
-      if (input.value.length >= 10) return;
-      input.value += ch;
-    }
-
-    function backspacePin() {
-      const input = document.getElementById(`pin-input`);
-      if (!input || input.disabled) return;
-      input.value = input.value.slice(0, -1);
-    }
-
-    function clearPinInput() {
-      const input = document.getElementById(`pin-input`);
-      if (!input || input.disabled) return;
-      input.value = ``;
-    }
-
-    function submitPinForm(evt) {
-      evt.preventDefault();
-      verifyCurrentPin();
-    }
-
-    function verifyCurrentPin() {
-      if (!appState.studentName || !appState.sessionCode) {
-        openStudentModal();
-        return;
-      }
-
-      const input = document.getElementById(`pin-input`);
-      const feedbackBanner = document.getElementById(`feedback-banner`);
-      const feedbackHeading = document.getElementById(`feedback-heading`);
-      const feedbackMsg = document.getElementById(`feedback-message`);
-      if (!input || !feedbackBanner || !feedbackHeading || !feedbackMsg) return;
-
-      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
-      if (appState.solved[key]) return;
-
-      const raw = input.value.trim().replace(`,`, `.`);
-      if (!raw) {
-        feedbackBanner.className = `feedback-banner is-error`;
-        feedbackHeading.textContent = `RALAT INPUT // KOD PIN KOSONG`;
-        feedbackMsg.textContent = `Sila masukkan nilai jawapan menggunakan pad PIN digital atau papan kekunci sebelum mengesahkan.`;
-        return;
-      }
-
-      const numVal = Number(raw);
-      if (Number.isNaN(numVal)) {
-        feedbackBanner.className = `feedback-banner is-error`;
-        feedbackHeading.textContent = `RALAT FORMAT // BUKAN NOMBOR SAH`;
-        feedbackMsg.textContent = `Pastikan kod PIN hanya mengandungi angka, tanda negatif (−), atau titik perpuluhan (.).`;
-        return;
-      }
-
-      const q = getCurrentQuestion();
-      appState.attempts[key] = (appState.attempts[key] || 0) + 1;
-
-      if (Math.abs(numVal - q.answer) <= q.tolerance) {
-        appState.solved[key] = true;
-        const usedHint = Boolean(appState.hintsUsed[key]);
-        const pointsEarned = usedHint ? 80 : 100;
-        appState.score += pointsEarned;
-
-        refreshAll();
-        const updatedHeading = document.getElementById(`feedback-heading`);
-        const updatedMsg = document.getElementById(`feedback-message`);
-        if (updatedHeading) updatedHeading.textContent = `AKSES DIBENARKAN // +${pointsEarned} MATA`;
-        if (updatedMsg) {
-          updatedMsg.textContent = usedHint
-            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Kemajuan diselaraskan ke sesi guru.`
-            : `Kod PIN ${q.answer} tepat pada percubaan tanpa petunjuk (+100 mata)! Kemajuan diselaraskan ke sesi guru.`;
-        }
-        submitReportToTeacher(false);
-      } else {
-        feedbackBanner.className = `feedback-banner is-error`;
-        feedbackHeading.textContent = `AKSES DITOLAK // KOD PIN "${raw}" TIDAK SEPADAN`;
-        let tip = `Semak semula pengiraan (x₂ − x₁)² dan (y₂ − y₁)².`;
-        if (q.answer < 0 && numVal > 0) {
-          tip = `Perhatian: soalan ini memerlukan koordinat di Sukuan IV. Pastikan anda menyertakan tanda negatif (−).`;
-        } else if (String(q.answer).includes(`.`) && Number.isInteger(numVal)) {
-          tip = `Jawapan memerlukan punca kuasa dua yang dibundarkan kepada 2 tempat perpuluhan.`;
-        }
-        feedbackMsg.textContent = `${tip} Anda boleh menekan butang "Aktifkan Petunjuk" untuk melihat panduan langkah dan unjuran pada grid.`;
-      }
-    }
-
-    function handleResetClick(btn) {
-      if (!btn) return;
-      if (btn.dataset.armed !== `true`) {
-        btn.dataset.armed = `true`;
-        btn.textContent = `Klik Sekali Lagi Untuk Sahkan`;
-        setTimeout(function () {
-          if (btn.dataset.armed === `true`) {
-            btn.dataset.armed = `false`;
-            btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
-          }
-        }, 4000);
-        return;
-      }
-      btn.dataset.armed = `false`;
-      btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
-      appState.currentLevel = 0;
-      appState.currentQ = 0;
-      appState.solved = {};
-      appState.hintsUsed = {};
-      appState.attempts = {};
-      appState.score = 0;
-      appState.elapsedSeconds = 0;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-      refreshAll();
-    }
-
-    function refreshAll() {
-      updateStudentHeaderBar();
-      updateHud();
-      renderPinNodes();
-      renderQuestionPanel();
-      renderCartesianPlane();
-    }
-
-    function initApp() {
-      initializeFreshPageSession();
-
-      const svg = document.getElementById(`cartesian-svg`);
-      if (svg) {
-        svg.addEventListener(`pointermove`, handleGridPointer);
-        svg.addEventListener(`click`, handleGridPointer);
-      }
-
-      startTimer();
-
-      if (appState.isTeacherPortalUrl) {
-        openTeacherLoginModal();
-        return;
-      }
-
-      openStudentModal();
-    }
-
-    document.addEventListener(`DOMContentLoaded`, initApp);
   </script>
 </body>
 </html>
