@@ -745,6 +745,12 @@
                   box-shadow var(--dur-short) var(--ease-out);
     }
 
+    .text-input:disabled {
+      opacity: 0.75;
+      color: var(--on-surface-variant);
+      border-bottom-color: var(--outline);
+    }
+
     .pin-input {
       font-size: var(--subhead-size);
       letter-spacing: 0.08em;
@@ -946,6 +952,36 @@
       overflow-y: auto;
     }
 
+    .modal-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xs);
+      background: var(--surface-container-low);
+      padding: 4px;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    .modal-tab-btn {
+      background: transparent;
+      color: var(--on-surface-variant);
+      border: none;
+      padding: 0.55rem;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: var(--rounded);
+      transition: all var(--dur-micro) var(--ease-out);
+    }
+
+    .modal-tab-btn.is-active {
+      background: var(--surface-container-high);
+      color: var(--tertiary);
+      box-shadow: var(--glow-tertiary);
+    }
+
     .table-wrap {
       width: 100%;
       overflow-x: auto;
@@ -1102,7 +1138,7 @@
             Hantar Laporan ke Guru
           </button>
           <button type="button" class="btn-neon is-yellow" id="btn-open-teacher" onclick="openTeacherLoginModal()">
-            Panel Guru (Dashboard)
+            Panel Guru
           </button>
           <button type="button" class="btn-neon" id="btn-reset-mission" onclick="handleResetClick(this)">
             Mula Semula Misi
@@ -1118,9 +1154,9 @@
     <!-- Student Profile Bar -->
     <section class="student-bar" aria-label="Maklumat Calon Murid">
       <div class="student-info-group">
-        <span class="student-info-item">PEGAWAI / MURID: <strong id="display-student-name">Belum Ditetapkan</strong></span>
+        <span class="student-info-item">MURID: <strong id="display-student-name">Belum Ditetapkan</strong></span>
         <span class="student-info-item">KELAS: <strong id="display-student-class">—</strong></span>
-        <span class="student-info-item">KOD SESI GURU: <strong id="display-session-code">CIKGU2A</strong></span>
+        <span class="student-info-item">KOD SESI: <strong id="display-session-code">—</strong></span>
       </div>
       <div class="header-actions">
         <span class="sync-pill" id="sync-status-pill">
@@ -1128,7 +1164,7 @@
           <span id="sync-status-text">Sedia diselaraskan</span>
         </span>
         <button type="button" class="btn-neon is-sm is-cyan" onclick="openStudentModal(true)">
-          Tukar Profil Murid
+          Tukar Profil
         </button>
       </div>
     </section>
@@ -1350,7 +1386,7 @@
 
     <footer class="mission-footer">
       <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) & Modul Kit Detektif Grid.</span>
-      <span>Sistem Pelaporan Bersepadu Murid & Guru // GitHub Pages.</span>
+      <span>Sistem Pelaporan Berbilang Sekolah // GitHub Pages.</span>
     </footer>
   </main>
 
@@ -1360,7 +1396,7 @@
       <p class="kicker">PENGESAHAN IDENTITI PEGAWAI NAVIGASI</p>
       <h2 class="panel-title" id="student-modal-title">Daftar Maklumat Murid Sebelum Mula</h2>
       <p class="mission-subtitle">
-        Maklumat ini diperlukan supaya skor, masa dan pencapaian setiap aras anda direkodkan terus ke sistem pemantauan guru.
+        Masukkan maklumat anda dan Kod Sesi yang diberikan oleh guru mata pelajaran anda.
       </p>
       <form class="pin-form" onsubmit="saveStudentProfile(event)">
         <div class="input-group">
@@ -1372,9 +1408,9 @@
           <input type="text" id="input-student-class" class="text-input" placeholder="Contoh: 2 Amanah" required>
         </div>
         <div class="input-group">
-          <label class="input-label" for="input-session-code">Kod Sesi / Kelas Guru</label>
-          <input type="text" id="input-session-code" class="text-input" value="CIKGU2A" placeholder="Contoh: CIKGU2A" required>
-          <span class="hud-caption">Gunakan kod sesi yang diberikan oleh guru mata pelajaran anda (lalai: CIKGU2A).</span>
+          <label class="input-label" for="input-session-code">Kod Sesi Guru / Sekolah</label>
+          <input type="text" id="input-session-code" class="text-input" placeholder="Masukkan kod daripada guru anda" required>
+          <span class="hud-caption" id="session-lock-note">Pastikan ejaan Kod Sesi tepat seperti yang diberikan oleh guru anda.</span>
         </div>
         <div class="header-actions" style="justify-content: flex-end;">
           <button type="button" class="btn-neon hidden" id="btn-cancel-profile" onclick="closeStudentModal()">Batal</button>
@@ -1384,27 +1420,63 @@
     </div>
   </div>
 
-  <!-- Modal 2: Log Masuk Guru -->
+  <!-- Modal 2: Akses Guru (Log Masuk & Daftar Sesi Baharu) -->
   <div class="modal-backdrop hidden" id="teacher-login-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-login-title">
     <div class="modal-card">
-      <p class="kicker">AKSES TERHAD // MOD PEMANTAUAN GURU</p>
-      <h2 class="panel-title" id="teacher-login-title">Log Masuk Panel Guru</h2>
-      <p class="mission-subtitle">
-        Masukkan Kod Sesi Kelas dan PIN Keselamatan Guru untuk melihat rekod penghantaran murid secara langsung.
-      </p>
-      <form class="pin-form" onsubmit="verifyTeacherLogin(event)">
+      <p class="kicker">PORTAL GURU // PENGURUSAN SESI SEKOLAH</p>
+      <h2 class="panel-title" id="teacher-login-title">Akses Panel Pemantauan Guru</h2>
+
+      <div class="modal-tabs" role="tablist">
+        <button type="button" class="modal-tab-btn is-active" id="tab-teacher-login" onclick="switchTeacherAuthTab('login')">
+          Log Masuk Sesi
+        </button>
+        <button type="button" class="modal-tab-btn" id="tab-teacher-create" onclick="switchTeacherAuthTab('create')">
+          Cipta Sesi Baharu
+        </button>
+      </div>
+
+      <!-- Form A: Log Masuk Sesi Sedia Ada -->
+      <form class="pin-form" id="form-teacher-login" onsubmit="verifyTeacherLogin(event)">
+        <p class="hud-caption" style="margin: 0;">
+          Masukkan Kod Sesi sekolah/kelas anda dan kata laluan rahsia yang anda tetapkan semasa pendaftaran sesi.
+        </p>
         <div class="input-group">
-          <label class="input-label" for="teacher-session-input">Kod Sesi Kelas</label>
-          <input type="text" id="teacher-session-input" class="text-input" value="CIKGU2A" required>
+          <label class="input-label" for="teacher-session-input">Kod Sesi Kelas / Sekolah</label>
+          <input type="text" id="teacher-session-input" class="text-input" placeholder="Contoh: SMKTP-2A" required>
         </div>
         <div class="input-group">
-          <label class="input-label" for="teacher-pin-input">PIN Guru (Lalai: 1234)</label>
-          <input type="password" id="teacher-pin-input" class="text-input" placeholder="Masukkan PIN Guru" required>
+          <label class="input-label" for="teacher-pin-input">Kata Laluan / PIN Guru</label>
+          <input type="password" id="teacher-pin-input" class="text-input" placeholder="Masukkan kata laluan rahsia anda" autocomplete="off" required>
         </div>
         <p class="hint-text hidden" id="teacher-login-error" style="color: var(--error);"></p>
         <div class="header-actions" style="justify-content: flex-end;">
           <button type="button" class="btn-neon" onclick="closeTeacherLoginModal()">Tutup</button>
-          <button type="submit" class="btn-neon is-yellow">Buka Dashboard Guru</button>
+          <button type="submit" class="btn-neon is-yellow" id="btn-teacher-login-submit">Buka Dashboard</button>
+        </div>
+      </form>
+
+      <!-- Form B: Cipta Bilik Sesi Sekolah Baharu -->
+      <form class="pin-form hidden" id="form-teacher-create" onsubmit="createTeacherRoom(event)">
+        <p class="hud-caption" style="margin: 0;">
+          Cipta kod sesi khas untuk sekolah atau kelas anda. Data murid anda hanya akan dipaparkan di bawah kod sesi ini.
+        </p>
+        <div class="input-group">
+          <label class="input-label" for="create-school-name">Nama Sekolah & Guru</label>
+          <input type="text" id="create-school-name" class="text-input" placeholder="Contoh: SMK Taman Permai (Cikgu Aminah)" required>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="create-session-code">Cipta Kod Sesi Unik (Tanpa Jarak)</label>
+          <input type="text" id="create-session-code" class="text-input" placeholder="Contoh: SMKTP-2AMANAH" pattern="[A-Za-z0-9_-]{4,24}" required>
+          <span class="hud-caption">4–24 aksara (huruf, nombor, tanda sempang - atau _).</span>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="create-teacher-pin">Tetapkan Kata Laluan / PIN Rahsia Anda</label>
+          <input type="password" id="create-teacher-pin" class="text-input" placeholder="Minimum 4 aksara" minlength="4" autocomplete="new-password" required>
+        </div>
+        <p class="hint-text hidden" id="teacher-create-error" style="color: var(--error);"></p>
+        <div class="header-actions" style="justify-content: flex-end;">
+          <button type="button" class="btn-neon" onclick="closeTeacherLoginModal()">Tutup</button>
+          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar & Masuk Dashboard</button>
         </div>
       </form>
     </div>
@@ -1415,18 +1487,21 @@
     <div class="modal-card is-wide">
       <div class="panel-header">
         <div>
-          <p class="kicker">SISTEM ANALITIK GURU // PAPARAN REKOD MURID MASA NYATA</p>
-          <h2 class="panel-title" id="teacher-dash-title">Dashboard Prestasi Murid — Matematik Tingkatan 2</h2>
+          <p class="kicker" id="dash-school-kicker">SISTEM ANALITIK GURU // PAPARAN REKOD MURID</p>
+          <h2 class="panel-title" id="teacher-dash-title">Dashboard Prestasi Murid</h2>
         </div>
         <div class="header-actions">
+          <button type="button" class="btn-neon is-cyan is-sm" id="btn-copy-student-link" onclick="copyStudentMagicLink()">
+            Salin Pautan Khas Murid
+          </button>
           <button type="button" class="btn-neon is-cyan is-sm" onclick="refreshTeacherSubmissions()">
-            Segar Semula Data
+            Segar Semula
           </button>
           <button type="button" class="btn-neon is-yellow is-sm" onclick="exportTeacherCsv()">
-            Eksport Semua ke CSV (Excel)
+            Eksport CSV (Excel)
           </button>
           <button type="button" class="btn-neon is-sm" onclick="closeTeacherDashboard()">
-            Tutup Panel
+            Log Keluar
           </button>
         </div>
       </div>
@@ -1438,12 +1513,12 @@
       <div class="teacher-toolbar">
         <div class="toolbar-inputs">
           <div class="input-group">
-            <label class="input-label" for="dash-session-filter">Kod Sesi</label>
-            <input type="text" id="dash-session-filter" class="text-input" style="min-height: 38px; width: 140px;" onchange="refreshTeacherSubmissions()">
+            <label class="input-label" for="dash-session-display">Kod Sesi Aktif (Terkunci)</label>
+            <input type="text" id="dash-session-display" class="text-input" style="min-height: 38px; width: 180px;" disabled>
           </div>
           <div class="input-group">
-            <label class="input-label" for="dash-class-filter">Tapis Ikut Kelas</label>
-            <input type="text" id="dash-class-filter" class="text-input" style="min-height: 38px; width: 160px;" placeholder="Semua kelas..." oninput="renderTeacherTable()">
+            <label class="input-label" for="dash-class-filter">Tapis Ikut Kelas / Nama</label>
+            <input type="text" id="dash-class-filter" class="text-input" style="min-height: 38px; width: 200px;" placeholder="Cari kelas atau murid..." oninput="renderTeacherTable()">
           </div>
         </div>
         <div>
@@ -1484,14 +1559,16 @@
 
   <script>
     // =========================================================================
-    // KONFIGURASI PANGKALAN DATA AWAN (UNTUK SINKRONISASI ANTARA PERANTI)
-    // Masukkan URL Firebase Realtime Database anda jika ingin data murid terus
-    // muncul di peranti guru secara dalam talian (cth: "https://projek-anda-default-rtdb.asia-southeast1.firebasedatabase.app")
+    // KONFIGURASI PANGKALAN DATA AWAN (FIREBASE REALTIME DATABASE)
+    // Masukkan URL Firebase Realtime Database anda untuk menyelaraskan rekod
+    // murid merentasi sekolah dan peranti secara dalam talian.
+    // Contoh: "https://projek-matematik-default-rtdb.asia-southeast1.firebasedatabase.app"
     // =========================================================================
     const FIREBASE_DB_URL = "";
-    const TEACHER_PIN_CODE = "1234";
-    const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v1";
-    const LOCAL_STATE_KEY = "kssm_grid_escape_player_state_v1";
+
+    const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v2";
+    const LOCAL_ROOMS_KEY = "kssm_grid_escape_rooms_v2";
+    const LOCAL_STATE_KEY = "kssm_grid_escape_player_state_v2";
 
     const LEVELS = [
       {
@@ -1854,7 +1931,8 @@
       studentId: ``,
       studentName: ``,
       studentClass: ``,
-      sessionCode: `CIKGU2A`,
+      sessionCode: ``,
+      sessionLockedFromUrl: false,
       currentLevel: 0,
       currentQ: 0,
       solved: {},
@@ -1868,10 +1946,29 @@
     };
 
     let timerInterval = null;
+    let activeTeacherSession = null;
     let teacherSubmissionsCache = [];
 
     function generateStudentId() {
       return `STU_` + Date.now().toString(36) + `_` + Math.random().toString(36).slice(2, 6).toUpperCase();
+    }
+
+    // Fungsi pencincangan SHA-256 supaya kata laluan guru tidak disimpan sebagai teks biasa
+    async function hashSecretPin(sessionCode, rawPin) {
+      const saltAndText = `${sessionCode.toUpperCase()}::KSSM_GRID::${rawPin.trim()}`;
+      if (window.crypto && window.crypto.subtle) {
+        const msgUint8 = new TextEncoder().encode(saltAndText);
+        const hashBuffer = await crypto.subtle.digest(`SHA-256`, msgUint8);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(function (b) { return b.toString(16).padStart(2, `0`); }).join(``);
+      }
+      // Sandaran jika pelayar tanpa HTTPS
+      let hash = 0;
+      for (let i = 0; i < saltAndText.length; i++) {
+        hash = ((hash << 5) - hash) + saltAndText.charCodeAt(i);
+        hash |= 0;
+      }
+      return `FALLBACK_` + String(hash);
     }
 
     function getQuestionKey(levelIdx, qIdx) {
@@ -1928,7 +2025,193 @@
     }
 
     // =========================================================================
-    // PENYIMPANAN & SINKRONISASI KE SISTEM GURU (FIREBASE + LOCALSTORAGE)
+    // PENGURUSAN BILIK SESI SEKOLAH (MULTI-TENANT ROOMS)
+    // =========================================================================
+    async function getRoomMetadata(sessionCode) {
+      const cleanCode = sessionCode.trim().toUpperCase();
+      // 1. Semak Firebase dahulu jika dikonfigurasi
+      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+        try {
+          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
+          const res = await fetch(`${cleanBase}/rooms/${encodeURIComponent(cleanCode)}.json`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.pinHash) return data;
+          }
+        } catch (e) {}
+      }
+      // 2. Semak storan pelayar
+      try {
+        const localRooms = JSON.parse(localStorage.getItem(LOCAL_ROOMS_KEY) || `{}`);
+        if (localRooms[cleanCode]) return localRooms[cleanCode];
+      } catch (e) {}
+      return null;
+    }
+
+    async function saveRoomMetadata(roomObj) {
+      const cleanCode = roomObj.sessionCode.trim().toUpperCase();
+      try {
+        const localRooms = JSON.parse(localStorage.getItem(LOCAL_ROOMS_KEY) || `{}`);
+        localRooms[cleanCode] = roomObj;
+        localStorage.setItem(LOCAL_ROOMS_KEY, JSON.stringify(localRooms));
+      } catch (e) {}
+
+      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+        try {
+          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
+          await fetch(`${cleanBase}/rooms/${encodeURIComponent(cleanCode)}.json`, {
+            method: `PUT`,
+            headers: { 'Content-Type': `application/json` },
+            body: JSON.stringify(roomObj)
+          });
+        } catch (e) {}
+      }
+    }
+
+    function switchTeacherAuthTab(mode) {
+      const tabLogin = document.getElementById(`tab-teacher-login`);
+      const tabCreate = document.getElementById(`tab-teacher-create`);
+      const formLogin = document.getElementById(`form-teacher-login`);
+      const formCreate = document.getElementById(`form-teacher-create`);
+
+      document.getElementById(`teacher-login-error`).classList.add(`hidden`);
+      document.getElementById(`teacher-create-error`).classList.add(`hidden`);
+
+      if (mode === `create`) {
+        tabCreate.classList.add(`is-active`);
+        tabLogin.classList.remove(`is-active`);
+        formCreate.classList.remove(`hidden`);
+        formLogin.classList.add(`hidden`);
+      } else {
+        tabLogin.classList.add(`is-active`);
+        tabCreate.classList.remove(`is-active`);
+        formLogin.classList.remove(`hidden`);
+        formCreate.classList.add(`hidden`);
+      }
+    }
+
+    async function createTeacherRoom(evt) {
+      evt.preventDefault();
+      const schoolInput = document.getElementById(`create-school-name`);
+      const codeInput = document.getElementById(`create-session-code`);
+      const pinInput = document.getElementById(`create-teacher-pin`);
+      const errEl = document.getElementById(`teacher-create-error`);
+      const submitBtn = document.getElementById(`btn-teacher-create-submit`);
+
+      const schoolName = schoolInput.value.trim();
+      const sessionCode = codeInput.value.trim().toUpperCase();
+      const rawPin = pinInput.value.trim();
+
+      if (!schoolName || !sessionCode || rawPin.length < 4) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = `Menyemak Kod...`;
+      errEl.classList.add(`hidden`);
+
+      const existing = await getRoomMetadata(sessionCode);
+      if (existing) {
+        errEl.textContent = `Kod Sesi "${sessionCode}" telah didaftarkan oleh pengguna lain. Sila pilih kod unik yang berbeza (contohnya tambah nama kelas atau tahun).`;
+        errEl.classList.remove(`hidden`);
+        submitBtn.disabled = false;
+        submitBtn.textContent = `Daftar & Masuk Dashboard`;
+        return;
+      }
+
+      const pinHash = await hashSecretPin(sessionCode, rawPin);
+      const roomData = {
+        sessionCode: sessionCode,
+        schoolName: schoolName,
+        pinHash: pinHash,
+        createdAt: new Date().toISOString()
+      };
+
+      await saveRoomMetadata(roomData);
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = `Daftar & Masuk Dashboard`;
+      pinInput.value = ``;
+
+      openAuthenticatedDashboard(roomData);
+    }
+
+    async function verifyTeacherLogin(evt) {
+      evt.preventDefault();
+      const sessionInp = document.getElementById(`teacher-session-input`);
+      const pinInp = document.getElementById(`teacher-pin-input`);
+      const errEl = document.getElementById(`teacher-login-error`);
+      const submitBtn = document.getElementById(`btn-teacher-login-submit`);
+
+      const sessionCode = sessionInp.value.trim().toUpperCase();
+      const rawPin = pinInp.value.trim();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = `Mengesahkan...`;
+      errEl.classList.add(`hidden`);
+
+      const roomData = await getRoomMetadata(sessionCode);
+      if (!roomData) {
+        errEl.textContent = `Kod Sesi "${sessionCode}" belum didaftarkan. Sila klik tab "Cipta Sesi Baharu" untuk mendaftar kod sekolah/kelas anda.`;
+        errEl.classList.remove(`hidden`);
+        submitBtn.disabled = false;
+        submitBtn.textContent = `Buka Dashboard`;
+        return;
+      }
+
+      const enteredHash = await hashSecretPin(sessionCode, rawPin);
+      if (enteredHash !== roomData.pinHash) {
+        errEl.textContent = `Pengesahan gagal. Kod Sesi atau Kata Laluan Guru tidak sepadan.`;
+        errEl.classList.remove(`hidden`);
+        submitBtn.disabled = false;
+        submitBtn.textContent = `Buka Dashboard`;
+        return;
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = `Buka Dashboard`;
+      pinInp.value = ``;
+
+      openAuthenticatedDashboard(roomData);
+    }
+
+    function openAuthenticatedDashboard(roomData) {
+      activeTeacherSession = roomData;
+      closeTeacherLoginModal();
+
+      const kickerEl = document.getElementById(`dash-school-kicker`);
+      const titleEl = document.getElementById(`teacher-dash-title`);
+      const sessionDisp = document.getElementById(`dash-session-display`);
+
+      if (kickerEl) kickerEl.textContent = `SESI AKTIF: ${roomData.sessionCode} // ${roomData.schoolName.toUpperCase()}`;
+      if (titleEl) titleEl.textContent = `Dashboard Prestasi Murid — ${roomData.schoolName}`;
+      if (sessionDisp) sessionDisp.value = roomData.sessionCode;
+
+      const dashModal = document.getElementById(`teacher-dashboard-modal`);
+      if (dashModal) dashModal.classList.remove(`hidden`);
+
+      refreshTeacherSubmissions();
+    }
+
+    function copyStudentMagicLink() {
+      if (!activeTeacherSession) return;
+      const baseUrl = window.location.href.split(`?`)[0].split(`#`)[0];
+      const magicUrl = `${baseUrl}?sesi=${encodeURIComponent(activeTeacherSession.sessionCode)}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(magicUrl).then(function () {
+          const btn = document.getElementById(`btn-copy-student-link`);
+          if (btn) {
+            const orig = btn.textContent;
+            btn.textContent = `✓ Pautan Disalin! Kongsi ke Murid`;
+            setTimeout(function () { btn.textContent = orig; }, 3500);
+          }
+        });
+      } else {
+        prompt(`Salin pautan ini dan kongsikan kepada murid kelas anda:`, magicUrl);
+      }
+    }
+
+    // =========================================================================
+    // PENYIMPANAN & SINKRONISASI REKOD MURID
     // =========================================================================
     function setSyncBadge(status, label) {
       const pill = document.getElementById(`sync-status-pill`);
@@ -1957,6 +2240,10 @@
     }
 
     function loadSavedPlayerState() {
+      // Semak parameter URL ?sesi=KOD_GURU dahulu
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlSession = urlParams.get(`sesi`);
+
       try {
         const raw = localStorage.getItem(LOCAL_STATE_KEY);
         if (raw) {
@@ -1976,6 +2263,12 @@
           }
         }
       } catch (e) {}
+
+      if (urlSession && urlSession.trim()) {
+        appState.sessionCode = urlSession.trim().toUpperCase();
+        appState.sessionLockedFromUrl = true;
+      }
+
       if (!appState.studentId) {
         appState.studentId = generateStudentId();
       }
@@ -1994,7 +2287,7 @@
         studentId: appState.studentId,
         studentName: appState.studentName || `Murid Tanpa Nama`,
         studentClass: appState.studentClass || `Tiada Kelas`,
-        sessionCode: (appState.sessionCode || `CIKGU2A`).trim().toUpperCase(),
+        sessionCode: (appState.sessionCode || ``).trim().toUpperCase(),
         score: appState.score,
         solvedCount: totalSolved,
         totalQuestions: 15,
@@ -2012,7 +2305,7 @@
     }
 
     async function submitReportToTeacher(isManualClick) {
-      if (!appState.studentName) {
+      if (!appState.studentName || !appState.sessionCode) {
         openStudentModal(false);
         return;
       }
@@ -2021,7 +2314,6 @@
       const sessionKey = payload.sessionCode;
       setSyncBadge(`sending`, `Menghantar ke sistem guru...`);
 
-      // 1. Simpan ke LocalStorage (untuk paparan segera pada peranti yang sama)
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
         if (!allLocal[sessionKey]) allLocal[sessionKey] = {};
@@ -2029,25 +2321,22 @@
         localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
       } catch (e) {}
 
-      // 2. Hantar ke Firebase Realtime Database jika URL dikonfigurasi
-      let cloudSuccess = false;
       if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
         try {
           const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
           const endpoint = `${cleanBase}/submissions/${encodeURIComponent(sessionKey)}/${encodeURIComponent(payload.studentId)}.json`;
-          const res = await fetch(endpoint, {
+          await fetch(endpoint, {
             method: `PUT`,
             headers: { 'Content-Type': `application/json` },
             body: JSON.stringify(payload)
           });
-          if (res.ok) cloudSuccess = true;
         } catch (err) {
           console.warn(`Gagal hantar ke awan:`, err);
         }
       }
 
       const timeNow = new Date().toLocaleTimeString(`ms-MY`, { hour: `2-digit`, minute: `2-digit` });
-      setSyncBadge(`synced`, `Direkod ke sistem guru (${timeNow})`);
+      setSyncBadge(`synced`, `Direkod ke sesi ${sessionKey} (${timeNow})`);
 
       if (isManualClick) {
         const btn = document.getElementById(`btn-submit-teacher`);
@@ -2062,10 +2351,9 @@
     }
 
     async function fetchSubmissionsForSession(sessionCode) {
-      const cleanSession = (sessionCode || `CIKGU2A`).trim().toUpperCase();
+      const cleanSession = (sessionCode || ``).trim().toUpperCase();
       const mergedMap = {};
 
-      // Baca dari LocalStorage dahulu
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
         if (allLocal[cleanSession]) {
@@ -2073,7 +2361,6 @@
         }
       } catch (e) {}
 
-      // Baca dari Firebase jika URL dikonfigurasi
       if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
         try {
           const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
@@ -2096,16 +2383,13 @@
       });
     }
 
-    // =========================================================================
-    // KAWALAN MODAL PROFIL MURID & PANEL GURU
-    // =========================================================================
     function updateStudentHeaderBar() {
       const nameEl = document.getElementById(`display-student-name`);
       const classEl = document.getElementById(`display-student-class`);
       const codeEl = document.getElementById(`display-session-code`);
       if (nameEl) nameEl.textContent = appState.studentName || `Belum Ditetapkan`;
       if (classEl) classEl.textContent = appState.studentClass || `—`;
-      if (codeEl) codeEl.textContent = appState.sessionCode || `CIKGU2A`;
+      if (codeEl) codeEl.textContent = appState.sessionCode || `—`;
     }
 
     function openStudentModal(allowCancel) {
@@ -2113,12 +2397,19 @@
       const nameInput = document.getElementById(`input-student-name`);
       const classInput = document.getElementById(`input-student-class`);
       const codeInput = document.getElementById(`input-session-code`);
+      const lockNote = document.getElementById(`session-lock-note`);
       const cancelBtn = document.getElementById(`btn-cancel-profile`);
       if (!modal) return;
 
       if (nameInput) nameInput.value = appState.studentName || ``;
       if (classInput) classInput.value = appState.studentClass || ``;
-      if (codeInput) codeInput.value = appState.sessionCode || `CIKGU2A`;
+      if (codeInput) {
+        codeInput.value = appState.sessionCode || ``;
+        codeInput.disabled = appState.sessionLockedFromUrl;
+      }
+      if (lockNote && appState.sessionLockedFromUrl) {
+        lockNote.textContent = `Kod sesi telah ditetapkan secara automatik melalui pautan guru anda.`;
+      }
       if (cancelBtn) cancelBtn.classList.toggle(`hidden`, !allowCancel);
 
       modal.classList.remove(`hidden`);
@@ -2138,11 +2429,10 @@
 
       const newName = nameInput.value.trim();
       const newClass = classInput.value.trim();
-      const newCode = (codeInput.value.trim() || `CIKGU2A`).toUpperCase();
+      const newCode = codeInput.value.trim().toUpperCase();
 
-      if (!newName || !newClass) return;
+      if (!newName || !newClass || !newCode) return;
 
-      // Jika nama murid berubah, jana ID rekod baharu supaya tidak menindih rekod murid sebelumnya
       if (appState.studentName && appState.studentName.toLowerCase() !== newName.toLowerCase()) {
         appState.studentId = generateStudentId();
       }
@@ -2161,12 +2451,10 @@
       const modal = document.getElementById(`teacher-login-modal`);
       const sessionInp = document.getElementById(`teacher-session-input`);
       const pinInp = document.getElementById(`teacher-pin-input`);
-      const errEl = document.getElementById(`teacher-login-error`);
-      if (sessionInp) sessionInp.value = appState.sessionCode || `CIKGU2A`;
+      switchTeacherAuthTab(`login`);
+      if (sessionInp && appState.sessionCode) sessionInp.value = appState.sessionCode;
       if (pinInp) pinInp.value = ``;
-      if (errEl) errEl.classList.add(`hidden`);
       if (modal) modal.classList.remove(`hidden`);
-      if (pinInp) pinInp.focus();
     }
 
     function closeTeacherLoginModal() {
@@ -2174,43 +2462,18 @@
       if (modal) modal.classList.add(`hidden`);
     }
 
-    function verifyTeacherLogin(evt) {
-      evt.preventDefault();
-      const sessionInp = document.getElementById(`teacher-session-input`);
-      const pinInp = document.getElementById(`teacher-pin-input`);
-      const errEl = document.getElementById(`teacher-login-error`);
-
-      if (pinInp.value.trim() !== TEACHER_PIN_CODE) {
-        if (errEl) {
-          errEl.textContent = `PIN Guru tidak sah. (Gunakan PIN lalai: 1234)`;
-          errEl.classList.remove(`hidden`);
-        }
-        return;
-      }
-
-      const sessionCode = (sessionInp.value.trim() || `CIKGU2A`).toUpperCase();
-      closeTeacherLoginModal();
-
-      const dashFilter = document.getElementById(`dash-session-filter`);
-      if (dashFilter) dashFilter.value = sessionCode;
-
-      const dashModal = document.getElementById(`teacher-dashboard-modal`);
-      if (dashModal) dashModal.classList.remove(`hidden`);
-
-      refreshTeacherSubmissions();
-    }
-
     function closeTeacherDashboard() {
+      activeTeacherSession = null;
       const dashModal = document.getElementById(`teacher-dashboard-modal`);
       if (dashModal) dashModal.classList.add(`hidden`);
     }
 
     async function refreshTeacherSubmissions() {
-      const sessionInput = document.getElementById(`dash-session-filter`);
-      const sessionCode = sessionInput ? sessionInput.value.trim().toUpperCase() : appState.sessionCode;
+      if (!activeTeacherSession) return;
+      const sessionCode = activeTeacherSession.sessionCode;
       const tbody = document.getElementById(`teacher-table-body`);
       if (tbody) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Mengemas kini data dari sistem...</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Mengemas kini rekod bagi sesi ${escapeHtml(sessionCode)}...</td></tr>`;
       }
       teacherSubmissionsCache = await fetchSubmissionsForSession(sessionCode);
       renderTeacherTable();
@@ -2226,7 +2489,6 @@
                (item.studentName || ``).toLowerCase().includes(filterText);
       });
 
-      // Kemas kini KPI Guru
       const kpiContainer = document.getElementById(`teacher-kpi-row`);
       if (kpiContainer) {
         const totalStudents = filtered.length;
@@ -2240,7 +2502,7 @@
 
         kpiContainer.innerHTML = `
           <div class="hud-tile is-cyan">
-            <span class="hud-label">Jumlah Murid Menghantar</span>
+            <span class="hud-label">Jumlah Murid Sesi Ini</span>
             <span class="hud-value is-cyan">${totalStudents}</span>
             <span class="hud-caption">${completedCount} orang tamat penuh</span>
           </div>
@@ -2261,7 +2523,7 @@
       if (!tbody) return;
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:var(--on-surface-variant);">Tiada rekod penghantaran murid ditemui bagi kod sesi ini.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:var(--on-surface-variant);">Tiada rekod penghantaran murid ditemui bagi sesi ini. Klik "Salin Pautan Khas Murid" di atas dan kongsikan kepada kelas anda.</td></tr>`;
         return;
       }
 
@@ -2294,13 +2556,14 @@
     }
 
     function exportTeacherCsv() {
-      const sessionInput = document.getElementById(`dash-session-filter`);
-      const sessionCode = sessionInput ? sessionInput.value.trim().toUpperCase() : `CIKGU2A`;
+      if (!activeTeacherSession) return;
+      const sessionCode = activeTeacherSession.sessionCode;
 
       const headers = [
         `Bil`,
         `Nama Murid`,
         `Kelas`,
+        `Sekolah`,
         `Kod Sesi`,
         `Status`,
         `Skor`,
@@ -2319,6 +2582,7 @@
           idx + 1,
           `"${String(r.studentName || ``).replace(/"/g, `""`)}"`,
           `"${String(r.studentClass || ``).replace(/"/g, `""`)}"`,
+          `"${String(activeTeacherSession.schoolName || ``).replace(/"/g, `""`)}"`,
           `"${sessionCode}"`,
           `"${r.status}"`,
           r.score,
@@ -2346,9 +2610,10 @@
     }
 
     async function handleClearTeacherRecords(btn) {
+      if (!activeTeacherSession) return;
       if (btn.dataset.armed !== `true`) {
         btn.dataset.armed = `true`;
-        btn.textContent = `Sahkan Padam Semua Rekod?`;
+        btn.textContent = `Sahkan Padam Rekod Sesi Ini?`;
         setTimeout(function () {
           if (btn.dataset.armed === `true`) {
             btn.dataset.armed = `false`;
@@ -2360,8 +2625,7 @@
       btn.dataset.armed = `false`;
       btn.textContent = `Padam Rekod Sesi Ini`;
 
-      const sessionInput = document.getElementById(`dash-session-filter`);
-      const sessionCode = (sessionInput ? sessionInput.value.trim() : `CIKGU2A`).toUpperCase();
+      const sessionCode = activeTeacherSession.sessionCode;
 
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
@@ -3081,7 +3345,7 @@
     }
 
     function verifyCurrentPin() {
-      if (!appState.studentName) {
+      if (!appState.studentName || !appState.sessionCode) {
         openStudentModal(false);
         return;
       }
@@ -3126,11 +3390,10 @@
         if (updatedHeading) updatedHeading.textContent = `AKSES DIBENARKAN // +${pointsEarned} MATA`;
         if (updatedMsg) {
           updatedMsg.textContent = usedHint
-            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Kemajuan diselaraskan ke sistem guru.`
-            : `Kod PIN ${q.answer} tepat pada percubaan tanpa petunjuk (+100 mata)! Kemajuan diselaraskan ke sistem guru.`;
+            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Kemajuan diselaraskan ke sesi guru.`
+            : `Kod PIN ${q.answer} tepat pada percubaan tanpa petunjuk (+100 mata)! Kemajuan diselaraskan ke sesi guru.`;
         }
         persistPlayerState();
-        // Auto-hantar ke sistem guru setiap kali soalan berjaya diselesaikan
         submitReportToTeacher(false);
       } else {
         feedbackBanner.className = `feedback-banner is-error`;
@@ -3194,7 +3457,7 @@
       refreshAll();
       startTimer();
 
-      if (!appState.studentName) {
+      if (!appState.studentName || !appState.sessionCode) {
         openStudentModal(false);
       }
     }
