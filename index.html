@@ -224,6 +224,11 @@
       color: var(--tertiary);
     }
 
+    .sync-pill.is-error {
+      border-color: var(--error);
+      color: var(--error);
+    }
+
     .sync-dot {
       width: 8px;
       height: 8px;
@@ -1059,6 +1064,25 @@
       align-items: flex-end;
     }
 
+    .cloud-banner {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-left: 3px solid var(--tertiary);
+      border-radius: var(--rounded);
+      padding: 0.65rem 0.9rem;
+      font-size: var(--label-size);
+      color: var(--on-surface);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .cloud-banner.is-online {
+      border-left-color: var(--secondary);
+    }
+
     /* Footer */
     .mission-footer {
       border-top: 1px solid var(--outline-variant);
@@ -1197,7 +1221,7 @@
         <button type="button" role="tab" aria-selected="true" class="level-btn is-active" id="tab-level-0" onclick="selectLevel(0)">
           <span class="level-btn-code">Sektor 01 // Aras Asas</span>
           <span class="level-btn-title">Kuantum</span>
-          <span class="level-btn-meta" id="meta-level-0">0/5 PIN — Selari paksi & Sukuan I</span>
+          <span class="level-btn-meta" id="meta-level-0">0/5 PIN — Selari paksi &amp; Sukuan I</span>
         </button>
         <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-1" onclick="selectLevel(1)">
           <span class="level-btn-code">Sektor 02 // Aras Sederhana</span>
@@ -1207,7 +1231,7 @@
         <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-2" onclick="selectLevel(2)">
           <span class="level-btn-code">Sektor 03 // Aras Tinggi</span>
           <span class="level-btn-title">Matriks</span>
-          <span class="level-btn-meta" id="meta-level-2">0/5 PIN — 4 sukuan & koordinat</span>
+          <span class="level-btn-meta" id="meta-level-2">0/5 PIN — 4 sukuan &amp; koordinat</span>
         </button>
       </div>
 
@@ -1251,7 +1275,7 @@
             Papar / Sembunyi Rumus Rujukan
           </button>
           <div class="formula-box hidden" id="formula-drawer">
-            <span class="hud-label">Rumus Jarak & Teorem Pythagoras (Bab 7.1)</span>
+            <span class="hud-label">Rumus Jarak &amp; Teorem Pythagoras (Bab 7.1)</span>
             <div class="formula-math">1. Selari paksi-x (y sama): Jarak = |x₂ − x₁|</div>
             <div class="formula-math">2. Selari paksi-y (x sama): Jarak = |y₂ − y₁|</div>
             <div class="formula-math">3. Jarak condong: d = √[(x₂ − x₁)² + (y₂ − y₁)²]</div>
@@ -1285,7 +1309,7 @@
         </div>
 
         <div class="hint-box hidden" id="hint-panel">
-          <p class="hint-title">Panduan Pengiraan & Petunjuk Visual Grid</p>
+          <p class="hint-title">Panduan Pengiraan &amp; Petunjuk Visual Grid</p>
           <p class="hint-text" id="hint-text"></p>
         </div>
 
@@ -1374,7 +1398,7 @@
       <div class="report-stats" id="report-stats"></div>
       <div class="header-actions">
         <button type="button" class="btn-neon is-cyan" onclick="finishAndLogoutStudent()">
-          Hantar Laporan & Log Keluar
+          Hantar Laporan &amp; Log Keluar
         </button>
         <button type="button" class="btn-neon" onclick="handleResetClick(this)">
           Main Semula Misi
@@ -1383,12 +1407,12 @@
     </section>
 
     <footer class="mission-footer">
-      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) & Modul Kit Detektif Grid.</span>
+      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) &amp; Modul Kit Detektif Grid.</span>
       <span>Makmal Grid Digital // KSSM Matematik Tingkatan 2.</span>
     </footer>
   </main>
 
-  <!-- Modal 1: Pendaftaran Profil Murid (Sentiasa dibuka setiap kali pautan baru dibuka / selepas Log Keluar) -->
+  <!-- Modal 1: Pendaftaran Profil Murid -->
   <div class="modal-backdrop hidden" id="student-modal" role="dialog" aria-modal="true" aria-labelledby="student-modal-title">
     <div class="modal-card">
       <p class="kicker">PENGESAHAN IDENTITI PEGAWAI NAVIGASI</p>
@@ -1417,11 +1441,29 @@
     </div>
   </div>
 
-  <!-- Modal 2: Akses Guru (HANYA MUNCUL JIKA URL MEMPUNYAI ?mod=guru) -->
+  <!-- Modal 2: Akses Guru (?mod=guru) -->
   <div class="modal-backdrop hidden" id="teacher-login-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-login-title">
     <div class="modal-card">
       <p class="kicker">PORTAL GURU // PENGURUSAN SESI SEKOLAH</p>
       <h2 class="panel-title" id="teacher-login-title">Akses Panel Pemantauan Guru</h2>
+
+      <div class="cloud-banner" id="login-cloud-status-banner">
+        <span>Mod Pangkalan Data: <strong id="login-cloud-mode-label">Menyemak sambungan awan...</strong></span>
+        <button type="button" class="btn-neon is-cyan is-sm" onclick="toggleCloudConfigDrawer()">Tetapan Pangkalan Data Awan</button>
+      </div>
+
+      <!-- Laci Tetapan Firebase URL (Boleh ditetapkan terus tanpa edit kod) -->
+      <div class="formula-box hidden" id="cloud-config-drawer" style="border-left-color: var(--secondary);">
+        <span class="hud-label" style="color: var(--secondary);">SAMBUNGAN PANGKALAN DATA MERENTAS PERANTI (FIREBASE URL)</span>
+        <p class="hud-caption" style="margin: 0;">
+          Masukkan URL <strong>Firebase Realtime Database</strong> anda (contoh: <code>https://nama-projek-default-rtdb.asia-southeast1.firebasedatabase.app</code>) supaya jawapan murid dari telefon/laptop lain terus masuk ke Dashboard ini. Pautan khas murid akan menyertakan alamat ini secara automatik!
+        </p>
+        <div class="pin-input-row" style="margin-top: 0.4rem;">
+          <input type="url" id="input-firebase-url" class="text-input" style="min-height: 38px;" placeholder="https://projek-anda-default-rtdb.firebaseio.com">
+          <button type="button" class="btn-neon is-cyan is-sm" onclick="saveCloudUrlFromUi()">Simpan URL</button>
+        </div>
+        <p class="hint-text hidden" id="cloud-url-feedback" style="margin-top: 0.3rem; font-size: var(--label-size);"></p>
+      </div>
 
       <div class="modal-tabs" role="tablist">
         <button type="button" class="modal-tab-btn is-active" id="tab-teacher-login" onclick="switchTeacherAuthTab('login')">
@@ -1458,7 +1500,7 @@
           Cipta kod sesi khas untuk sekolah atau kelas anda. Data murid anda hanya akan dipaparkan di bawah kod sesi ini.
         </p>
         <div class="input-group">
-          <label class="input-label" for="create-school-name">Nama Sekolah & Guru</label>
+          <label class="input-label" for="create-school-name">Nama Sekolah &amp; Guru</label>
           <input type="text" id="create-school-name" class="text-input" placeholder="Contoh: SMK Taman Permai (Cikgu Aminah)" required>
         </div>
         <div class="input-group">
@@ -1473,7 +1515,7 @@
         <p class="hint-text hidden" id="teacher-create-error" style="color: var(--error);"></p>
         <div class="header-actions" style="justify-content: flex-end;">
           <button type="button" class="btn-neon" onclick="exitTeacherModeToStudent()">Kembali ke Mod Murid</button>
-          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar & Masuk Dashboard</button>
+          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar &amp; Masuk Dashboard</button>
         </div>
       </form>
     </div>
@@ -1504,6 +1546,12 @@
             Log Keluar
           </button>
         </div>
+      </div>
+
+      <!-- Status Segerak Awan Dalam Dashboard -->
+      <div class="cloud-banner" id="dash-cloud-banner">
+        <span id="dash-cloud-text">Status Segerak Awan: Menyemak...</span>
+        <span class="hud-caption" id="dash-auto-refresh-label">Auto-segar setiap 10 saat</span>
       </div>
 
       <!-- Laci Tukar Kata Laluan / PIN Guru -->
@@ -1584,17 +1632,124 @@
   <script>
     // =========================================================================
     // KONFIGURASI PANGKALAN DATA AWAN (FIREBASE REALTIME DATABASE)
-    // Masukkan URL Firebase Realtime Database anda untuk menyelaraskan rekod
-    // murid merentasi sekolah dan peranti secara dalam talian.
+    // Anda boleh menampal URL Firebase di bawah ATAU terus masukkan melalui
+    // butang "Tetapan Pangkalan Data Awan" dalam skrin log masuk guru (?mod=guru).
     // =========================================================================
-    const FIREBASE_DB_URL = "";
+    const DEFAULT_FIREBASE_DB_URL = "";
 
+    const CLOUD_URL_STORAGE_KEY = "kssm_grid_firebase_db_url_v1";
     const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v2";
     const LOCAL_ROOMS_KEY = "kssm_grid_escape_rooms_v2";
     const LEGACY_STATE_KEY = "kssm_grid_escape_player_state_v2";
     const LOCKOUT_STORAGE_KEY = "kssm_grid_teacher_lockout_v1";
     const MAX_LOGIN_ATTEMPTS = 3;
     const LOCKOUT_DURATION_MS = 5 * 60 * 1000;
+
+    function getActiveCloudUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const dbFromUrl = urlParams.get(`db`);
+      if (dbFromUrl && dbFromUrl.trim().startsWith(`http`)) {
+        const clean = dbFromUrl.trim().replace(/\/+$/, ``);
+        try { localStorage.setItem(CLOUD_URL_STORAGE_KEY, clean); } catch (e) {}
+        return clean;
+      }
+      if (DEFAULT_FIREBASE_DB_URL && DEFAULT_FIREBASE_DB_URL.trim().startsWith(`http`)) {
+        return DEFAULT_FIREBASE_DB_URL.trim().replace(/\/+$/, ``);
+      }
+      try {
+        const saved = localStorage.getItem(CLOUD_URL_STORAGE_KEY);
+        if (saved && saved.trim().startsWith(`http`)) {
+          return saved.trim().replace(/\/+$/, ``);
+        }
+      } catch (e) {}
+      return ``;
+    }
+
+    function updateCloudStatusIndicators() {
+      const cloudUrl = getActiveCloudUrl();
+      const loginBanner = document.getElementById(`login-cloud-status-banner`);
+      const loginLabel = document.getElementById(`login-cloud-mode-label`);
+      const urlInput = document.getElementById(`input-firebase-url`);
+      const dashBanner = document.getElementById(`dash-cloud-banner`);
+      const dashText = document.getElementById(`dash-cloud-text`);
+
+      if (urlInput && cloudUrl && !urlInput.value) {
+        urlInput.value = cloudUrl;
+      }
+
+      if (cloudUrl) {
+        if (loginBanner) loginBanner.classList.add(`is-online`);
+        if (loginLabel) {
+          loginLabel.style.color = `var(--secondary)`;
+          loginLabel.textContent = `AWAN AKTIF (Segerak Merentas Semua Peranti)`;
+        }
+        if (dashBanner) dashBanner.classList.add(`is-online`);
+        if (dashText) {
+          dashText.innerHTML = `<strong style="color: var(--secondary);">✓ SEGERAK AWAN AKTIF:</strong> Semua peranti murid yang menggunakan Pautan Khas akan menghantar markah ke sini secara automatik.`;
+        }
+      } else {
+        if (loginBanner) loginBanner.classList.remove(`is-online`);
+        if (loginLabel) {
+          loginLabel.style.color = `var(--tertiary)`;
+          loginLabel.textContent = `MOD LOKAL SAHAJA (Peranti Ini Sahaja)`;
+        }
+        if (dashBanner) dashBanner.classList.remove(`is-online`);
+        if (dashText) {
+          dashText.innerHTML = `<strong style="color: var(--tertiary);">⚠ MOD LOKAL SAHAJA:</strong> Rekod hanya disimpan dalam pelayar ini. Untuk terima rekod dari peranti lain, tetapkan URL Firebase di skrin log masuk guru.`;
+        }
+      }
+    }
+
+    function toggleCloudConfigDrawer() {
+      const drawer = document.getElementById(`cloud-config-drawer`);
+      const fbEl = document.getElementById(`cloud-url-feedback`);
+      if (fbEl) fbEl.classList.add(`hidden`);
+      if (drawer) drawer.classList.toggle(`hidden`);
+    }
+
+    async function saveCloudUrlFromUi() {
+      const inp = document.getElementById(`input-firebase-url`);
+      const fbEl = document.getElementById(`cloud-url-feedback`);
+      if (!inp || !fbEl) return;
+
+      const raw = inp.value.trim().replace(/\/+$/, ``);
+      fbEl.classList.remove(`hidden`);
+
+      if (!raw) {
+        try { localStorage.removeItem(CLOUD_URL_STORAGE_KEY); } catch (e) {}
+        fbEl.style.color = `var(--tertiary)`;
+        fbEl.textContent = `URL Awan dipadam. Sistem kembali ke Mod Lokal.`;
+        updateCloudStatusIndicators();
+        return;
+      }
+
+      if (!raw.startsWith(`https://`)) {
+        fbEl.style.color = `var(--error)`;
+        fbEl.textContent = `Ralat: URL mestilah bermula dengan https:// (contoh: https://projek-anda-default-rtdb.firebaseio.com)`;
+        return;
+      }
+
+      fbEl.style.color = `var(--tertiary)`;
+      fbEl.textContent = `Menguji sambungan ke pangkalan data awan...`;
+
+      try {
+        const testRes = await fetch(`${raw}/ping_test.json`, {
+          method: `PUT`,
+          headers: { 'Content-Type': `application/json` },
+          body: JSON.stringify({ ok: true, ts: Date.now() })
+        });
+        if (!testRes.ok) {
+          throw new Error(`HTTP ` + testRes.status);
+        }
+        try { localStorage.setItem(CLOUD_URL_STORAGE_KEY, raw); } catch (e) {}
+        fbEl.style.color = `var(--secondary)`;
+        fbEl.textContent = `✓ Berjaya disambungkan! Semua peranti murid kini boleh menghantar rekod ke pangkalan data awan ini.`;
+        updateCloudStatusIndicators();
+      } catch (err) {
+        fbEl.style.color = `var(--error)`;
+        fbEl.textContent = `Gagal menyambung (${err.message}). Pastikan Rules Firebase Realtime Database ditetapkan kepada ".read": true dan ".write": true.`;
+      }
+    }
 
     const LEVELS = [
       {
@@ -1901,7 +2056,7 @@
               `Susun persamaan jarak: <code>10 = √[(x − 2)² + (5 − (−3))²]</code>.`,
               `Kuasa duakan kedua-dua belah: <code>100 = (x − 2)² + 8²</code> → <code>100 = (x − 2)² + 64</code>.`,
               `Selesaikan: <code>(x − 2)² = 36</code> → <code>x − 2 = ±6</code>, maka <code>x = 8</code> atau <code>x = −4</code>.`,
-              `Oleh sebab B di Sukuan I (x > 0), nilai koordinat-x ialah <code>8</code>.`
+              `Oleh sebab B di Sukuan I (x &gt; 0), nilai koordinat-x ialah <code>8</code>.`
             ]
           },
           {
@@ -1924,7 +2079,7 @@
               `Bentukkan persamaan jarak: <code>10² = [4 − (−2)]² + (y − 1)²</code>.`,
               `Ringkaskan: <code>100 = 6² + (y − 1)²</code> → <code>(y − 1)² = 100 − 36 = 64</code>.`,
               `Ambil punca kuasa dua: <code>y − 1 = ±8</code>, maka <code>y = 9</code> atau <code>y = −7</code>.`,
-              `Oleh sebab L di Sukuan IV (y < 0), nilai koordinat-y ialah <code>−7</code>.`
+              `Oleh sebab L di Sukuan IV (y &lt; 0), nilai koordinat-y ialah <code>−7</code>.`
             ]
           },
           {
@@ -1945,7 +2100,7 @@
             solutionSteps: [
               `Jarak kapsul P dari asalan O(0, 0): <code>OP = √[(−6)² + 8²] = √(36 + 64) = √100 = 10 unit</code>.`,
               `Jarak kapsul Q dari asalan O(0, 0): <code>OQ = √[3² + (−8)²] = √(9 + 64) = √73 ≈ 8.54 unit</code>.`,
-              `Bandingkan jarak: <code>8.54 < 10</code>, maka kapsul Q lebih dekat.`,
+              `Bandingkan jarak: <code>8.54 &lt; 10</code>, maka kapsul Q lebih dekat.`,
               `Kod PIN Pembebasan Utama ialah <code>8.54</code>.`
             ]
           }
@@ -1973,6 +2128,7 @@
     };
 
     let timerInterval = null;
+    let teacherAutoRefreshInterval = null;
     let activeTeacherSession = null;
     let teacherSubmissionsCache = [];
 
@@ -2068,10 +2224,10 @@
 
     async function getRoomMetadata(sessionCode) {
       const cleanCode = sessionCode.trim().toUpperCase();
-      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+      const cloudBase = getActiveCloudUrl();
+      if (cloudBase) {
         try {
-          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
-          const res = await fetch(`${cleanBase}/rooms/${encodeURIComponent(cleanCode)}.json`);
+          const res = await fetch(`${cloudBase}/rooms/${encodeURIComponent(cleanCode)}.json`);
           if (res.ok) {
             const data = await res.json();
             if (data && data.pinHash) return data;
@@ -2093,10 +2249,10 @@
         localStorage.setItem(LOCAL_ROOMS_KEY, JSON.stringify(localRooms));
       } catch (e) {}
 
-      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+      const cloudBase = getActiveCloudUrl();
+      if (cloudBase) {
         try {
-          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
-          await fetch(`${cleanBase}/rooms/${encodeURIComponent(cleanCode)}.json`, {
+          await fetch(`${cloudBase}/rooms/${encodeURIComponent(cleanCode)}.json`, {
             method: `PUT`,
             headers: { 'Content-Type': `application/json` },
             body: JSON.stringify(roomObj)
@@ -2233,10 +2389,20 @@
       if (titleEl) titleEl.textContent = `Dashboard Prestasi Murid — ${roomData.schoolName}`;
       if (sessionDisp) sessionDisp.value = roomData.sessionCode;
 
+      updateCloudStatusIndicators();
+
       const dashModal = document.getElementById(`teacher-dashboard-modal`);
       if (dashModal) dashModal.classList.remove(`hidden`);
 
       refreshTeacherSubmissions();
+
+      // Auto-segar setiap 10 saat supaya markah murid dari peranti lain muncul secara masa nyata
+      if (teacherAutoRefreshInterval) clearInterval(teacherAutoRefreshInterval);
+      teacherAutoRefreshInterval = setInterval(function () {
+        if (activeTeacherSession) {
+          refreshTeacherSubmissions(true);
+        }
+      }, 10000);
     }
 
     function toggleChangePinDrawer() {
@@ -2299,7 +2465,14 @@
     function copyStudentMagicLink() {
       if (!activeTeacherSession) return;
       const baseUrl = window.location.href.split(`?`)[0].split(`#`)[0];
-      const magicUrl = `${baseUrl}?sesi=${encodeURIComponent(activeTeacherSession.sessionCode)}`;
+      const cloudUrl = getActiveCloudUrl();
+
+      // Sertakan sekali parameter &db= jika URL Firebase dikonfigurasikan supaya
+      // peranti murid terus bersambung ke pangkalan data awan yang sama
+      let magicUrl = `${baseUrl}?sesi=${encodeURIComponent(activeTeacherSession.sessionCode)}`;
+      if (cloudUrl) {
+        magicUrl += `&db=${encodeURIComponent(cloudUrl)}`;
+      }
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(magicUrl).then(function () {
@@ -2334,12 +2507,11 @@
       const pill = document.getElementById(`sync-status-pill`);
       const text = document.getElementById(`sync-status-text`);
       if (!pill || !text) return;
-      pill.className = `sync-pill` + (status === `synced` ? ` is-synced` : (status === `sending` ? ` is-sending` : ``));
+      pill.className = `sync-pill` + (status === `synced` ? ` is-synced` : (status === `sending` ? ` is-sending` : (status === `error` ? ` is-error` : ``)));
       text.textContent = label;
     }
 
     function resetFullStudentSession() {
-      // Padam sebarang sisa profil lama dalam localStorage / sessionStorage
       try {
         localStorage.removeItem(LEGACY_STATE_KEY);
         sessionStorage.removeItem(LEGACY_STATE_KEY);
@@ -2368,6 +2540,9 @@
     }
 
     function initializeFreshPageSession() {
+      // Simpan parameter ?db= daripada URL jika murid membuka pautan khas guru
+      getActiveCloudUrl();
+
       const urlParams = new URLSearchParams(window.location.search);
       const urlMod = urlParams.get(`mod`);
 
@@ -2375,7 +2550,6 @@
         appState.isTeacherPortalUrl = true;
       }
 
-      // Setiap kali pautan dibuka semula, mulakan dengan profil kosong
       resetFullStudentSession();
     }
 
@@ -2419,6 +2593,7 @@
       const sessionKey = payload.sessionCode;
       setSyncBadge(`sending`, `Menghantar ke sistem guru...`);
 
+      // 1. Simpan sandaran dalam pelayar semasa
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
         if (!allLocal[sessionKey]) allLocal[sessionKey] = {};
@@ -2426,28 +2601,40 @@
         localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
       } catch (e) {}
 
-      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+      // 2. Hantar ke Pangkalan Data Awan supaya masuk ke peranti guru
+      const cloudBase = getActiveCloudUrl();
+      let cloudSuccess = false;
+
+      if (cloudBase) {
         try {
-          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
-          const endpoint = `${cleanBase}/submissions/${encodeURIComponent(sessionKey)}/${encodeURIComponent(payload.studentId)}.json`;
-          await fetch(endpoint, {
+          const endpoint = `${cloudBase}/submissions/${encodeURIComponent(sessionKey)}/${encodeURIComponent(payload.studentId)}.json`;
+          const res = await fetch(endpoint, {
             method: `PUT`,
             headers: { 'Content-Type': `application/json` },
             body: JSON.stringify(payload)
           });
+          if (res.ok) {
+            cloudSuccess = true;
+          }
         } catch (err) {
           console.warn(`Gagal hantar ke awan:`, err);
         }
       }
 
       const timeNow = new Date().toLocaleTimeString(`ms-MY`, { hour: `2-digit`, minute: `2-digit` });
-      setSyncBadge(`synced`, `Direkod ke sesi ${sessionKey} (${timeNow})`);
+      if (cloudBase && cloudSuccess) {
+        setSyncBadge(`synced`, `Direkod ke awan sesi ${sessionKey} (${timeNow})`);
+      } else if (cloudBase && !cloudSuccess) {
+        setSyncBadge(`error`, `Ralat awan — disimpan lokal (${timeNow})`);
+      } else {
+        setSyncBadge(`synced`, `Direkod lokal sesi ${sessionKey} (${timeNow})`);
+      }
 
       if (isManualClick) {
         const btn = document.getElementById(`btn-submit-teacher`);
         if (btn) {
           const orig = btn.textContent;
-          btn.textContent = `✓ Laporan Dihantar ke Guru`;
+          btn.textContent = cloudSuccess ? `✓ Dihantar ke Awan Guru` : `✓ Laporan Disimpan`;
           setTimeout(function () {
             btn.textContent = orig;
           }, 3000);
@@ -2466,10 +2653,10 @@
         }
       } catch (e) {}
 
-      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+      const cloudBase = getActiveCloudUrl();
+      if (cloudBase) {
         try {
-          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
-          const endpoint = `${cleanBase}/submissions/${encodeURIComponent(cleanSession)}.json`;
+          const endpoint = `${cloudBase}/submissions/${encodeURIComponent(cleanSession)}.json`;
           const res = await fetch(endpoint);
           if (res.ok) {
             const cloudData = await res.json();
@@ -2548,7 +2735,6 @@
       submitReportToTeacher(false);
     }
 
-    // Fungsi Log Keluar Murid: hantar markah semasa, kosongkan sesi & buka skrin daftar semula
     async function logoutAndResetStudent(btn) {
       if (btn && btn.dataset.armed !== `true`) {
         btn.dataset.armed = `true`;
@@ -2574,7 +2760,6 @@
       openStudentModal();
     }
 
-    // Log keluar segera selepas tamat misi 15/15
     async function finishAndLogoutStudent() {
       if (appState.studentName && appState.sessionCode) {
         await submitReportToTeacher(false);
@@ -2587,6 +2772,7 @@
       const modal = document.getElementById(`teacher-login-modal`);
       const sessionInp = document.getElementById(`teacher-session-input`);
       const pinInp = document.getElementById(`teacher-pin-input`);
+      updateCloudStatusIndicators();
       switchTeacherAuthTab(`login`);
       if (sessionInp && appState.sessionCode) sessionInp.value = appState.sessionCode;
       if (pinInp) pinInp.value = ``;
@@ -2600,6 +2786,7 @@
 
     function closeTeacherDashboard() {
       activeTeacherSession = null;
+      if (teacherAutoRefreshInterval) clearInterval(teacherAutoRefreshInterval);
       const dashModal = document.getElementById(`teacher-dashboard-modal`);
       if (dashModal) dashModal.classList.add(`hidden`);
       if (appState.isTeacherPortalUrl) {
@@ -2607,11 +2794,11 @@
       }
     }
 
-    async function refreshTeacherSubmissions() {
+    async function refreshTeacherSubmissions(isSilent) {
       if (!activeTeacherSession) return;
       const sessionCode = activeTeacherSession.sessionCode;
       const tbody = document.getElementById(`teacher-table-body`);
-      if (tbody) {
+      if (tbody && !isSilent) {
         tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Mengemas kini rekod bagi sesi ${escapeHtml(sessionCode)}...</td></tr>`;
       }
       teacherSubmissionsCache = await fetchSubmissionsForSession(sessionCode);
@@ -2688,10 +2875,10 @@
 
     function escapeHtml(str) {
       return String(str || ``)
-        .replace(/&/g, `&`)
-        .replace(/</g, `<`)
-        .replace(/>/g, `>`)
-        .replace(/"/g, `"`);
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
     }
 
     function exportTeacherCsv() {
@@ -2736,7 +2923,8 @@
         ].join(`,`);
       });
 
-      const csvContent = `\uFEFF` + [headers.join(`,`)].concat(rows).join(`\n`);
+      const csvContent = `﻿` + [headers.join(`,`)].concat(rows).join(`
+`);
       const blob = new Blob([csvContent], { type: `text/csv;charset=utf-8;` });
       const url = URL.createObjectURL(blob);
       const a = document.createElement(`a`);
@@ -2772,10 +2960,10 @@
         localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
       } catch (e) {}
 
-      if (FIREBASE_DB_URL && FIREBASE_DB_URL.startsWith(`http`)) {
+      const cloudBase = getActiveCloudUrl();
+      if (cloudBase) {
         try {
-          const cleanBase = FIREBASE_DB_URL.replace(/\/+$/, ``);
-          await fetch(`${cleanBase}/submissions/${encodeURIComponent(sessionCode)}.json`, {
+          await fetch(`${cloudBase}/submissions/${encodeURIComponent(sessionCode)}.json`, {
             method: `DELETE`
           });
         } catch (e) {}
@@ -2875,7 +3063,7 @@
         <div class="hud-tile is-cyan">
           <span class="hud-label">Petunjuk Digunakan</span>
           <span class="hud-value is-cyan">${hintsCount} / 15</span>
-          <span class="hud-caption">Panduan visual & teks</span>
+          <span class="hud-caption">Panduan visual &amp; teks</span>
         </div>
         <div class="hud-tile">
           <span class="hud-label">Jumlah Cubaan PIN</span>
@@ -3588,13 +3776,11 @@
 
       startTimer();
 
-      // Jika URL mempunyai ?mod=guru, buka Portal Guru secara automatik
       if (appState.isTeacherPortalUrl) {
         openTeacherLoginModal();
         return;
       }
 
-      // Setiap kali murid membuka link, sentiasa paparkan borang daftar baru
       openStudentModal();
     }
 
