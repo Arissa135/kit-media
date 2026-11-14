@@ -1,0 +1,2489 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="neon_noir">
+  <title>Escape Room Digital: Misi Menyelamat Grid — Matematik Tingkatan 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+
+      /* Page and surfaces */
+      --background: #0a0a12;
+      --surface-container-low: #111118;
+      --surface-container: #141422;
+      --surface-container-high: #1e1e30;
+
+      /* Text */
+      --on-surface: #e8e0f0;
+      --on-surface-variant: #a098b0;
+
+      /* Lines */
+      --outline: #5a5068;
+      --outline-variant: #302840;
+
+      /* Neon accents */
+      --primary: #ff2d78;
+      --on-primary: #1a0010;
+      --primary-container: #b3004e;
+      --on-primary-container: #ffe0ec;
+      --secondary: #00ffcc;
+      --tertiary: #ffe04a;
+      --error: #ff4444;
+      --on-error: #1a0000;
+
+      /* Semantic */
+      --positive: #00ffcc;
+      --warning: #ffe04a;
+      --focus: #ff2d78;
+
+      /* Data series */
+      --data-1: #ff2d78;
+      --data-2: #00ffcc;
+      --data-3: #ffe04a;
+      --data-4: #b388ff;
+      --data-context: #6e6680;
+
+      /* Fonts */
+      --font-headline: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-label: 'Space Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.75rem;
+
+      /* Style effects */
+      --glow-text: 0 0 8px currentColor;
+      --glow-primary: 0 0 16px color-mix(in srgb, var(--primary) 40%, transparent);
+      --glow-secondary: 0 0 16px color-mix(in srgb, var(--secondary) 35%, transparent);
+      --glow-tertiary: 0 0 14px color-mix(in srgb, var(--tertiary) 35%, transparent);
+      --neon-border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+      --neon-border-lit: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
+      --cyan-border: 1px solid color-mix(in srgb, var(--secondary) 35%, transparent);
+      --cyan-border-lit: 1px solid color-mix(in srgb, var(--secondary) 60%, transparent);
+      --neon-inset: inset 0 0 12px color-mix(in srgb, var(--primary) 10%, transparent);
+      --cyan-inset: inset 0 0 12px color-mix(in srgb, var(--secondary) 10%, transparent);
+      --glow-line: drop-shadow(0 0 4px currentColor);
+      --scanlines: repeating-linear-gradient(to bottom, transparent 0 3px, color-mix(in srgb, var(--on-surface) 3%, transparent) 3px 4px);
+
+      /* Type scale (Focused Tool) */
+      --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      background-image: var(--scanlines);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: static !important;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1260px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .page-grid * {
+      min-width: 0;
+    }
+
+    /* Header */
+    .mission-header {
+      display: grid;
+      gap: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      padding-bottom: var(--space-lg);
+    }
+
+    .header-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--secondary);
+      text-shadow: var(--glow-text);
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .mission-title {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--on-surface);
+      margin: 0;
+    }
+
+    .mission-subtitle {
+      color: var(--on-surface-variant);
+      max-width: 68ch;
+      margin: 0;
+    }
+
+    /* HUD Metrics Row */
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .hud-tile {
+      background: var(--surface-container);
+      border: var(--neon-border);
+      box-shadow: var(--neon-inset);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .hud-tile.is-cyan {
+      border: var(--cyan-border);
+      box-shadow: var(--cyan-inset);
+    }
+
+    .hud-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+    }
+
+    .hud-value {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hud-value.is-pink {
+      color: var(--primary);
+      text-shadow: var(--glow-text);
+    }
+
+    .hud-value.is-cyan {
+      color: var(--secondary);
+      text-shadow: var(--glow-text);
+    }
+
+    .hud-value.is-yellow {
+      color: var(--tertiary);
+      text-shadow: var(--glow-text);
+    }
+
+    .hud-caption {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Sector Selector & PIN Node Strip */
+    .sector-bar {
+      display: grid;
+      gap: var(--space-md);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+    }
+
+    .level-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .level-btn {
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 48px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      transition: border-color var(--dur-short) var(--ease-out),
+                  box-shadow var(--dur-short) var(--ease-out),
+                  background-color var(--dur-short) var(--ease-out);
+    }
+
+    .level-btn:hover {
+      border-color: var(--primary);
+      color: var(--on-surface);
+      box-shadow: var(--glow-primary);
+    }
+
+    .level-btn.is-active {
+      background: var(--surface-container-high);
+      border-color: var(--primary);
+      color: var(--on-surface);
+      box-shadow: var(--glow-primary);
+    }
+
+    .level-btn-code {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    .level-btn.is-active .level-btn-code {
+      text-shadow: var(--glow-text);
+    }
+
+    .level-btn-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--body-size);
+      color: var(--on-surface);
+    }
+
+    .level-btn-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    .pin-strip-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-sm);
+    }
+
+    .pin-nodes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .pin-node {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      min-height: 44px;
+      min-width: 84px;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: border-color var(--dur-short) var(--ease-out),
+                  box-shadow var(--dur-short) var(--ease-out),
+                  background-color var(--dur-short) var(--ease-out);
+    }
+
+    .pin-node:hover {
+      border-color: var(--secondary);
+      color: var(--on-surface);
+    }
+
+    .pin-node.is-current {
+      background: var(--surface-container-high);
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: var(--glow-primary);
+    }
+
+    .pin-node.is-solved {
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+
+    .pin-node.is-current.is-solved {
+      border-color: var(--secondary);
+      box-shadow: var(--glow-secondary);
+    }
+
+    /* Main Asymmetric Workspace */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .neon-panel {
+      background: var(--surface-container);
+      border: var(--neon-border);
+      box-shadow: var(--neon-inset);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .neon-panel.is-cyan {
+      border: var(--cyan-border);
+      box-shadow: var(--cyan-inset);
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .panel-title {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .badge-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      border: 1px solid var(--secondary);
+      color: var(--secondary);
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .badge-tag.is-pink {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .badge-tag.is-yellow {
+      border-color: var(--tertiary);
+      color: var(--tertiary);
+    }
+
+    /* Cartesian Grid Container */
+    .cartesian-frame {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-sm);
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .scanner-readout {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      padding: 0 var(--space-xs);
+    }
+
+    .scanner-coords {
+      color: var(--secondary);
+      text-shadow: var(--glow-text);
+    }
+
+    .cartesian-svg {
+      width: 100%;
+      height: auto;
+      min-height: 360px;
+      display: block;
+      cursor: crosshair;
+      touch-action: manipulation;
+      user-select: none;
+    }
+
+    .grid-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      padding-top: var(--space-xs);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--rounded);
+      display: inline-block;
+    }
+
+    .legend-dot.is-cyan {
+      background: var(--secondary);
+      box-shadow: var(--glow-secondary);
+    }
+
+    .legend-dot.is-pink {
+      background: var(--primary);
+      box-shadow: var(--glow-primary);
+    }
+
+    .legend-dot.is-yellow {
+      background: var(--tertiary);
+      box-shadow: var(--glow-tertiary);
+    }
+
+    /* Formula Drawer */
+    .formula-toggle-wrap {
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-sm);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .formula-box {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-left: 2px solid var(--secondary);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .formula-math {
+      font-family: var(--font-label);
+      font-size: var(--body-size);
+      color: var(--secondary);
+      word-break: break-word;
+    }
+
+    /* Right Column: Terminal & Keypad */
+    .question-scenario {
+      color: var(--on-surface);
+      margin: 0;
+      font-size: var(--body-size);
+    }
+
+    .coords-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .coord-chip {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+    }
+
+    .coord-chip strong {
+      color: var(--secondary);
+    }
+
+    /* Buttons */
+    .btn-neon {
+      background: var(--surface-container-low);
+      color: var(--primary);
+      border: var(--neon-border-lit);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      min-height: 44px;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      transition: box-shadow var(--dur-short) var(--ease-out),
+                  border-color var(--dur-short) var(--ease-out),
+                  background-color var(--dur-short) var(--ease-out);
+    }
+
+    .btn-neon:hover:not(:disabled) {
+      border-color: var(--primary);
+      box-shadow: var(--glow-primary);
+      text-shadow: var(--glow-text);
+      background: var(--surface-container-high);
+    }
+
+    .btn-neon:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-neon.is-cyan {
+      color: var(--secondary);
+      border: var(--cyan-border-lit);
+    }
+
+    .btn-neon.is-cyan:hover:not(:disabled) {
+      border-color: var(--secondary);
+      box-shadow: var(--glow-secondary);
+      text-shadow: var(--glow-text);
+    }
+
+    .btn-neon.is-yellow {
+      color: var(--tertiary);
+      border-color: color-mix(in srgb, var(--tertiary) 55%, transparent);
+    }
+
+    .btn-neon.is-yellow:hover:not(:disabled) {
+      border-color: var(--tertiary);
+      box-shadow: var(--glow-tertiary);
+      text-shadow: var(--glow-text);
+    }
+
+    /* Hint Panel */
+    .hint-box {
+      background: var(--surface-container-low);
+      border: 1px solid color-mix(in srgb, var(--tertiary) 45%, transparent);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-xs);
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+
+    .hint-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--tertiary);
+      margin: 0;
+    }
+
+    .hint-text {
+      color: var(--on-surface);
+      margin: 0;
+      font-size: var(--body-size);
+    }
+
+    /* PIN Input & Digital Keypad */
+    .pin-form {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .input-group {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .input-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+    }
+
+    .pin-input-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-sm);
+      align-items: end;
+    }
+
+    .pin-input {
+      width: 100%;
+      min-height: 48px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      color: var(--secondary);
+      border: 1px solid var(--outline-variant);
+      border-bottom: 2px solid var(--primary);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      transition: border-color var(--dur-short) var(--ease-out),
+                  box-shadow var(--dur-short) var(--ease-out);
+    }
+
+    .pin-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--glow-primary);
+    }
+
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .key-btn {
+      min-height: 46px;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--dur-micro) var(--ease-out),
+                  box-shadow var(--dur-micro) var(--ease-out),
+                  background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .key-btn:hover {
+      border-color: var(--secondary);
+      background: var(--surface-container-high);
+      color: var(--secondary);
+    }
+
+    .key-btn:active {
+      transform: translateY(1px);
+    }
+
+    .key-btn.is-action {
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+    }
+
+    .key-btn.is-submit {
+      grid-column: span 2;
+      background: var(--surface-container-high);
+      color: var(--secondary);
+      border: var(--cyan-border-lit);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .key-btn.is-submit:hover {
+      border-color: var(--secondary);
+      box-shadow: var(--glow-secondary);
+      text-shadow: var(--glow-text);
+    }
+
+    /* Feedback & Step-by-Step Solution */
+    .feedback-banner {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      display: grid;
+      gap: var(--space-xs);
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+
+    .feedback-banner.is-success {
+      border-color: var(--secondary);
+      box-shadow: var(--cyan-inset);
+    }
+
+    .feedback-banner.is-error {
+      border-color: var(--error);
+    }
+
+    .feedback-heading {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .feedback-banner.is-success .feedback-heading {
+      color: var(--secondary);
+      text-shadow: var(--glow-text);
+    }
+
+    .feedback-banner.is-error .feedback-heading {
+      color: var(--error);
+    }
+
+    .solution-card {
+      background: var(--surface-container-low);
+      border: var(--cyan-border);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-sm);
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+
+    .solution-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--secondary);
+      margin: 0;
+    }
+
+    .solution-steps {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: grid;
+      gap: var(--space-xs);
+      font-family: var(--font-body);
+      color: var(--on-surface);
+    }
+
+    .solution-steps code {
+      font-family: var(--font-label);
+      color: var(--secondary);
+      background: var(--surface-container);
+      padding: 0.1rem 0.35rem;
+      border-radius: var(--rounded);
+    }
+
+    .nav-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+
+    /* Completion Report Card */
+    .report-panel {
+      background: var(--surface-container);
+      border: var(--cyan-border-lit);
+      box-shadow: var(--cyan-inset);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .report-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+    }
+
+    /* Footer */
+    .mission-footer {
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .svg-glow-line {
+      filter: var(--glow-line);
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+      .hud-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+      .level-tabs {
+        grid-template-columns: 1fr;
+      }
+      .hud-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .cartesian-frame {
+        min-height: 320px;
+      }
+      .cartesian-svg {
+        min-height: 300px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-grid">
+    <!-- Header -->
+    <header class="mission-header">
+      <div class="header-top-row">
+        <p class="kicker">MAKMAL GRID KSSM // MATEMATIK TINGKATAN 2 BAB 7 (SP 7.1.4)</p>
+        <div class="header-actions">
+          <button type="button" class="btn-neon is-cyan" id="btn-export-report" onclick="exportMissionReport()">
+            Muat Turun Laporan
+          </button>
+          <button type="button" class="btn-neon" id="btn-reset-mission" onclick="handleResetClick(this)">
+            Mula Semula Misi
+          </button>
+        </div>
+      </div>
+      <h1 class="mission-title">Escape Room Digital: Misi Menyelamat Grid</h1>
+      <p class="mission-subtitle">
+        Anda ialah Pegawai Navigasi yang terperangkap di dalam Bilik Kawalan Grid. Selesaikan 15 kod PIN keselamatan berdasarkan jarak antara dua titik pada satah Cartes merentasi tiga aras sekuriti untuk menyahaktif pintu laser.
+      </p>
+    </header>
+
+    <!-- HUD Status Metrics -->
+    <section class="hud-grid" aria-label="Status Misi Semasa">
+      <div class="hud-tile is-cyan">
+        <span class="hud-label">Penanda Masa</span>
+        <span class="hud-value is-cyan" id="hud-timer">00:00</span>
+        <span class="hud-caption" id="hud-timer-status">Pemasa aktif</span>
+      </div>
+      <div class="hud-tile">
+        <span class="hud-label">Skor Keselamatan</span>
+        <span class="hud-value is-pink" id="hud-score">0</span>
+        <span class="hud-caption">+100 mata setiap PIN tepat</span>
+      </div>
+      <div class="hud-tile is-cyan">
+        <span class="hud-label">PIN Berjaya Dibuka</span>
+        <span class="hud-value is-cyan" id="hud-progress">0 / 15</span>
+        <span class="hud-caption" id="hud-level-progress">Aras semasa: 0 / 5</span>
+      </div>
+      <div class="hud-tile">
+        <span class="hud-label">Status Pintu Laser</span>
+        <span class="hud-value is-yellow" id="hud-door-status">TERKUNCI</span>
+        <span class="hud-caption" id="hud-door-caption">Selesaikan semua PIN untuk keluar</span>
+      </div>
+    </section>
+
+    <!-- Level Selector & Node Navigator -->
+    <section class="sector-bar" aria-label="Pemilih Aras dan Soalan">
+      <div class="level-tabs" role="tablist" aria-label="Tiga Aras Kesukaran">
+        <button type="button" role="tab" aria-selected="true" class="level-btn is-active" id="tab-level-0" onclick="selectLevel(0)">
+          <span class="level-btn-code">Sektor 01 // Aras Asas</span>
+          <span class="level-btn-title">Kuantum</span>
+          <span class="level-btn-meta" id="meta-level-0">0/5 PIN — Selari paksi &amp; Sukuan I</span>
+        </button>
+        <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-1" onclick="selectLevel(1)">
+          <span class="level-btn-code">Sektor 02 // Aras Sederhana</span>
+          <span class="level-btn-title">Vektor</span>
+          <span class="level-btn-meta" id="meta-level-1">0/5 PIN — Rumus jarak positif</span>
+        </button>
+        <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-2" onclick="selectLevel(2)">
+          <span class="level-btn-code">Sektor 03 // Aras Tinggi</span>
+          <span class="level-btn-title">Matriks</span>
+          <span class="level-btn-meta" id="meta-level-2">0/5 PIN — 4 sukuan &amp; koordinat</span>
+        </button>
+      </div>
+
+      <div class="pin-strip-row">
+        <span class="hud-label" id="sector-label">NOD KUNCI SEKTOR KUANTUM:</span>
+        <div class="pin-nodes" id="pin-nodes-container"></div>
+      </div>
+    </section>
+
+    <!-- Main Interactive Workspace -->
+    <section class="workspace-grid" aria-label="Ruang Kerja Interaktif">
+      <!-- Left: Interactive Cartesian Plane -->
+      <div class="neon-panel is-cyan">
+        <div class="panel-header">
+          <h2 class="panel-title">Papan Satah Cartes Interaktif</h2>
+          <span class="badge-tag" id="grid-range-badge">SKALA: 1 UNIT / PETAK</span>
+        </div>
+
+        <div class="cartesian-frame">
+          <div class="scanner-readout">
+            <span>PENGIMBAS KURSOR GRID (KLIK / SENTUH PETAK):</span>
+            <span class="scanner-coords" id="scanner-coords">(x, y) = —</span>
+          </div>
+          <svg id="cartesian-svg" class="cartesian-svg" viewBox="0 0 560 440" role="img" aria-label="Papan satah Cartes interaktif memaparkan koordinat titik misi">
+            <g id="svg-grid-layer"></g>
+            <g id="svg-axes-layer"></g>
+            <g id="svg-hint-layer"></g>
+            <g id="svg-solution-layer"></g>
+            <g id="svg-points-layer"></g>
+            <g id="svg-cursor-layer"></g>
+          </svg>
+          <div class="grid-legend">
+            <span class="legend-item"><span class="legend-dot is-cyan"></span> Titik Mula / Rujukan</span>
+            <span class="legend-item"><span class="legend-dot is-pink"></span> Titik Sasaran</span>
+            <span class="legend-item"><span class="legend-dot is-yellow"></span> Unjuran Petunjuk (Δx, Δy)</span>
+          </div>
+        </div>
+
+        <div class="formula-toggle-wrap">
+          <button type="button" class="btn-neon is-cyan" id="btn-toggle-formula" onclick="toggleFormulaDrawer()">
+            Papar / Sembunyi Rumus Rujukan
+          </button>
+          <div class="formula-box hidden" id="formula-drawer">
+            <span class="hud-label">Rumus Jarak &amp; Teorem Pythagoras (Bab 7.1)</span>
+            <div class="formula-math">1. Selari paksi-x (y sama): Jarak = |x₂ − x₁|</div>
+            <div class="formula-math">2. Selari paksi-y (x sama): Jarak = |y₂ − y₁|</div>
+            <div class="formula-math">3. Jarak condong: d = √[(x₂ − x₁)² + (y₂ − y₁)²]</div>
+            <div class="formula-math">4. Teorem Pythagoras: c = √(a² + b²)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Mission Brief & Digital PIN Pad -->
+      <div class="neon-panel">
+        <div class="panel-header">
+          <span class="badge-tag is-pink" id="question-code-badge">KUANTUM // PIN 01</span>
+          <span class="badge-tag is-yellow" id="question-status-badge">TERKUNCI</span>
+        </div>
+
+        <h2 class="panel-title" id="question-title">Isyarat Pemulihan Aras Mengufuk</h2>
+        <p class="question-scenario" id="question-text"></p>
+
+        <div class="coords-pill-row" id="coords-chips"></div>
+
+        <!-- Interactive Hint Control -->
+        <div>
+          <button type="button" class="btn-neon is-yellow" id="btn-hint" onclick="toggleHint()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+              <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2v.3h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"></path>
+            </svg>
+            <span id="btn-hint-label">Aktifkan Petunjuk (Hint)</span>
+          </button>
+        </div>
+
+        <div class="hint-box hidden" id="hint-panel">
+          <p class="hint-title">Panduan Pengiraan &amp; Petunjuk Visual Grid</p>
+          <p class="hint-text" id="hint-text"></p>
+        </div>
+
+        <!-- Digital PIN Pad -->
+        <form class="pin-form" id="pin-form" onsubmit="submitPinForm(event)">
+          <div class="input-group">
+            <label class="input-label" for="pin-input" id="pin-input-label">
+              MASUKKAN KOD PIN / NILAI JAWAPAN
+            </label>
+            <div class="pin-input-row">
+              <input
+                type="text"
+                inputmode="decimal"
+                id="pin-input"
+                class="pin-input"
+                autocomplete="off"
+                aria-describedby="input-format-note"
+              >
+              <button type="submit" class="btn-neon is-cyan" id="btn-verify-pin">
+                Sahkod
+              </button>
+            </div>
+            <span class="hud-caption" id="input-format-note">
+              Gunakan pad kekunci digital di bawah atau papan kekunci anda.
+            </span>
+          </div>
+
+          <div class="keypad-grid" aria-label="Pad PIN Keselamatan Digital">
+            <button type="button" class="key-btn" onclick="pressKey('7')">7</button>
+            <button type="button" class="key-btn" onclick="pressKey('8')">8</button>
+            <button type="button" class="key-btn" onclick="pressKey('9')">9</button>
+            <button type="button" class="key-btn is-action" onclick="backspacePin()">Padam</button>
+
+            <button type="button" class="key-btn" onclick="pressKey('4')">4</button>
+            <button type="button" class="key-btn" onclick="pressKey('5')">5</button>
+            <button type="button" class="key-btn" onclick="pressKey('6')">6</button>
+            <button type="button" class="key-btn is-action" onclick="clearPinInput()">Kosong</button>
+
+            <button type="button" class="key-btn" onclick="pressKey('1')">1</button>
+            <button type="button" class="key-btn" onclick="pressKey('2')">2</button>
+            <button type="button" class="key-btn" onclick="pressKey('3')">3</button>
+            <button type="button" class="key-btn" onclick="pressKey('-')">−</button>
+
+            <button type="button" class="key-btn" onclick="pressKey('0')">0</button>
+            <button type="button" class="key-btn" onclick="pressKey('.')">.</button>
+            <button type="button" class="key-btn is-submit" onclick="verifyCurrentPin()">Sahkan PIN</button>
+          </div>
+        </form>
+
+        <!-- Instant Feedback -->
+        <div class="feedback-banner hidden" id="feedback-banner" role="status" aria-live="polite">
+          <p class="feedback-heading" id="feedback-heading"></p>
+          <p class="hint-text" id="feedback-message"></p>
+        </div>
+
+        <!-- Complete Step-by-Step Solution -->
+        <div class="solution-card hidden" id="solution-card">
+          <p class="solution-title">Langkah Penyelesaian Lengkap</p>
+          <ol class="solution-steps" id="solution-steps"></ol>
+        </div>
+
+        <!-- Prev / Next Navigation -->
+        <div class="nav-actions-row">
+          <button type="button" class="btn-neon" id="btn-prev-q" onclick="navigateQuestion(-1)">
+            ← PIN Sebelumnya
+          </button>
+          <button type="button" class="btn-neon is-cyan" id="btn-next-q" onclick="navigateQuestion(1)">
+            PIN Seterusnya →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Complete / Summary Panel -->
+    <section class="report-panel hidden" id="mission-complete-panel" aria-label="Ringkasan Misi Tamat">
+      <div class="panel-header">
+        <div>
+          <p class="kicker">AKSES PENUH DIBERIKAN // PINTU LASER DINYAHAKTIFKAN</p>
+          <h2 class="panel-title">Tahniah! Anda Berjaya Menyelamatkan Diri dari Bilik Kawalan Grid</h2>
+        </div>
+        <span class="badge-tag">15 / 15 PIN SELESAI</span>
+      </div>
+      <p class="mission-subtitle">
+        Semua kunci keselamatan merentasi Sektor Kuantum, Vektor, dan Matriks telah berjaya dibuka menggunakan konsep jarak dalam sistem koordinat Cartes.
+      </p>
+      <div class="report-stats" id="report-stats"></div>
+      <div class="header-actions">
+        <button type="button" class="btn-neon is-cyan" onclick="exportMissionReport()">
+          Muat Turun Sijil &amp; Laporan (.txt)
+        </button>
+        <button type="button" class="btn-neon" onclick="handleResetClick(this)">
+          Main Semula Misi
+        </button>
+      </div>
+    </section>
+
+    <footer class="mission-footer">
+      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) &amp; Modul Kit Detektif Grid.</span>
+      <span>Sedia dihoskan sebagai Aplikasi Web Satu Halaman (SPA) di GitHub Pages.</span>
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    const LEVELS = [
+      {
+        id: `kuantum`,
+        name: `Kuantum`,
+        label: `Aras Asas`,
+        gridMin: 0,
+        gridMax: 14,
+        step: 1,
+        showQuadrants: false,
+        questions: [
+          {
+            id: `Q1`,
+            title: `Isyarat Pemulihan Aras Mengufuk`,
+            scenario: `Pegawai Navigasi di stesen kawalan A(2, 3) perlu menghantar isyarat pemulihan ke panel suis B(9, 3) pada aras mengufuk yang sama. Tentukan jarak antara titik A dengan titik B (dalam unit).`,
+            coords: [`A(2, 3)`, `B(9, 3)`],
+            points: [
+              { label: `A`, x: 2, y: 3, role: `start` },
+              { label: `B`, x: 9, y: 3, role: `target` }
+            ],
+            hintVisual: { type: `horizontal`, x1: 2, y1: 3, x2: 9, y2: 3 },
+            hintText: `Perhatikan kedua-dua titik berkongsi koordinat-y yang sama (y = 3). Ini bermakna garis AB selari dengan paksi-x. Kira perbezaan koordinat-x: |x₂ − x₁| atau bilang petak grid secara mengufuk dari x = 2 ke x = 9.`,
+            answer: 7,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>y = 3</code>.`,
+              `Oleh itu, jarak AB ialah jarak mengufuk selari dengan paksi-x.`,
+              `Kira jarak mengufuk: <code>|x₂ − x₁| = |9 − 2| = 7 unit</code>.`,
+              `Kod PIN Keselamatan ialah <code>7</code>.`
+            ]
+          },
+          {
+            id: `Q2`,
+            title: `Sensor Pengesan Aras Mencancang`,
+            scenario: `Pintu laser kedua memerlukan nilai ketinggian tegak dari nod bawah P(5, 1) ke pengesan atas Q(5, 9). Kira jarak mencancang antara P dengan Q (dalam unit).`,
+            coords: [`P(5, 1)`, `Q(5, 9)`],
+            points: [
+              { label: `P`, x: 5, y: 1, role: `start` },
+              { label: `Q`, x: 5, y: 9, role: `target` }
+            ],
+            hintVisual: { type: `vertical`, x1: 5, y1: 1, x2: 5, y2: 9 },
+            hintText: `Koordinat-x bagi P dan Q adalah sama (x = 5), jadi laluan ini selari dengan paksi-y. Hitung jarak mencancang dengan menolak nilai y yang lebih kecil daripada nilai y yang lebih besar.`,
+            answer: 8,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>x = 5</code>.`,
+              `Oleh itu, jarak PQ ialah jarak mencancang selari dengan paksi-y.`,
+              `Kira jarak mencancang: <code>|y₂ − y₁| = |9 − 1| = 8 unit</code>.`,
+              `Kod PIN Keselamatan ialah <code>8</code>.`
+            ]
+          },
+          {
+            id: `Q3`,
+            title: `Terowong Kecemasan Detektif Grid`,
+            scenario: `Token Detektif A(1, 2) mesti bergerak mengikut laluan terus paling singkat untuk menyelamatkan mangsa di B(4, 6). Tentukan jarak terpendek antara A dengan B.`,
+            coords: [`A(1, 2)`, `B(4, 6)`],
+            points: [
+              { label: `A`, x: 1, y: 2, role: `start` },
+              { label: `B`, x: 4, y: 6, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 4, y2: 6, cx: 4, cy: 2 },
+            hintText: `Bina sebuah segi tiga bersudut tegak dengan bucu sudut tegak C(4, 2). Hitung panjang tapak mengufuk (4 − 1) dan tinggi mencancang (6 − 2), kemudian gunakan Teorem Pythagoras c = √(a² + b²).`,
+            answer: 5,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Hitung jarak mengufuk: <code>a = 4 − 1 = 3 unit</code>.`,
+              `Hitung jarak mencancang: <code>b = 6 − 2 = 4 unit</code>.`,
+              `Gunakan Teorem Pythagoras: <code>AB = √(3² + 4²) = √(9 + 16) = √25</code>.`,
+              `Maka, jarak <code>AB = 5 unit</code>.`
+            ]
+          },
+          {
+            id: `Q4`,
+            title: `Lintasan Dron Peninjau Sektor I`,
+            scenario: `Dron peninjau berlepas dari pad pelancaran J(2, 1) menuju terus ke menara pemancar K(8, 9). Berapakah jarak penerbangan lurus dron tersebut?`,
+            coords: [`J(2, 1)`, `K(8, 9)`],
+            points: [
+              { label: `J`, x: 2, y: 1, role: `start` },
+              { label: `K`, x: 8, y: 9, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 2, y1: 1, x2: 8, y2: 9, cx: 8, cy: 1 },
+            hintText: `Cari beza koordinat-x (8 − 2) dan beza koordinat-y (9 − 1) terlebih dahulu. Jumlah kuasa dua kedua-dua sisi ini akan menghasilkan nombor kuasa dua sempurna.`,
+            answer: 10,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak mengufuk: <code>x₂ − x₁ = 8 − 2 = 6 unit</code>.`,
+              `Jarak mencancang: <code>y₂ − y₁ = 9 − 1 = 8 unit</code>.`,
+              `Kira hipotenus: <code>JK = √(6² + 8²) = √(36 + 64) = √100</code>.`,
+              `Maka, jarak <code>JK = 10 unit</code>.`
+            ]
+          },
+          {
+            id: `Q5`,
+            title: `Kabel Kuasa dari Titik Asalan`,
+            scenario: `Untuk menyahaktif Kunci Kuantum terakhir, kabel kuasa perlu ditarik terus dari titik asalan M(0, 0) ke terminal utama N(5, 12). Kira panjang kabel minimum yang diperlukan.`,
+            coords: [`M(0, 0)`, `N(5, 12)`],
+            points: [
+              { label: `M`, x: 0, y: 0, role: `start` },
+              { label: `N`, x: 5, y: 12, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 5, y2: 12, cx: 5, cy: 0 },
+            hintText: `Titik M ialah asalan (0, 0), jadi jarak mengufuk ialah 5 unit dan jarak mencancang ialah 12 unit. Hitung √(5² + 12²) menggunakan Teorem Pythagoras.`,
+            answer: 13,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak mengufuk dari asalan: <code>5 − 0 = 5 unit</code>.`,
+              `Jarak mencancang dari asalan: <code>12 − 0 = 12 unit</code>.`,
+              `Gunakan Teorem Pythagoras: <code>MN = √(5² + 12²) = √(25 + 144) = √169</code>.`,
+              `Maka, panjang kabel minimum ialah <code>13 unit</code>.`
+            ]
+          }
+        ]
+      },
+      {
+        id: `vektor`,
+        name: `Vektor`,
+        label: `Aras Sederhana`,
+        gridMin: 0,
+        gridMax: 12,
+        step: 1,
+        showQuadrants: false,
+        questions: [
+          {
+            id: `Q6`,
+            title: `Lintasan Laser Cermin Vektor`,
+            scenario: `Sektor Vektor memerlukan panjang tepat lintasan laser antara cermin P(2, 3) dengan penerima Q(7, 6). Gunakan rumus jarak dan bundarkan jawapan kepada 2 tempat perpuluhan.`,
+            coords: [`P(2, 3)`, `Q(7, 6)`],
+            points: [
+              { label: `P`, x: 2, y: 3, role: `start` },
+              { label: `Q`, x: 7, y: 6, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 2, y1: 3, x2: 7, y2: 6, cx: 7, cy: 3 },
+            hintText: `Gantikan (x₁, y₁) = (2, 3) dan (x₂, y₂) = (7, 6) ke dalam rumus d = √[(x₂ − x₁)² + (y₂ − y₁)²]. Anda akan memperoleh punca kuasa dua bagi 34; bundarkan kepada 2 tempat perpuluhan.`,
+            answer: 5.83,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan (cth: 5.83).`,
+            solutionSteps: [
+              `Gunakan rumus jarak: <code>d = √[(x₂ − x₁)² + (y₂ − y₁)²]</code>.`,
+              `Gantikan nilai: <code>PQ = √[(7 − 2)² + (6 − 3)²] = √(5² + 3²)</code>.`,
+              `Ringkaskan: <code>PQ = √(25 + 9) = √34</code>.`,
+              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 5.83 unit</code>.`
+            ]
+          },
+          {
+            id: `Q7`,
+            title: `Laluan Kapsul Kecemasan`,
+            scenario: `Kapsul kecemasan bergerak secara terus dari stesen A(3, 8) ke pintu keluar B(8, 6). Hitung jarak laluan kapsul tersebut (bundarkan kepada 2 tempat perpuluhan).`,
+            coords: [`A(3, 8)`, `B(8, 6)`],
+            points: [
+              { label: `A`, x: 3, y: 8, role: `start` },
+              { label: `B`, x: 8, y: 6, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 3, y1: 8, x2: 8, y2: 6, cx: 8, cy: 8 },
+            hintText: `Perhatikan koordinat-y menurun dari 8 ke 6, jadi (y₂ − y₁) = 6 − 8 = −2. Apabila dikuasa duakan, (−2)² bernilai positif (+4). Hitung √(5² + (−2)²).`,
+            answer: 5.39,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `Kira beza koordinat: <code>x₂ − x₁ = 8 − 3 = 5</code> dan <code>y₂ − y₁ = 6 − 8 = −2</code>.`,
+              `Gantikan ke dalam rumus jarak: <code>AB = √[5² + (−2)²]</code>.`,
+              `Ringkaskan: <code>AB = √(25 + 4) = √29</code>.`,
+              `Bundarkan kepada 2 tempat perpuluhan: <code>AB ≈ 5.39 unit</code>.`
+            ]
+          },
+          {
+            id: `Q8`,
+            title: `Pengesanan Nod Tenaga Berganda`,
+            scenario: `Radar mengesan dua nod tenaga pada kedudukan R(1, 9) dan S(7, 3). Kira jarak antara kedua-dua nod tersebut dalam unit (2 tempat perpuluhan).`,
+            coords: [`R(1, 9)`, `S(7, 3)`],
+            points: [
+              { label: `R`, x: 1, y: 9, role: `start` },
+              { label: `S`, x: 7, y: 3, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 1, y1: 9, x2: 7, y2: 3, cx: 7, cy: 9 },
+            hintText: `Hitung (7 − 1) untuk jarak mengufuk dan (3 − 9) untuk jarak mencancang. Kedua-dua beza ini memberi magnitud 6 unit. Maka, hitungkan √(6² + (−6)²).`,
+            answer: 8.49,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `Kira beza koordinat: <code>x₂ − x₁ = 7 − 1 = 6</code>, <code>y₂ − y₁ = 3 − 9 = −6</code>.`,
+              `Gantikan ke dalam rumus: <code>RS = √[6² + (−6)²] = √(36 + 36)</code>.`,
+              `Maka <code>RS = √72</code>.`,
+              `Bundarkan kepada 2 tempat perpuluhan: <code>RS ≈ 8.49 unit</code>.`
+            ]
+          },
+          {
+            id: `Q9`,
+            title: `Optimasi Laluan Robot Penyelamat`,
+            scenario: `Robot boleh bergerak melalui sudut C(10, 2) dari T(2, 2) ke U(10, 8), atau bergerak terus secara condong dari T ke U. Berapakah beza jarak (penjimatan laluan) apabila menggunakan laluan terus TU berbanding melalui C?`,
+            coords: [`T(2, 2)`, `C(10, 2)`, `U(10, 8)`],
+            points: [
+              { label: `T`, x: 2, y: 2, role: `start` },
+              { label: `C`, x: 10, y: 2, role: `helper` },
+              { label: `U`, x: 10, y: 8, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 2, y1: 2, x2: 10, y2: 8, cx: 10, cy: 2 },
+            hintText: `Langkah 1: Jumlahkan jarak mengufuk TC dan jarak mencancang CU. Langkah 2: Hitung jarak terus TU menggunakan rumus jarak. Langkah 3: Tolakkan jarak terus daripada jumlah jarak melalui C.`,
+            answer: 4,
+            tolerance: 0.01,
+            inputNote: `Masukkan beza jarak dalam unit (integer tepat).`,
+            solutionSteps: [
+              `Jarak melalui C: <code>TC = 10 − 2 = 8 unit</code>, <code>CU = 8 − 2 = 6 unit</code>.`,
+              `Jumlah jarak melalui C ialah <code>8 + 6 = 14 unit</code>.`,
+              `Jarak terus TU: <code>TU = √[(10 − 2)² + (8 − 2)²] = √(8² + 6²) = √100 = 10 unit</code>.`,
+              `Beza jarak (penjimatan) = <code>14 − 10 = 4 unit</code>.`
+            ]
+          },
+          {
+            id: `Q10`,
+            title: `Penyahaktifan Teras Sektor Vektor`,
+            scenario: `Kunci terakhir Sektor Vektor akan terbuka apabila jarak antara teras tenaga X(1, 2) dengan penerima Y(9, 7) dimasukkan. Kira jarak XY (2 tempat perpuluhan).`,
+            coords: [`X(1, 2)`, `Y(9, 7)`],
+            points: [
+              { label: `X`, x: 1, y: 2, role: `start` },
+              { label: `Y`, x: 9, y: 7, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 9, y2: 7, cx: 9, cy: 2 },
+            hintText: `Hitung Δx = 9 − 1 dan Δy = 7 − 2. Kuasa duakan kedua-dua nilai tersebut, jumlahkan untuk mendapat 89, kemudian cari punca kuasa dua √89.`,
+            answer: 9.43,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `Hitung beza koordinat: <code>x₂ − x₁ = 9 − 1 = 8</code>, <code>y₂ − y₁ = 7 − 2 = 5</code>.`,
+              `Gantikan ke dalam rumus: <code>XY = √(8² + 5²) = √(64 + 25)</code>.`,
+              `Maka <code>XY = √89</code>.`,
+              `Bundarkan kepada 2 tempat perpuluhan: <code>XY ≈ 9.43 unit</code>.`
+            ]
+          }
+        ]
+      },
+      {
+        id: `matriks`,
+        name: `Matriks`,
+        label: `Aras Tinggi`,
+        gridMin: -8,
+        gridMax: 8,
+        step: 1,
+        showQuadrants: true,
+        questions: [
+          {
+            id: `Q11`,
+            title: `Isyarat Rentas Sukuan II ke Sukuan I`,
+            scenario: `Isyarat kecemasan dipancarkan dari titik P(−2, 6) di Sukuan II ke stesen penerimaan Q(4, 1) di Sukuan I. Tentukan jarak PQ dalam unit (2 tempat perpuluhan).`,
+            coords: [`P(−2, 6)`, `Q(4, 1)`],
+            points: [
+              { label: `P`, x: -2, y: 6, role: `start` },
+              { label: `Q`, x: 4, y: 1, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: -2, y1: 6, x2: 4, y2: 1, cx: 4, cy: 6 },
+            hintText: `Berhati-hati dengan tanda negatif! Untuk beza koordinat-x: [4 − (−2)] = 4 + 2 = 6. Untuk beza koordinat-y: (1 − 6) = −5. Gantikan ke dalam rumus √[6² + (−5)²].`,
+            answer: 7.81,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `Hitung beza koordinat-x: <code>4 − (−2) = 4 + 2 = 6</code>.`,
+              `Hitung beza koordinat-y: <code>1 − 6 = −5</code>.`,
+              `Gantikan ke dalam rumus jarak: <code>PQ = √[6² + (−5)²] = √(36 + 25) = √61</code>.`,
+              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 7.81 unit</code>.`
+            ]
+          },
+          {
+            id: `Q12`,
+            title: `Terowong Matriks Sukuan III ke Sukuan I`,
+            scenario: `Terowong matriks bawah tanah menghubungkan bilik kuasa di A(−4, −3) pada Sukuan III ke pintu keluar di B(8, 2) pada Sukuan I. Berapakah panjang tepat terowong AB?`,
+            coords: [`A(−4, −3)`, `B(8, 2)`],
+            points: [
+              { label: `A`, x: -4, y: -3, role: `start` },
+              { label: `B`, x: 8, y: 2, role: `target` }
+            ],
+            hintVisual: { type: `triangle`, x1: -4, y1: -3, x2: 8, y2: 2, cx: 8, cy: -3 },
+            hintText: `Menolak nombor negatif bersamaan dengan menambah! Hitung [8 − (−4)] = 12 dan [2 − (−3)] = 5. Kemudian gunakan Teorem Pythagoras √(12² + 5²).`,
+            answer: 13,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Beza koordinat-x: <code>8 − (−4) = 8 + 4 = 12 unit</code>.`,
+              `Beza koordinat-y: <code>2 − (−3) = 2 + 3 = 5 unit</code>.`,
+              `Gunakan rumus jarak: <code>AB = √(12² + 5²) = √(144 + 25) = √169</code>.`,
+              `Maka, panjang terowong ialah <code>13 unit</code>.`
+            ]
+          },
+          {
+            id: `Q13`,
+            title: `Menjejak Koordinat-x Tersembunyi`,
+            scenario: `Jarak antara kunci magnetik A(2, −3) dengan sasaran B(x, 5) ialah 10 unit. Diberi titik B berada di Sukuan I (nilai x positif). Cari nilai koordinat-x tersebut untuk membuka kod PIN!`,
+            coords: [`A(2, −3)`, `B(x, 5)`, `Jarak AB = 10`],
+            points: [
+              { label: `A`, x: 2, y: -3, role: `start` }
+            ],
+            solvedPoints: [
+              { label: `B`, x: 8, y: 5, role: `target` }
+            ],
+            hintVisual: { type: `locus-x`, fixedX: 2, fixedY: -3, targetY: 5 },
+            hintText: `Gunakan rumus jarak dan kuasa duakan kedua-dua belah persamaan: 10² = (x − 2)² + [5 − (−3)]². Oleh sebab [5 − (−3)] = 8, anda akan mendapat (x − 2)² = 100 − 64 = 36. Pilih nilai x yang positif (Sukuan I).`,
+            answer: 8,
+            tolerance: 0.01,
+            inputNote: `Masukkan nilai koordinat-x (integer).`,
+            solutionSteps: [
+              `Susun persamaan jarak: <code>10 = √[(x − 2)² + (5 − (−3))²]</code>.`,
+              `Kuasa duakan kedua-dua belah: <code>100 = (x − 2)² + 8²</code> → <code>100 = (x − 2)² + 64</code>.`,
+              `Selesaikan: <code>(x − 2)² = 36</code> → <code>x − 2 = ±6</code>, maka <code>x = 8</code> atau <code>x = −4</code>.`,
+              `Oleh sebab B di Sukuan I (x &gt; 0), nilai koordinat-x ialah <code>8</code>.`
+            ]
+          },
+          {
+            id: `Q14`,
+            title: `Menjejak Koordinat-y Negatif (Sukuan IV)`,
+            scenario: `Penderia laser di K(−2, 1) berjarak tepat 10 unit dari nod keselamatan L(4, y) yang terletak di Sukuan IV (y < 0). Masukkan nilai koordinat-y (termasuk tanda negatif) sebagai kod PIN.`,
+            coords: [`K(−2, 1)`, `L(4, y)`, `Jarak KL = 10`],
+            points: [
+              { label: `K`, x: -2, y: 1, role: `start` }
+            ],
+            solvedPoints: [
+              { label: `L`, x: 4, y: -7, role: `target` }
+            ],
+            hintVisual: { type: `locus-y`, fixedX: -2, fixedY: 1, targetX: 4 },
+            hintText: `Bentukkan persamaan 10² = [4 − (−2)]² + (y − 1)². Beza x ialah 6, jadi 100 = 36 + (y − 1)², memberikan (y − 1)² = 64. Maka y − 1 = +8 atau −8. Pilih nilai y yang negatif (Sukuan IV).`,
+            answer: -7,
+            tolerance: 0.01,
+            inputNote: `Masukkan nilai integer negatif (gunakan butang −).`,
+            solutionSteps: [
+              `Bentukkan persamaan jarak: <code>10² = [4 − (−2)]² + (y − 1)²</code>.`,
+              `Ringkaskan: <code>100 = 6² + (y − 1)²</code> → <code>(y − 1)² = 100 − 36 = 64</code>.`,
+              `Ambil punca kuasa dua: <code>y − 1 = ±8</code>, maka <code>y = 9</code> atau <code>y = −7</code>.`,
+              `Oleh sebab L di Sukuan IV (y &lt; 0), nilai koordinat-y ialah <code>−7</code>.`
+            ]
+          },
+          {
+            id: `Q15`,
+            title: `Misi Akhir: Kapsul Penyelamat Terdekat`,
+            scenario: `Pintu Utama Bilik Kawalan terletak di titik asalan O(0, 0). Dua kapsul penyelamat dikesan di P(−6, 8) dan Q(3, −8). Kira jarak dari O ke kapsul yang lebih dekat (bundarkan kepada 2 tempat perpuluhan).`,
+            coords: [`O(0, 0)`, `P(−6, 8)`, `Q(3, −8)`],
+            points: [
+              { label: `O`, x: 0, y: 0, role: `start` },
+              { label: `P`, x: -6, y: 8, role: `helper` },
+              { label: `Q`, x: 3, y: -8, role: `target` }
+            ],
+            hintVisual: { type: `dual-origin`, p1: { x: -6, y: 8 }, p2: { x: 3, y: -8 } },
+            hintText: `Hitung jarak setiap kapsul dari asalan O(0, 0) menggunakan d = √(x² + y²): kira jarak OP = √[(−6)² + 8²] dan jarak OQ = √[3² + (−8)²]. Bandingkan kedua-duanya dan masukkan jarak yang lebih pendek.`,
+            answer: 8.54,
+            tolerance: 0.02,
+            inputNote: `Bundarkan jarak terdekat kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `Jarak kapsul P dari asalan O(0, 0): <code>OP = √[(−6)² + 8²] = √(36 + 64) = √100 = 10 unit</code>.`,
+              `Jarak kapsul Q dari asalan O(0, 0): <code>OQ = √[3² + (−8)²] = √(9 + 64) = √73 ≈ 8.54 unit</code>.`,
+              `Bandingkan jarak: <code>8.54 &lt; 10</code>, maka kapsul Q lebih dekat.`,
+              `Kod PIN Pembebasan Utama ialah <code>8.54</code>.`
+            ]
+          }
+        ]
+      }
+    ];
+
+    const appState = {
+      currentLevel: 0,
+      currentQ: 0,
+      solved: {},
+      hintsUsed: {},
+      attempts: {},
+      score: 0,
+      elapsedSeconds: 0,
+      hintVisible: false,
+      formulaVisible: false,
+      cursorCoord: null
+    };
+
+    let timerInterval = null;
+
+    function getQuestionKey(levelIdx, qIdx) {
+      return `${levelIdx}-${qIdx}`;
+    }
+
+    function getCurrentLevel() {
+      return LEVELS[appState.currentLevel];
+    }
+
+    function getCurrentQuestion() {
+      return LEVELS[appState.currentLevel].questions[appState.currentQ];
+    }
+
+    function formatTime(totalSec) {
+      const mins = Math.floor(totalSec / 60);
+      const secs = totalSec % 60;
+      const mStr = String(mins).padStart(2, `0`);
+      const sStr = String(secs).padStart(2, `0`);
+      return `${mStr}:${sStr}`;
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(function () {
+        if (getTotalSolvedCount() < 15) {
+          appState.elapsedSeconds += 1;
+          const timerEl = document.getElementById(`hud-timer`);
+          if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
+        } else {
+          const statusEl = document.getElementById(`hud-timer-status`);
+          if (statusEl) statusEl.textContent = `Misi tamat`;
+        }
+      }, 1000);
+    }
+
+    function getTotalSolvedCount() {
+      let count = 0;
+      LEVELS.forEach(function (lvl, lIdx) {
+        lvl.questions.forEach(function (_, qIdx) {
+          if (appState.solved[getQuestionKey(lIdx, qIdx)]) count += 1;
+        });
+      });
+      return count;
+    }
+
+    function getLevelSolvedCount(lIdx) {
+      let count = 0;
+      LEVELS[lIdx].questions.forEach(function (_, qIdx) {
+        if (appState.solved[getQuestionKey(lIdx, qIdx)]) count += 1;
+      });
+      return count;
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi) {
+        await window.notebookAppApi.setAppState({
+          currentLevel: appState.currentLevel,
+          currentQ: appState.currentQ,
+          solved: appState.solved,
+          hintsUsed: appState.hintsUsed,
+          attempts: appState.attempts,
+          score: appState.score,
+          elapsedSeconds: appState.elapsedSeconds
+        });
+      }
+    }
+
+    async function loadSavedState() {
+      if (window.notebookAppApi) {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === `object`) {
+          if (typeof saved.currentLevel === `number`) appState.currentLevel = Math.min(2, Math.max(0, saved.currentLevel));
+          if (typeof saved.currentQ === `number`) appState.currentQ = Math.min(4, Math.max(0, saved.currentQ));
+          if (saved.solved && typeof saved.solved === `object`) appState.solved = saved.solved;
+          if (saved.hintsUsed && typeof saved.hintsUsed === `object`) appState.hintsUsed = saved.hintsUsed;
+          if (saved.attempts && typeof saved.attempts === `object`) appState.attempts = saved.attempts;
+          if (typeof saved.score === `number`) appState.score = saved.score;
+          if (typeof saved.elapsedSeconds === `number`) appState.elapsedSeconds = saved.elapsedSeconds;
+        }
+      }
+    }
+
+    function updateHud() {
+      const totalSolved = getTotalSolvedCount();
+      const levelSolved = getLevelSolvedCount(appState.currentLevel);
+
+      const timerEl = document.getElementById(`hud-timer`);
+      if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
+
+      const scoreEl = document.getElementById(`hud-score`);
+      if (scoreEl) scoreEl.textContent = String(appState.score);
+
+      const progEl = document.getElementById(`hud-progress`);
+      if (progEl) progEl.textContent = `${totalSolved} / 15`;
+
+      const lvlProgEl = document.getElementById(`hud-level-progress`);
+      if (lvlProgEl) lvlProgEl.textContent = `Aras semasa: ${levelSolved} / 5`;
+
+      const doorEl = document.getElementById(`hud-door-status`);
+      const doorCapEl = document.getElementById(`hud-door-caption`);
+      if (doorEl && doorCapEl) {
+        if (totalSolved === 15) {
+          doorEl.textContent = `TERBUKA`;
+          doorEl.className = `hud-value is-cyan`;
+          doorCapEl.textContent = `Semua 15 pintu laser dinyahaktif`;
+        } else if (levelSolved === 5) {
+          doorEl.textContent = `SEKTOR BEBAS`;
+          doorEl.className = `hud-value is-cyan`;
+          doorCapEl.textContent = `Teruskan ke sektor seterusnya`;
+        } else {
+          doorEl.textContent = `TERKUNCI`;
+          doorEl.className = `hud-value is-yellow`;
+          doorCapEl.textContent = `${15 - totalSolved} lagi PIN diperlukan`;
+        }
+      }
+
+      LEVELS.forEach(function (lvl, idx) {
+        const metaEl = document.getElementById(`meta-level-${idx}`);
+        const solvedInLvl = getLevelSolvedCount(idx);
+        const descriptions = [
+          `Selari paksi & Sukuan I`,
+          `Rumus jarak positif`,
+          `4 sukuan & koordinat`
+        ];
+        if (metaEl) {
+          metaEl.textContent = `${solvedInLvl}/5 PIN — ${descriptions[idx]}`;
+        }
+
+        const tabBtn = document.getElementById(`tab-level-${idx}`);
+        if (tabBtn) {
+          const active = idx === appState.currentLevel;
+          tabBtn.classList.toggle(`is-active`, active);
+          tabBtn.setAttribute(`aria-selected`, active ? `true` : `false`);
+        }
+      });
+
+      const completePanel = document.getElementById(`mission-complete-panel`);
+      if (completePanel) {
+        if (totalSolved === 15) {
+          completePanel.classList.remove(`hidden`);
+          renderCompletionStats();
+        } else {
+          completePanel.classList.add(`hidden`);
+        }
+      }
+    }
+
+    function renderCompletionStats() {
+      const container = document.getElementById(`report-stats`);
+      if (!container) return;
+      const hintsCount = Object.keys(appState.hintsUsed).filter(function (k) {
+        return appState.hintsUsed[k];
+      }).length;
+      const totalAttempts = Object.values(appState.attempts).reduce(function (acc, n) {
+        return acc + (Number(n) || 0);
+      }, 0);
+      container.innerHTML = `
+        <div class="hud-tile is-cyan">
+          <span class="hud-label">Skor Akhir</span>
+          <span class="hud-value is-cyan">${appState.score}</span>
+          <span class="hud-caption">Maksimum 1500 mata</span>
+        </div>
+        <div class="hud-tile">
+          <span class="hud-label">Masa Diambil</span>
+          <span class="hud-value is-pink">${formatTime(appState.elapsedSeconds)}</span>
+          <span class="hud-caption">Masa penyahaktifan penuh</span>
+        </div>
+        <div class="hud-tile is-cyan">
+          <span class="hud-label">Petunjuk Digunakan</span>
+          <span class="hud-value is-cyan">${hintsCount} / 15</span>
+          <span class="hud-caption">Panduan visual &amp; teks</span>
+        </div>
+        <div class="hud-tile">
+          <span class="hud-label">Jumlah Cubaan PIN</span>
+          <span class="hud-value is-yellow">${totalAttempts}</span>
+          <span class="hud-caption">Ketepatan penyelesaian</span>
+        </div>
+      `;
+    }
+
+    function renderPinNodes() {
+      const container = document.getElementById(`pin-nodes-container`);
+      const sectorLabel = document.getElementById(`sector-label`);
+      const lvl = getCurrentLevel();
+      if (sectorLabel) {
+        sectorLabel.textContent = `NOD KUNCI SEKTOR ${lvl.name.toUpperCase()}:`;
+      }
+      if (!container) return;
+      container.innerHTML = ``;
+
+      lvl.questions.forEach(function (q, idx) {
+        const key = getQuestionKey(appState.currentLevel, idx);
+        const isSolved = Boolean(appState.solved[key]);
+        const isCurrent = idx === appState.currentQ;
+
+        const btn = document.createElement(`button`);
+        btn.type = `button`;
+        btn.className = `pin-node` + (isCurrent ? ` is-current` : ``) + (isSolved ? ` is-solved` : ``);
+        btn.onclick = function () {
+          selectQuestion(idx);
+        };
+        const statusIcon = isSolved ? `✓` : `🔒`;
+        btn.innerHTML = `<span aria-hidden="true">${statusIcon}</span> <span>PIN ${idx + 1}</span>`;
+        btn.setAttribute(`aria-label`, `Soalan ${idx + 1}: ${q.title}${isSolved ? ` (Selesai)` : ``}`);
+        container.appendChild(btn);
+      });
+    }
+
+    function renderQuestionPanel() {
+      const lvl = getCurrentLevel();
+      const q = getCurrentQuestion();
+      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
+      const isSolved = Boolean(appState.solved[key]);
+
+      const codeBadge = document.getElementById(`question-code-badge`);
+      if (codeBadge) codeBadge.textContent = `${lvl.name.toUpperCase()} // PIN 0${appState.currentQ + 1}`;
+
+      const statusBadge = document.getElementById(`question-status-badge`);
+      if (statusBadge) {
+        if (isSolved) {
+          statusBadge.textContent = `TERBUKA`;
+          statusBadge.className = `badge-tag`;
+        } else {
+          statusBadge.textContent = `TERKUNCI`;
+          statusBadge.className = `badge-tag is-yellow`;
+        }
+      }
+
+      const titleEl = document.getElementById(`question-title`);
+      if (titleEl) titleEl.textContent = q.title;
+
+      const textEl = document.getElementById(`question-text`);
+      if (textEl) textEl.textContent = q.scenario;
+
+      const chipsEl = document.getElementById(`coords-chips`);
+      if (chipsEl) {
+        chipsEl.innerHTML = q.coords.map(function (c) {
+          return `<span class="coord-chip"><strong>DATA:</strong> ${c}</span>`;
+        }).join(``);
+      }
+
+      const hintTextEl = document.getElementById(`hint-text`);
+      if (hintTextEl) hintTextEl.textContent = q.hintText;
+
+      const hintPanel = document.getElementById(`hint-panel`);
+      const hintBtnLabel = document.getElementById(`btn-hint-label`);
+      if (hintPanel && hintBtnLabel) {
+        if (appState.hintVisible) {
+          hintPanel.classList.remove(`hidden`);
+          hintBtnLabel.textContent = `Sembunyikan Petunjuk`;
+        } else {
+          hintPanel.classList.add(`hidden`);
+          hintBtnLabel.textContent = `Aktifkan Petunjuk (Hint)`;
+        }
+      }
+
+      const noteEl = document.getElementById(`input-format-note`);
+      if (noteEl) noteEl.textContent = q.inputNote;
+
+      const pinInput = document.getElementById(`pin-input`);
+      if (pinInput) {
+        pinInput.value = isSolved ? String(q.answer) : ``;
+        pinInput.disabled = isSolved;
+      }
+
+      const verifyBtn = document.getElementById(`btn-verify-pin`);
+      if (verifyBtn) verifyBtn.disabled = isSolved;
+
+      const feedbackBanner = document.getElementById(`feedback-banner`);
+      const solutionCard = document.getElementById(`solution-card`);
+      const solutionSteps = document.getElementById(`solution-steps`);
+
+      if (isSolved) {
+        if (feedbackBanner) {
+          feedbackBanner.className = `feedback-banner is-success`;
+          const fh = document.getElementById(`feedback-heading`);
+          const fm = document.getElementById(`feedback-message`);
+          if (fh) fh.textContent = `AKSES DIBENARKAN // KOD PIN ${q.answer} SAH`;
+          if (fm) fm.textContent = `Kunci keselamatan bagi nod ini telah berjaya dibuka. Semak langkah penyelesaian lengkap di bawah.`;
+        }
+        if (solutionCard && solutionSteps) {
+          solutionSteps.innerHTML = q.solutionSteps.map(function (s) {
+            return `<li>${s}</li>`;
+          }).join(``);
+          solutionCard.classList.remove(`hidden`);
+        }
+      } else {
+        if (feedbackBanner) feedbackBanner.classList.add(`hidden`);
+        if (solutionCard) solutionCard.classList.add(`hidden`);
+      }
+
+      const prevBtn = document.getElementById(`btn-prev-q`);
+      const nextBtn = document.getElementById(`btn-next-q`);
+      if (prevBtn) prevBtn.disabled = (appState.currentLevel === 0 && appState.currentQ === 0);
+      if (nextBtn) nextBtn.disabled = (appState.currentLevel === 2 && appState.currentQ === 4);
+    }
+
+    // SVG Coordinate Mapping
+    const SVG_W = 560;
+    const SVG_H = 440;
+    const PAD_L = 48;
+    const PAD_R = 28;
+    const PAD_T = 26;
+    const PAD_B = 42;
+
+    function getPlotBounds() {
+      const lvl = getCurrentLevel();
+      const plotW = SVG_W - PAD_L - PAD_R;
+      const plotH = SVG_H - PAD_T - PAD_B;
+      const units = lvl.gridMax - lvl.gridMin;
+      const size = Math.min(plotW, plotH);
+      const offsetX = PAD_L + (plotW - size) / 2;
+      const offsetY = PAD_T + (plotH - size) / 2;
+      const unitPx = size / units;
+      return {
+        min: lvl.gridMin,
+        max: lvl.gridMax,
+        offsetX: offsetX,
+        offsetY: offsetY,
+        size: size,
+        unitPx: unitPx
+      };
+    }
+
+    function toSvgX(x, b) {
+      return b.offsetX + (x - b.min) * b.unitPx;
+    }
+
+    function toSvgY(y, b) {
+      return b.offsetY + (b.max - y) * b.unitPx;
+    }
+
+    function svgEl(tag, attrs) {
+      const el = document.createElementNS(`http://www.w3.org/2000/svg`, tag);
+      Object.keys(attrs).forEach(function (k) {
+        el.setAttribute(k, attrs[k]);
+      });
+      return el;
+    }
+
+    function renderCartesianPlane() {
+      const lvl = getCurrentLevel();
+      const q = getCurrentQuestion();
+      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
+      const isSolved = Boolean(appState.solved[key]);
+      const b = getPlotBounds();
+
+      const gridLayer = document.getElementById(`svg-grid-layer`);
+      const axesLayer = document.getElementById(`svg-axes-layer`);
+      const hintLayer = document.getElementById(`svg-hint-layer`);
+      const solLayer = document.getElementById(`svg-solution-layer`);
+      const ptsLayer = document.getElementById(`svg-points-layer`);
+
+      if (!gridLayer || !axesLayer || !hintLayer || !solLayer || !ptsLayer) return;
+
+      gridLayer.innerHTML = ``;
+      axesLayer.innerHTML = ``;
+      hintLayer.innerHTML = ``;
+      solLayer.innerHTML = ``;
+      ptsLayer.innerHTML = ``;
+
+      const rangeBadge = document.getElementById(`grid-range-badge`);
+      if (rangeBadge) {
+        rangeBadge.textContent = lvl.showQuadrants
+          ? `4 SUKUAN (${lvl.gridMin} HINGGA +${lvl.gridMax})`
+          : `SUKUAN I (0 HINGGA ${lvl.gridMax})`;
+      }
+
+      // Draw gridlines & ticks
+      for (let v = b.min; v <= b.max; v += 1) {
+        const sx = toSvgX(v, b);
+        const sy = toSvgY(v, b);
+
+        // Vertical gridline
+        gridLayer.appendChild(svgEl(`line`, {
+          x1: sx, y1: b.offsetY, x2: sx, y2: b.offsetY + b.size,
+          stroke: `var(--outline-variant)`,
+          'stroke-width': v === 0 ? `0` : `1`
+        }));
+
+        // Horizontal gridline
+        gridLayer.appendChild(svgEl(`line`, {
+          x1: b.offsetX, y1: sy, x2: b.offsetX + b.size, y2: sy,
+          stroke: `var(--outline-variant)`,
+          'stroke-width': v === 0 ? `0` : `1`
+        }));
+
+        // Tick labels (every 2 units if range > 10, else every 1 or 2)
+        const showTick = (b.max - b.min > 12) ? (v % 2 === 0) : (v % 2 === 0 || (b.max - b.min <= 12 && v % 2 === 0));
+        if (showTick) {
+          const xAxisY = toSvgY(0, b);
+          const xTickLbl = svgEl(`text`, {
+            x: sx,
+            y: xAxisY + 15,
+            fill: `var(--on-surface-variant)`,
+            'font-family': `var(--font-label)`,
+            'font-size': `10`,
+            'text-anchor': `middle`
+          });
+          xTickLbl.textContent = String(v);
+          axesLayer.appendChild(xTickLbl);
+
+          if (v !== 0) {
+            const yAxisX = toSvgX(0, b);
+            const yTickLbl = svgEl(`text`, {
+              x: yAxisX - 8,
+              y: sy + 3.5,
+              fill: `var(--on-surface-variant)`,
+              'font-family': `var(--font-label)`,
+              'font-size': `10`,
+              'text-anchor': `end`
+            });
+            yTickLbl.textContent = String(v);
+            axesLayer.appendChild(yTickLbl);
+          }
+        }
+      }
+
+      // Draw X and Y axes
+      const axisX0 = toSvgX(0, b);
+      const axisY0 = toSvgY(0, b);
+
+      axesLayer.appendChild(svgEl(`line`, {
+        x1: b.offsetX, y1: axisY0, x2: b.offsetX + b.size, y2: axisY0,
+        stroke: `var(--outline)`,
+        'stroke-width': `2`
+      }));
+      axesLayer.appendChild(svgEl(`line`, {
+        x1: axisX0, y1: b.offsetY, x2: axisX0, y2: b.offsetY + b.size,
+        stroke: `var(--outline)`,
+        'stroke-width': `2`
+      }));
+
+      // Axis labels x and y
+      const xLabel = svgEl(`text`, {
+        x: b.offsetX + b.size + 12,
+        y: axisY0 + 4,
+        fill: `var(--secondary)`,
+        'font-family': `var(--font-label)`,
+        'font-size': `12`,
+        'font-weight': `700`
+      });
+      xLabel.textContent = `x`;
+      axesLayer.appendChild(xLabel);
+
+      const yLabel = svgEl(`text`, {
+        x: axisX0,
+        y: b.offsetY - 10,
+        fill: `var(--secondary)`,
+        'font-family': `var(--font-label)`,
+        'font-size': `12`,
+        'font-weight': `700`,
+        'text-anchor': `middle`
+      });
+      yLabel.textContent = `y`;
+      axesLayer.appendChild(yLabel);
+
+      // Quadrant markers for Level 3
+      if (lvl.showQuadrants) {
+        const quads = [
+          { txt: `SUKUAN I (+,+)`, x: b.offsetX + b.size * 0.76, y: b.offsetY + 18 },
+          { txt: `SUKUAN II (−,+)`, x: b.offsetX + b.size * 0.24, y: b.offsetY + 18 },
+          { txt: `SUKUAN III (−,−)`, x: b.offsetX + b.size * 0.24, y: b.offsetY + b.size - 10 },
+          { txt: `SUKUAN IV (+,−)`, x: b.offsetX + b.size * 0.76, y: b.offsetY + b.size - 10 }
+        ];
+        quads.forEach(function (qd) {
+          const qt = svgEl(`text`, {
+            x: qd.x,
+            y: qd.y,
+            fill: `var(--outline)`,
+            'font-family': `var(--font-label)`,
+            'font-size': `10`,
+            'text-anchor': `middle`
+          });
+          qt.textContent = qd.txt;
+          axesLayer.appendChild(qt);
+        });
+      }
+
+      // Draw Hint Overlay if hintVisible or solved
+      if (appState.hintVisible || isSolved) {
+        const hv = q.hintVisual;
+        if (hv.type === `horizontal` || hv.type === `vertical`) {
+          hintLayer.appendChild(svgEl(`line`, {
+            x1: toSvgX(hv.x1, b), y1: toSvgY(hv.y1, b),
+            x2: toSvgX(hv.x2, b), y2: toSvgY(hv.y2, b),
+            stroke: `var(--tertiary)`,
+            'stroke-width': `2.5`,
+            'stroke-dasharray': `6 4`
+          }));
+        } else if (hv.type === `triangle`) {
+          const sx1 = toSvgX(hv.x1, b);
+          const sy1 = toSvgY(hv.y1, b);
+          const sx2 = toSvgX(hv.x2, b);
+          const sy2 = toSvgY(hv.y2, b);
+          const scx = toSvgX(hv.cx, b);
+          const scy = toSvgY(hv.cy, b);
+
+          hintLayer.appendChild(svgEl(`line`, {
+            x1: sx1, y1: sy1, x2: scx, y2: scy,
+            stroke: `var(--tertiary)`,
+            'stroke-width': `2`,
+            'stroke-dasharray': `5 4`
+          }));
+          hintLayer.appendChild(svgEl(`line`, {
+            x1: scx, y1: scy, x2: sx2, y2: sy2,
+            stroke: `var(--tertiary)`,
+            'stroke-width': `2`,
+            'stroke-dasharray': `5 4`
+          }));
+          hintLayer.appendChild(svgEl(`circle`, {
+            cx: scx, cy: scy, r: `4`,
+            fill: `var(--tertiary)`
+          }));
+          const cLbl = svgEl(`text`, {
+            x: scx + 8,
+            y: scy + (sy2 > scy ? -8 : 14),
+            fill: `var(--tertiary)`,
+            'font-family': `var(--font-label)`,
+            'font-size': `11`,
+            'font-weight': `700`
+          });
+          cLbl.textContent = `C(${hv.cx}, ${hv.cy})`;
+          hintLayer.appendChild(cLbl);
+
+          // If not yet solved, show dashed hypotenuse guide without number
+          if (!isSolved) {
+            hintLayer.appendChild(svgEl(`line`, {
+              x1: sx1, y1: sy1, x2: sx2, y2: sy2,
+              stroke: `var(--primary)`,
+              'stroke-width': `1.5`,
+              'stroke-dasharray': `3 4`
+            }));
+          }
+        } else if (hv.type === `locus-x`) {
+          const syTarget = toSvgY(hv.targetY, b);
+          hintLayer.appendChild(svgEl(`line`, {
+            x1: b.offsetX, y1: syTarget, x2: b.offsetX + b.size, y2: syTarget,
+            stroke: `var(--tertiary)`,
+            'stroke-width': `1.5`,
+            'stroke-dasharray': `5 4`
+          }));
+          const lLbl = svgEl(`text`, {
+            x: b.offsetX + 8,
+            y: syTarget - 6,
+            fill: `var(--tertiary)`,
+            'font-family': `var(--font-label)`,
+            'font-size': `10`
+          });
+          lLbl.textContent = `Garis y = ${hv.targetY} (B terletak pada garis ini)`;
+          hintLayer.appendChild(lLbl);
+        } else if (hv.type === `locus-y`) {
+          const sxTarget = toSvgX(hv.targetX, b);
+          hintLayer.appendChild(svgEl(`line`, {
+            x1: sxTarget, y1: b.offsetY, x2: sxTarget, y2: b.offsetY + b.size,
+            stroke: `var(--tertiary)`,
+            'stroke-width': `1.5`,
+            'stroke-dasharray': `5 4`
+          }));
+          const lLbl = svgEl(`text`, {
+            x: sxTarget + 6,
+            y: b.offsetY + 34,
+            fill: `var(--tertiary)`,
+            'font-family': `var(--font-label)`,
+            'font-size': `10`
+          });
+          lLbl.textContent = `x = ${hv.targetX}`;
+          hintLayer.appendChild(lLbl);
+        } else if (hv.type === `dual-origin`) {
+          const ox = toSvgX(0, b);
+          const oy = toSvgY(0, b);
+          [hv.p1, hv.p2].forEach(function (pt) {
+            hintLayer.appendChild(svgEl(`line`, {
+              x1: ox, y1: oy, x2: toSvgX(pt.x, b), y2: toSvgY(pt.y, b),
+              stroke: `var(--tertiary)`,
+              'stroke-width': `2`,
+              'stroke-dasharray': `5 4`
+            }));
+          });
+        }
+      }
+
+      // Draw Solved Direct Line
+      if (isSolved) {
+        const allPts = q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
+        if (q.id === `Q15`) {
+          const ox = toSvgX(0, b);
+          const oy = toSvgY(0, b);
+          const qx = toSvgX(3, b);
+          const qy = toSvgY(-8, b);
+          solLayer.appendChild(svgEl(`line`, {
+            x1: ox, y1: oy, x2: qx, y2: qy,
+            stroke: `var(--primary)`,
+            'stroke-width': `3`,
+            'class': `svg-glow-line`
+          }));
+        } else if (allPts.length >= 2) {
+          const pA = allPts[0];
+          const pB = allPts[allPts.length - 1];
+          solLayer.appendChild(svgEl(`line`, {
+            x1: toSvgX(pA.x, b), y1: toSvgY(pA.y, b),
+            x2: toSvgX(pB.x, b), y2: toSvgY(pB.y, b),
+            stroke: `var(--primary)`,
+            'stroke-width': `3`,
+            'class': `svg-glow-line`
+          }));
+        }
+      }
+
+      // Draw Mission Points
+      const pointsToRender = isSolved && q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
+      pointsToRender.forEach(function (pt) {
+        const px = toSvgX(pt.x, b);
+        const py = toSvgY(pt.y, b);
+        const color = pt.role === `start` ? `var(--secondary)` : (pt.role === `helper` ? `var(--tertiary)` : `var(--primary)`);
+
+        ptsLayer.appendChild(svgEl(`circle`, {
+          cx: px, cy: py, r: `8`,
+          fill: `var(--surface-container)`,
+          stroke: color,
+          'stroke-width': `2.5`
+        }));
+        ptsLayer.appendChild(svgEl(`circle`, {
+          cx: px, cy: py, r: `3.5`,
+          fill: color
+        }));
+
+        const labelX = pt.x >= b.max - 2 ? px - 10 : px + 10;
+        const anchor = pt.x >= b.max - 2 ? `end` : `start`;
+        const labelY = pt.y >= b.max - 1 ? py + 16 : py - 10;
+
+        const txt = svgEl(`text`, {
+          x: labelX,
+          y: labelY,
+          fill: color,
+          'font-family': `var(--font-label)`,
+          'font-size': `12`,
+          'font-weight': `700`,
+          'text-anchor': anchor
+        });
+        txt.textContent = `${pt.label}(${pt.x}, ${pt.y})`;
+        ptsLayer.appendChild(txt);
+      });
+
+      renderCursorMarker();
+    }
+
+    function renderCursorMarker() {
+      const cursorLayer = document.getElementById(`svg-cursor-layer`);
+      const readoutEl = document.getElementById(`scanner-coords`);
+      if (!cursorLayer || !readoutEl) return;
+      cursorLayer.innerHTML = ``;
+
+      if (!appState.cursorCoord) {
+        readoutEl.textContent = `(x, y) = —`;
+        return;
+      }
+
+      const b = getPlotBounds();
+      const cx = appState.cursorCoord.x;
+      const cy = appState.cursorCoord.y;
+      const sx = toSvgX(cx, b);
+      const sy = toSvgY(cy, b);
+
+      readoutEl.textContent = `(x, y) = (${cx}, ${cy})`;
+
+      cursorLayer.appendChild(svgEl(`circle`, {
+        cx: sx, cy: sy, r: `6`,
+        fill: `none`,
+        stroke: `var(--secondary)`,
+        'stroke-width': `1.5`,
+        'stroke-dasharray': `2 2`
+      }));
+    }
+
+    function handleGridPointer(evt) {
+      const svg = document.getElementById(`cartesian-svg`);
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      const svgX = ((evt.clientX - rect.left) / rect.width) * SVG_W;
+      const svgY = ((evt.clientY - rect.top) / rect.height) * SVG_H;
+      const b = getPlotBounds();
+
+      const gridX = Math.round((svgX - b.offsetX) / b.unitPx + b.min);
+      const gridY = Math.round(b.max - (svgY - b.offsetY) / b.unitPx);
+
+      if (gridX >= b.min && gridX <= b.max && gridY >= b.min && gridY <= b.max) {
+        appState.cursorCoord = { x: gridX, y: gridY };
+        renderCursorMarker();
+      }
+    }
+
+    // Interactive Actions (Hoisted function declarations)
+    function selectLevel(levelIdx) {
+      appState.currentLevel = levelIdx;
+      appState.currentQ = 0;
+      appState.hintVisible = false;
+      appState.cursorCoord = null;
+      refreshAll();
+      persistState();
+    }
+
+    function selectQuestion(qIdx) {
+      appState.currentQ = qIdx;
+      appState.hintVisible = false;
+      appState.cursorCoord = null;
+      refreshAll();
+      persistState();
+    }
+
+    function navigateQuestion(delta) {
+      let l = appState.currentLevel;
+      let q = appState.currentQ + delta;
+      if (q < 0) {
+        if (l > 0) {
+          l -= 1;
+          q = 4;
+        } else {
+          q = 0;
+        }
+      } else if (q > 4) {
+        if (l < 2) {
+          l += 1;
+          q = 0;
+        } else {
+          q = 4;
+        }
+      }
+      appState.currentLevel = l;
+      appState.currentQ = q;
+      appState.hintVisible = false;
+      appState.cursorCoord = null;
+      refreshAll();
+      persistState();
+    }
+
+    function toggleHint() {
+      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
+      appState.hintVisible = !appState.hintVisible;
+      if (appState.hintVisible) {
+        appState.hintsUsed[key] = true;
+      }
+      renderQuestionPanel();
+      renderCartesianPlane();
+      persistState();
+    }
+
+    function toggleFormulaDrawer() {
+      appState.formulaVisible = !appState.formulaVisible;
+      const drawer = document.getElementById(`formula-drawer`);
+      if (drawer) {
+        drawer.classList.toggle(`hidden`, !appState.formulaVisible);
+      }
+    }
+
+    function pressKey(ch) {
+      const input = document.getElementById(`pin-input`);
+      if (!input || input.disabled) return;
+      if (ch === `-`) {
+        if (input.value.startsWith(`-`)) {
+          input.value = input.value.slice(1);
+        } else {
+          input.value = `-` + input.value;
+        }
+        return;
+      }
+      if (ch === `.` && input.value.includes(`.`)) return;
+      if (input.value.length >= 10) return;
+      input.value += ch;
+    }
+
+    function backspacePin() {
+      const input = document.getElementById(`pin-input`);
+      if (!input || input.disabled) return;
+      input.value = input.value.slice(0, -1);
+    }
+
+    function clearPinInput() {
+      const input = document.getElementById(`pin-input`);
+      if (!input || input.disabled) return;
+      input.value = ``;
+    }
+
+    function submitPinForm(evt) {
+      evt.preventDefault();
+      verifyCurrentPin();
+    }
+
+    function verifyCurrentPin() {
+      const input = document.getElementById(`pin-input`);
+      const feedbackBanner = document.getElementById(`feedback-banner`);
+      const feedbackHeading = document.getElementById(`feedback-heading`);
+      const feedbackMsg = document.getElementById(`feedback-message`);
+      if (!input || !feedbackBanner || !feedbackHeading || !feedbackMsg) return;
+
+      const key = getQuestionKey(appState.currentLevel, appState.currentQ);
+      if (appState.solved[key]) return;
+
+      const raw = input.value.trim().replace(`,`, `.`);
+      if (!raw) {
+        feedbackBanner.className = `feedback-banner is-error`;
+        feedbackHeading.textContent = `RALAT INPUT // KOD PIN KOSONG`;
+        feedbackMsg.textContent = `Sila masukkan nilai jawapan menggunakan pad PIN digital atau papan kekunci sebelum mengesahkan.`;
+        return;
+      }
+
+      const numVal = Number(raw);
+      if (Number.isNaN(numVal)) {
+        feedbackBanner.className = `feedback-banner is-error`;
+        feedbackHeading.textContent = `RALAT FORMAT // BUKAN NOMBOR SAH`;
+        feedbackMsg.textContent = `Pastikan kod PIN hanya mengandungi angka, tanda negatif (−), atau titik perpuluhan (.).`;
+        return;
+      }
+
+      const q = getCurrentQuestion();
+      appState.attempts[key] = (appState.attempts[key] || 0) + 1;
+
+      if (Math.abs(numVal - q.answer) <= q.tolerance) {
+        appState.solved[key] = true;
+        const usedHint = Boolean(appState.hintsUsed[key]);
+        const pointsEarned = usedHint ? 80 : 100;
+        appState.score += pointsEarned;
+
+        refreshAll();
+        const updatedHeading = document.getElementById(`feedback-heading`);
+        const updatedMsg = document.getElementById(`feedback-message`);
+        if (updatedHeading) updatedHeading.textContent = `AKSES DIBENARKAN // +${pointsEarned} MATA`;
+        if (updatedMsg) {
+          updatedMsg.textContent = usedHint
+            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Semak langkah penyelesaian di bawah.`
+            : `Kod PIN ${q.answer} tepat pada percubaan tanpa petunjuk (+100 mata)! Semak langkah penyelesaian di bawah.`;
+        }
+        persistState();
+      } else {
+        feedbackBanner.className = `feedback-banner is-error`;
+        feedbackHeading.textContent = `AKSES DITOLAK // KOD PIN "${raw}" TIDAK SEPADAN`;
+        let tip = `Semak semula pengiraan (x₂ − x₁)² dan (y₂ − y₁)².`;
+        if (q.answer < 0 && numVal > 0) {
+          tip = `Perhatian: soalan ini memerlukan koordinat di Sukuan IV. Pastikan anda menyertakan tanda negatif (−).`;
+        } else if (String(q.answer).includes(`.`) && Number.isInteger(numVal)) {
+          tip = `Jawapan memerlukan punca kuasa dua yang dibundarkan kepada 2 tempat perpuluhan.`;
+        }
+        feedbackMsg.textContent = `${tip} Anda boleh menekan butang "Aktifkan Petunjuk" untuk melihat panduan langkah dan unjuran pada grid.`;
+        persistState();
+      }
+    }
+
+    function handleResetClick(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Klik Sekali Lagi Untuk Sahkan`;
+        setTimeout(function () {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
+      appState.currentLevel = 0;
+      appState.currentQ = 0;
+      appState.solved = {};
+      appState.hintsUsed = {};
+      appState.attempts = {};
+      appState.score = 0;
+      appState.elapsedSeconds = 0;
+      appState.hintVisible = false;
+      appState.cursorCoord = null;
+      refreshAll();
+      persistState();
+    }
+
+    function exportMissionReport() {
+      const totalSolved = getTotalSolvedCount();
+      const hintsUsed = Object.keys(appState.hintsUsed).filter(function (k) {
+        return appState.hintsUsed[k];
+      }).length;
+      const lines = [
+        `LAPORAN MISI: ESCAPE ROOM DIGITAL — MISI MENYELAMAT GRID`,
+        `Matematik Tingkatan 2 | Bab 7: Koordinat (SP 7.1.4)`,
+        `----------------------------------------------------------`,
+        `Masa Misi      : ${formatTime(appState.elapsedSeconds)}`,
+        `Skor Akhir     : ${appState.score} mata`,
+        `PIN Selesai    : ${totalSolved} / 15`,
+        `Petunjuk Guna  : ${hintsUsed} soalan`,
+        ``,
+        `PERINCIAN MENGIKUT ARAS:`,
+        `- Aras Asas (Kuantum)      : ${getLevelSolvedCount(0)} / 5 PIN`,
+        `- Aras Sederhana (Vektor)  : ${getLevelSolvedCount(1)} / 5 PIN`,
+        `- Aras Tinggi (Matriks)    : ${getLevelSolvedCount(2)} / 5 PIN`
+      ];
+      const content = lines.join(`\n`);
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `laporan-misi-grid.txt`
+        });
+      } else {
+        const blob = new Blob([content], { type: `text/plain;charset=utf-8` });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement(`a`);
+        a.href = url;
+        a.download = `laporan-misi-grid.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    function refreshAll() {
+      updateHud();
+      renderPinNodes();
+      renderQuestionPanel();
+      renderCartesianPlane();
+    }
+
+    async function initApp() {
+      await loadSavedState();
+
+      const svg = document.getElementById(`cartesian-svg`);
+      if (svg) {
+        svg.addEventListener(`pointermove`, handleGridPointer);
+        svg.addEventListener(`click`, handleGridPointer);
+      }
+
+      refreshAll();
+      startTimer();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
