@@ -815,52 +815,45 @@
     }
 
     .key-btn.is-submit:hover {
-      // =========================================================================
-    // KONFIGURASI GOOGLE SHEETS
-    // Tampal URL Web App Google Apps Script selepas deploy.
-    // =========================================================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0F_jbembvZOW18SS6gx7bagibiQ_sRl2EnHz8Rdh3XZDM9u16wz_tv5JN-2TZvTAWhw/exec";
-
-    function googleSheetGet(params) {
-      return new Promise(function (resolve, reject) {
-        if (!GOOGLE_SCRIPT_URL) return reject(new Error("URL Google Apps Script belum ditetapkan."));
-        const callbackName = "gsCallback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-        const url = new URL(GOOGLE_SCRIPT_URL);
-        Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
-        url.searchParams.set("callback", callbackName);
-        const script = document.createElement("script");
-        const cleanup = function () {
-          if (script.parentNode) script.parentNode.removeChild(script);
-          try { delete window[callbackName]; } catch (e) { window[callbackName] = undefined; }
-        };
-        const timeout = setTimeout(function () { cleanup(); reject(new Error("Google Sheets tidak memberi respons.")); }, 15000);
-        window[callbackName] = function (result) {
-          clearTimeout(timeout); cleanup();
-          if (result && result.error) reject(new Error(result.error)); else resolve(result || {});
-        };
-        script.onerror = function () { clearTimeout(timeout); cleanup(); reject(new Error("Gagal menghubungi Google Sheets.")); };
-        script.src = url.toString();
-        document.head.appendChild(script);
-      });
+      border-color: var(--secondary);
+      box-shadow: var(--glow-secondary);
+      text-shadow: var(--glow-text);
     }
 
-    async function googleSheetPost(payload) {
-      if (!GOOGLE_SCRIPT_URL) throw new Error("URL Google Apps Script belum ditetapkan.");
-      const dataKey = payload.action === "saveSubmission" ? "submission" : (payload.action === "saveRoom" ? "room" : null);
-      if (dataKey && payload[dataKey]) {
-        return await googleSheetGet({
-          action: payload.action,
-          data: JSON.stringify(payload[dataKey])
-        });
-      }
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-      return { ok: true };
+    /* Feedback & Step-by-Step Solution */
+    .feedback-banner {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      display: grid;
+      gap: var(--space-xs);
+      animation: fadeSlide var(--dur-short) var(--ease-out);
     }
+
+    .feedback-banner.is-success {
+      border-color: var(--secondary);
+      box-shadow: var(--cyan-inset);
+    }
+
+    .feedback-banner.is-error {
+      border-color: var(--error);
+    }
+
+    .feedback-heading {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .feedback-banner.is-success .feedback-heading {
+      color: var(--secondary);
+      text-shadow: var(--glow-text);
+    }
+
     .feedback-banner.is-error .feedback-heading {
       color: var(--error);
     }
@@ -1593,7 +1586,7 @@
     // KONFIGURASI GOOGLE SHEETS
     // Tampal URL Web App Google Apps Script selepas deploy.
     // =========================================================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMd50WC_NHKrYjZ4VgOwI4y2S8XYcE1oc9cFoLZFdnCNaJBXP6vKY0ZVORtqCuGL1-MQ/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0F_jbembvZOW18SS6gx7bagibiQ_sRl2EnHz8Rdh3XZDM9u16wz_tv5JN-2TZvTAWhw/exec";
 
     function googleSheetGet(params) {
       return new Promise(function (resolve, reject) {
@@ -1620,9 +1613,16 @@
 
     async function googleSheetPost(payload) {
       if (!GOOGLE_SCRIPT_URL) throw new Error("URL Google Apps Script belum ditetapkan.");
-      // no-cors mengelakkan sekatan CORS Google Apps Script; Apps Script menerima teks JSON.
+      const dataKey = payload.action === "saveSubmission" ? "submission" : (payload.action === "saveRoom" ? "room" : null);
+      if (dataKey && payload[dataKey]) {
+        return await googleSheetGet({
+          action: payload.action,
+          data: JSON.stringify(payload[dataKey])
+        });
+      }
       await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST", mode: "no-cors",
+        method: "POST",
+        mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       });
@@ -3607,4 +3607,3 @@
   </script>
 </body>
 </html>
-```[cite: 1]
