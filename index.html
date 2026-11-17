@@ -8,22 +8,14 @@
   <style>
     :root {
       color-scheme: dark;
-
-      /* Page and surfaces */
       --background: #0a0a12;
       --surface-container-low: #111118;
       --surface-container: #141422;
       --surface-container-high: #1e1e30;
-
-      /* Text */
       --on-surface: #e8e0f0;
       --on-surface-variant: #a098b0;
-
-      /* Lines */
       --outline: #5a5068;
       --outline-variant: #302840;
-
-      /* Neon accents */
       --primary: #ff2d78;
       --on-primary: #1a0010;
       --primary-container: #b3004e;
@@ -32,23 +24,15 @@
       --tertiary: #ffe04a;
       --error: #ff4444;
       --on-error: #1a0000;
-
-      /* Semantic */
       --positive: #00ffcc;
       --warning: #ffe04a;
       --focus: #ff2d78;
-
-      /* Fonts */
       --font-headline: 'Sora', sans-serif;
       --font-body: 'Inter', sans-serif;
       --font-label: 'Space Mono', monospace;
-
-      /* Shape */
       --rounded: 0.125rem;
       --rounded-lg: 0.25rem;
       --rounded-full: 0.75rem;
-
-      /* Style effects */
       --glow-text: 0 0 8px currentColor;
       --glow-primary: 0 0 16px color-mix(in srgb, var(--primary) 40%, transparent);
       --glow-secondary: 0 0 16px color-mix(in srgb, var(--secondary) 35%, transparent);
@@ -61,30 +45,22 @@
       --cyan-inset: inset 0 0 12px color-mix(in srgb, var(--secondary) 10%, transparent);
       --glow-line: drop-shadow(0 0 4px currentColor);
       --scanlines: repeating-linear-gradient(to bottom, transparent 0 3px, color-mix(in srgb, var(--on-surface) 3%, transparent) 3px 4px);
-
-      /* Type scale */
       --display-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
       --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
       --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
       --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
       --label-size: 0.75rem;
-
-      /* Spacing scale */
       --space-xs: 0.25rem;
       --space-sm: 0.5rem;
       --space-md: 1rem;
       --space-lg: 1.5rem;
       --space-xl: 2.5rem;
-
-      /* Motion */
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --dur-micro: 120ms;
       --dur-short: 220ms;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
     html, body {
       overflow-x: clip;
@@ -99,18 +75,9 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      position: static !important;
-    }
-
-    button, input, select, textarea {
-      font-family: inherit;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 2px;
-    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+    :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
     .page-grid {
       display: grid;
@@ -120,12 +87,8 @@
       margin: 0 auto;
       overflow: hidden;
     }
+    .page-grid * { min-width: 0; }
 
-    .page-grid * {
-      min-width: 0;
-    }
-
-    /* Header */
     .mission-header {
       display: grid;
       gap: var(--space-sm);
@@ -170,11 +133,10 @@
 
     .mission-subtitle {
       color: var(--on-surface-variant);
-      max-width: 68ch;
+      max-width: 72ch;
       margin: 0;
     }
 
-    /* Student Identity Bar */
     .student-bar {
       display: flex;
       flex-wrap: wrap;
@@ -196,10 +158,7 @@
       font-family: var(--font-label);
       font-size: var(--label-size);
     }
-
-    .student-info-item strong {
-      color: var(--secondary);
-    }
+    .student-info-item strong { color: var(--secondary); }
 
     .sync-pill {
       display: inline-flex;
@@ -213,25 +172,10 @@
       background: var(--surface-container);
       color: var(--on-surface-variant);
     }
+    .sync-pill.is-synced { border-color: var(--secondary); color: var(--secondary); }
+    .sync-pill.is-sending { border-color: var(--tertiary); color: var(--tertiary); }
+    .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 
-    .sync-pill.is-synced {
-      border-color: var(--secondary);
-      color: var(--secondary);
-    }
-
-    .sync-pill.is-sending {
-      border-color: var(--tertiary);
-      color: var(--tertiary);
-    }
-
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    /* HUD Metrics Row */
     .hud-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -248,11 +192,7 @@
       flex-direction: column;
       gap: var(--space-xs);
     }
-
-    .hud-tile.is-cyan {
-      border: var(--cyan-border);
-      box-shadow: var(--cyan-inset);
-    }
+    .hud-tile.is-cyan { border: var(--cyan-border); box-shadow: var(--cyan-inset); }
 
     .hud-label {
       font-family: var(--font-label);
@@ -270,28 +210,11 @@
       color: var(--on-surface);
       font-variant-numeric: tabular-nums;
     }
+    .hud-value.is-pink { color: var(--primary); text-shadow: var(--glow-text); }
+    .hud-value.is-cyan { color: var(--secondary); text-shadow: var(--glow-text); }
+    .hud-value.is-yellow { color: var(--tertiary); text-shadow: var(--glow-text); }
+    .hud-caption { font-size: var(--label-size); color: var(--on-surface-variant); }
 
-    .hud-value.is-pink {
-      color: var(--primary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-value.is-cyan {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-value.is-yellow {
-      color: var(--tertiary);
-      text-shadow: var(--glow-text);
-    }
-
-    .hud-caption {
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
-    }
-
-    /* Sector Selector & PIN Node Strip */
     .sector-bar {
       display: grid;
       gap: var(--space-md);
@@ -319,24 +242,18 @@
       display: flex;
       flex-direction: column;
       gap: var(--space-xs);
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
+      transition: all var(--dur-short) var(--ease-out);
     }
+    .level-btn:hover { border-color: var(--primary); color: var(--on-surface); box-shadow: var(--glow-primary); }
+    .level-btn.is-active { background: var(--surface-container-high); border-color: var(--primary); color: var(--on-surface); box-shadow: var(--glow-primary); }
+    .level-btn.is-submitted { border-left: 4px solid var(--secondary); }
 
-    .level-btn:hover {
-      border-color: var(--primary);
-      color: var(--on-surface);
-      box-shadow: var(--glow-primary);
+    .level-btn-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
     }
-
-    .level-btn.is-active {
-      background: var(--surface-container-high);
-      border-color: var(--primary);
-      color: var(--on-surface);
-      box-shadow: var(--glow-primary);
-    }
-
     .level-btn-code {
       font-family: var(--font-label);
       font-size: var(--label-size);
@@ -344,23 +261,17 @@
       letter-spacing: 0.08em;
       color: var(--primary);
     }
-
-    .level-btn.is-active .level-btn-code {
-      text-shadow: var(--glow-text);
-    }
-
-    .level-btn-title {
-      font-family: var(--font-headline);
-      font-weight: 700;
-      font-size: var(--body-size);
-      color: var(--on-surface);
-    }
-
-    .level-btn-meta {
+    .level-btn.is-active .level-btn-code { text-shadow: var(--glow-text); }
+    .level-submitted-tag {
       font-family: var(--font-label);
-      font-size: var(--label-size);
-      color: var(--on-surface-variant);
+      font-size: 0.65rem;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      padding: 1px 5px;
+      border-radius: var(--rounded);
     }
+    .level-btn-title { font-family: var(--font-headline); font-weight: 700; font-size: var(--body-size); color: var(--on-surface); }
+    .level-btn-meta { font-family: var(--font-label); font-size: var(--label-size); color: var(--on-surface-variant); }
 
     .pin-strip-row {
       display: flex;
@@ -372,20 +283,16 @@
       padding-top: var(--space-sm);
     }
 
-    .pin-nodes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
+    .pin-nodes { display: flex; flex-wrap: wrap; gap: 6px; }
 
     .pin-node {
       font-family: var(--font-label);
       font-size: var(--label-size);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      min-height: 44px;
-      min-width: 84px;
-      padding: var(--space-xs) var(--space-md);
+      letter-spacing: 0.04em;
+      min-height: 38px;
+      min-width: 72px;
+      padding: var(--space-xs) var(--space-sm);
       background: var(--surface-container);
       color: var(--on-surface-variant);
       border: 1px solid var(--outline-variant);
@@ -394,35 +301,26 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-xs);
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
+      gap: 4px;
+      transition: all var(--dur-short) var(--ease-out);
     }
+    .pin-node:hover { border-color: var(--secondary); color: var(--on-surface); }
+    .pin-node.is-current { background: var(--surface-container-high); border-color: var(--primary); color: var(--primary); box-shadow: var(--glow-primary); }
+    .pin-node.is-solved { border-color: var(--secondary); color: var(--secondary); }
+    .pin-node.is-current.is-solved { border-color: var(--secondary); box-shadow: var(--glow-secondary); }
 
-    .pin-node:hover {
-      border-color: var(--secondary);
-      color: var(--on-surface);
-    }
-
-    .pin-node.is-current {
+    .level-submit-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
       background: var(--surface-container-high);
-      border-color: var(--primary);
-      color: var(--primary);
-      box-shadow: var(--glow-primary);
+      border: var(--cyan-border);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
     }
 
-    .pin-node.is-solved {
-      border-color: var(--secondary);
-      color: var(--secondary);
-    }
-
-    .pin-node.is-current.is-solved {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-    }
-
-    /* Main Asymmetric Workspace */
     .workspace-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -439,11 +337,7 @@
       display: grid;
       gap: var(--space-md);
     }
-
-    .neon-panel.is-cyan {
-      border: var(--cyan-border);
-      box-shadow: var(--cyan-inset);
-    }
+    .neon-panel.is-cyan { border: var(--cyan-border); box-shadow: var(--cyan-inset); }
 
     .panel-header {
       display: flex;
@@ -452,14 +346,7 @@
       align-items: center;
       gap: var(--space-sm);
     }
-
-    .panel-title {
-      font-family: var(--font-headline);
-      font-size: var(--subhead-size);
-      font-weight: 700;
-      margin: 0;
-      color: var(--on-surface);
-    }
+    .panel-title { font-family: var(--font-headline); font-size: var(--subhead-size); font-weight: 700; margin: 0; color: var(--on-surface); }
 
     .badge-tag {
       font-family: var(--font-label);
@@ -473,18 +360,9 @@
       background: transparent;
       white-space: nowrap;
     }
+    .badge-tag.is-pink { border-color: var(--primary); color: var(--primary); }
+    .badge-tag.is-yellow { border-color: var(--tertiary); color: var(--tertiary); }
 
-    .badge-tag.is-pink {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .badge-tag.is-yellow {
-      border-color: var(--tertiary);
-      color: var(--tertiary);
-    }
-
-    /* Cartesian Grid Container */
     .cartesian-frame {
       background: var(--surface-container-low);
       border: 1px solid var(--outline-variant);
@@ -507,11 +385,7 @@
       color: var(--on-surface-variant);
       padding: 0 var(--space-xs);
     }
-
-    .scanner-coords {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
+    .scanner-coords { color: var(--secondary); text-shadow: var(--glow-text); }
 
     .cartesian-svg {
       width: 100%;
@@ -533,36 +407,12 @@
       padding-top: var(--space-xs);
       border-top: 1px solid var(--outline-variant);
     }
+    .legend-item { display: inline-flex; align-items: center; gap: var(--space-xs); }
+    .legend-dot { width: 10px; height: 10px; border-radius: var(--rounded); display: inline-block; }
+    .legend-dot.is-cyan { background: var(--secondary); box-shadow: var(--glow-secondary); }
+    .legend-dot.is-pink { background: var(--primary); box-shadow: var(--glow-primary); }
+    .legend-dot.is-yellow { background: var(--tertiary); box-shadow: var(--glow-tertiary); }
 
-    .legend-item {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-xs);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: var(--rounded);
-      display: inline-block;
-    }
-
-    .legend-dot.is-cyan {
-      background: var(--secondary);
-      box-shadow: var(--glow-secondary);
-    }
-
-    .legend-dot.is-pink {
-      background: var(--primary);
-      box-shadow: var(--glow-primary);
-    }
-
-    .legend-dot.is-yellow {
-      background: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-    }
-
-    /* Formula Drawer */
     .formula-toggle-wrap {
       border-top: 1px solid var(--outline-variant);
       padding-top: var(--space-sm);
@@ -579,27 +429,10 @@
       display: grid;
       gap: var(--space-xs);
     }
+    .formula-math { font-family: var(--font-label); font-size: var(--body-size); color: var(--secondary); word-break: break-word; }
 
-    .formula-math {
-      font-family: var(--font-label);
-      font-size: var(--body-size);
-      color: var(--secondary);
-      word-break: break-word;
-    }
-
-    /* Right Column: Terminal & Keypad */
-    .question-scenario {
-      color: var(--on-surface);
-      margin: 0;
-      font-size: var(--body-size);
-    }
-
-    .coords-pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
+    .question-scenario { color: var(--on-surface); margin: 0; font-size: var(--body-size); }
+    .coords-pill-row { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
     .coord-chip {
       font-family: var(--font-label);
       font-size: var(--label-size);
@@ -609,12 +442,8 @@
       border-radius: var(--rounded);
       color: var(--on-surface);
     }
+    .coord-chip strong { color: var(--secondary); }
 
-    .coord-chip strong {
-      color: var(--secondary);
-    }
-
-    /* Buttons */
     .btn-neon {
       background: var(--surface-container-low);
       color: var(--primary);
@@ -632,51 +461,16 @@
       align-items: center;
       justify-content: center;
       gap: var(--space-sm);
-      transition: box-shadow var(--dur-short) var(--ease-out),
-                  border-color var(--dur-short) var(--ease-out),
-                  background-color var(--dur-short) var(--ease-out);
+      transition: all var(--dur-short) var(--ease-out);
     }
+    .btn-neon:hover:not(:disabled) { border-color: var(--primary); box-shadow: var(--glow-primary); text-shadow: var(--glow-text); background: var(--surface-container-high); }
+    .btn-neon:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-neon.is-cyan { color: var(--secondary); border: var(--cyan-border-lit); }
+    .btn-neon.is-cyan:hover:not(:disabled) { border-color: var(--secondary); box-shadow: var(--glow-secondary); text-shadow: var(--glow-text); }
+    .btn-neon.is-yellow { color: var(--tertiary); border-color: color-mix(in srgb, var(--tertiary) 55%, transparent); }
+    .btn-neon.is-yellow:hover:not(:disabled) { border-color: var(--tertiary); box-shadow: var(--glow-tertiary); text-shadow: var(--glow-text); }
+    .btn-neon.is-sm { min-height: 36px; padding: 0.35rem 0.75rem; }
 
-    .btn-neon:hover:not(:disabled) {
-      border-color: var(--primary);
-      box-shadow: var(--glow-primary);
-      text-shadow: var(--glow-text);
-      background: var(--surface-container-high);
-    }
-
-    .btn-neon:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .btn-neon.is-cyan {
-      color: var(--secondary);
-      border: var(--cyan-border-lit);
-    }
-
-    .btn-neon.is-cyan:hover:not(:disabled) {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .btn-neon.is-yellow {
-      color: var(--tertiary);
-      border-color: color-mix(in srgb, var(--tertiary) 55%, transparent);
-    }
-
-    .btn-neon.is-yellow:hover:not(:disabled) {
-      border-color: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-      text-shadow: var(--glow-text);
-    }
-
-    .btn-neon.is-sm {
-      min-height: 36px;
-      padding: 0.35rem 0.75rem;
-    }
-
-    /* Hint Panel */
     .hint-box {
       background: var(--surface-container-low);
       border: 1px solid color-mix(in srgb, var(--tertiary) 45%, transparent);
@@ -686,47 +480,13 @@
       gap: var(--space-xs);
       animation: fadeSlide var(--dur-short) var(--ease-out);
     }
+    .hint-title { font-family: var(--font-label); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--tertiary); margin: 0; }
+    .hint-text { color: var(--on-surface); margin: 0; font-size: var(--body-size); }
 
-    .hint-title {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--tertiary);
-      margin: 0;
-    }
-
-    .hint-text {
-      color: var(--on-surface);
-      margin: 0;
-      font-size: var(--body-size);
-    }
-
-    /* PIN Input & Digital Keypad */
-    .pin-form {
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .input-group {
-      display: grid;
-      gap: var(--space-xs);
-    }
-
-    .input-label {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--on-surface-variant);
-    }
-
-    .pin-input-row {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: var(--space-sm);
-      align-items: end;
-    }
+    .pin-form { display: grid; gap: var(--space-md); }
+    .input-group { display: grid; gap: var(--space-xs); }
+    .input-label { font-family: var(--font-label); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--on-surface-variant); }
+    .pin-input-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-sm); align-items: end; }
 
     .pin-input, .text-input {
       width: 100%;
@@ -741,33 +501,13 @@
       font-size: var(--body-size);
       font-weight: 700;
       letter-spacing: 0.04em;
-      transition: border-color var(--dur-short) var(--ease-out),
-                  box-shadow var(--dur-short) var(--ease-out);
+      transition: all var(--dur-short) var(--ease-out);
     }
+    .text-input:disabled { opacity: 0.75; color: var(--on-surface-variant); border-bottom-color: var(--outline); }
+    .pin-input { font-size: var(--subhead-size); letter-spacing: 0.08em; }
+    .pin-input:focus, .text-input:focus { outline: none; border-color: var(--primary); box-shadow: var(--glow-primary); }
 
-    .text-input:disabled {
-      opacity: 0.75;
-      color: var(--on-surface-variant);
-      border-bottom-color: var(--outline);
-    }
-
-    .pin-input {
-      font-size: var(--subhead-size);
-      letter-spacing: 0.08em;
-    }
-
-    .pin-input:focus, .text-input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: var(--glow-primary);
-    }
-
-    .keypad-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: var(--space-sm);
-    }
-
+    .keypad-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-sm); }
     .key-btn {
       min-height: 46px;
       background: var(--surface-container-low);
@@ -781,46 +521,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      transition: border-color var(--dur-micro) var(--ease-out),
-                  box-shadow var(--dur-micro) var(--ease-out),
-                  background-color var(--dur-micro) var(--ease-out);
+      transition: all var(--dur-micro) var(--ease-out);
     }
+    .key-btn:hover { border-color: var(--secondary); background: var(--surface-container-high); color: var(--secondary); }
+    .key-btn:active { transform: translateY(1px); }
+    .key-btn.is-action { font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); border-color: color-mix(in srgb, var(--primary) 40%, transparent); }
+    .key-btn.is-submit { grid-column: span 2; background: var(--surface-container-high); color: var(--secondary); border: var(--cyan-border-lit); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.08em; }
+    .key-btn.is-submit:hover { border-color: var(--secondary); box-shadow: var(--glow-secondary); text-shadow: var(--glow-text); }
 
-    .key-btn:hover {
-      border-color: var(--secondary);
-      background: var(--surface-container-high);
-      color: var(--secondary);
-    }
-
-    .key-btn:active {
-      transform: translateY(1px);
-    }
-
-    .key-btn.is-action {
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--primary);
-      border-color: color-mix(in srgb, var(--primary) 40%, transparent);
-    }
-
-    .key-btn.is-submit {
-      grid-column: span 2;
-      background: var(--surface-container-high);
-      color: var(--secondary);
-      border: var(--cyan-border-lit);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .key-btn.is-submit:hover {
-      border-color: var(--secondary);
-      box-shadow: var(--glow-secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    /* Feedback & Step-by-Step Solution */
     .feedback-banner {
       padding: var(--space-md);
       border-radius: var(--rounded);
@@ -830,33 +538,11 @@
       gap: var(--space-xs);
       animation: fadeSlide var(--dur-short) var(--ease-out);
     }
-
-    .feedback-banner.is-success {
-      border-color: var(--secondary);
-      box-shadow: var(--cyan-inset);
-    }
-
-    .feedback-banner.is-error {
-      border-color: var(--error);
-    }
-
-    .feedback-heading {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .feedback-banner.is-success .feedback-heading {
-      color: var(--secondary);
-      text-shadow: var(--glow-text);
-    }
-
-    .feedback-banner.is-error .feedback-heading {
-      color: var(--error);
-    }
+    .feedback-banner.is-success { border-color: var(--secondary); box-shadow: var(--cyan-inset); }
+    .feedback-banner.is-error { border-color: var(--error); }
+    .feedback-heading { font-family: var(--font-label); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin: 0; }
+    .feedback-banner.is-success .feedback-heading { color: var(--secondary); text-shadow: var(--glow-text); }
+    .feedback-banner.is-error .feedback-heading { color: var(--error); }
 
     .solution-card {
       background: var(--surface-container-low);
@@ -867,59 +553,14 @@
       gap: var(--space-sm);
       animation: fadeSlide var(--dur-short) var(--ease-out);
     }
+    .solution-title { font-family: var(--font-label); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.08em; color: var(--secondary); margin: 0; }
+    .solution-steps { margin: 0; padding-left: var(--space-lg); display: grid; gap: var(--space-xs); font-family: var(--font-body); color: var(--on-surface); }
+    .solution-steps code { font-family: var(--font-label); color: var(--secondary); background: var(--surface-container); padding: 0.1rem 0.35rem; border-radius: var(--rounded); }
 
-    .solution-title {
-      font-family: var(--font-label);
-      font-size: var(--label-size);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--secondary);
-      margin: 0;
-    }
+    .nav-actions-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-sm); padding-top: var(--space-xs); }
 
-    .solution-steps {
-      margin: 0;
-      padding-left: var(--space-lg);
-      display: grid;
-      gap: var(--space-xs);
-      font-family: var(--font-body);
-      color: var(--on-surface);
-    }
+    .report-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-md); }
 
-    .solution-steps code {
-      font-family: var(--font-label);
-      color: var(--secondary);
-      background: var(--surface-container);
-      padding: 0.1rem 0.35rem;
-      border-radius: var(--rounded);
-    }
-
-    .nav-actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--space-sm);
-      padding-top: var(--space-xs);
-    }
-
-    /* Completion Report Card */
-    .report-panel {
-      background: var(--surface-container);
-      border: var(--cyan-border-lit);
-      box-shadow: var(--cyan-inset);
-      border-radius: var(--rounded-lg);
-      padding: var(--space-lg);
-      display: grid;
-      gap: var(--space-md);
-    }
-
-    .report-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: var(--space-md);
-    }
-
-    /* Modals & Teacher Dashboard */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -935,7 +576,7 @@
 
     .modal-card {
       width: 100%;
-      max-width: 540px;
+      max-width: 560px;
       background: var(--surface-container);
       border: var(--cyan-border-lit);
       box-shadow: var(--glow-secondary);
@@ -945,12 +586,7 @@
       gap: var(--space-md);
       animation: fadeSlide var(--dur-short) var(--ease-out);
     }
-
-    .modal-card.is-wide {
-      max-width: 1080px;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
+    .modal-card.is-wide { max-width: 1140px; max-height: 90vh; overflow-y: auto; }
 
     .modal-tabs {
       display: grid;
@@ -961,7 +597,6 @@
       border-radius: var(--rounded);
       border: 1px solid var(--outline-variant);
     }
-
     .modal-tab-btn {
       background: transparent;
       color: var(--on-surface-variant);
@@ -975,12 +610,7 @@
       border-radius: var(--rounded);
       transition: all var(--dur-micro) var(--ease-out);
     }
-
-    .modal-tab-btn.is-active {
-      background: var(--surface-container-high);
-      color: var(--tertiary);
-      box-shadow: var(--glow-tertiary);
-    }
+    .modal-tab-btn.is-active { background: var(--surface-container-high); color: var(--tertiary); box-shadow: var(--glow-tertiary); }
 
     .table-wrap {
       width: 100%;
@@ -989,14 +619,7 @@
       border-radius: var(--rounded);
       background: var(--surface-container-low);
     }
-
-    .teacher-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--label-size);
-      text-align: left;
-    }
-
+    .teacher-table { width: 100%; border-collapse: collapse; font-size: var(--label-size); text-align: left; }
     .teacher-table th {
       font-family: var(--font-label);
       text-transform: uppercase;
@@ -1007,38 +630,12 @@
       border-bottom: 1px solid var(--outline-variant);
       white-space: nowrap;
     }
+    .teacher-table td { padding: 0.65rem; border-bottom: 1px solid var(--outline-variant); color: var(--on-surface); font-family: var(--font-body); }
+    .teacher-table tr:hover td { background: color-mix(in srgb, var(--surface-container-high) 65%, transparent); }
 
-    .teacher-table td {
-      padding: 0.65rem;
-      border-bottom: 1px solid var(--outline-variant);
-      color: var(--on-surface);
-      font-family: var(--font-body);
-    }
-
-    .teacher-table tr:hover td {
-      background: color-mix(in srgb, var(--surface-container-high) 65%, transparent);
-    }
-
-    .status-chip {
-      display: inline-block;
-      padding: 0.15rem 0.45rem;
-      border-radius: var(--rounded);
-      font-family: var(--font-label);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-    }
-
-    .status-chip.is-done {
-      background: color-mix(in srgb, var(--secondary) 15%, transparent);
-      color: var(--secondary);
-      border: 1px solid var(--secondary);
-    }
-
-    .status-chip.is-progress {
-      background: color-mix(in srgb, var(--tertiary) 15%, transparent);
-      color: var(--tertiary);
-      border: 1px solid var(--tertiary);
-    }
+    .status-chip { display: inline-block; padding: 0.15rem 0.45rem; border-radius: var(--rounded); font-family: var(--font-label); font-size: 0.7rem; text-transform: uppercase; }
+    .status-chip.is-done { background: color-mix(in srgb, var(--secondary) 15%, transparent); color: var(--secondary); border: 1px solid var(--secondary); }
+    .status-chip.is-progress { background: color-mix(in srgb, var(--tertiary) 15%, transparent); color: var(--tertiary); border: 1px solid var(--tertiary); }
 
     .teacher-toolbar {
       display: flex;
@@ -1051,15 +648,8 @@
       border: 1px solid var(--outline-variant);
       border-radius: var(--rounded);
     }
+    .toolbar-inputs { display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: flex-end; }
 
-    .toolbar-inputs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-      align-items: flex-end;
-    }
-
-    /* Footer */
     .mission-footer {
       border-top: 1px solid var(--outline-variant);
       padding-top: var(--space-md);
@@ -1071,73 +661,35 @@
       color: var(--on-surface-variant);
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .svg-glow-line {
-      filter: var(--glow-line);
-    }
+    .hidden { display: none !important; }
+    .svg-glow-line { filter: var(--glow-line); }
 
     @keyframes fadeSlide {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 960px) {
-      .workspace-grid {
-        grid-template-columns: 1fr;
-      }
-      .hud-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .workspace-grid { grid-template-columns: 1fr; }
+      .hud-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 640px) {
-      .page-grid {
-        padding: var(--space-md);
-        gap: var(--space-md);
-      }
-      .level-tabs {
-        grid-template-columns: 1fr;
-      }
-      .hud-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .cartesian-frame {
-        min-height: 320px;
-      }
-      .cartesian-svg {
-        min-height: 300px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+      .page-grid { padding: var(--space-md); gap: var(--space-md); }
+      .level-tabs { grid-template-columns: 1fr; }
+      .hud-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cartesian-frame { min-height: 320px; }
+      .cartesian-svg { min-height: 300px; }
     }
   </style>
 </head>
 <body>
-  <!-- SKRIN UTAMA MURID -->
   <main class="page-grid" id="student-workspace-root">
     <!-- Header -->
     <header class="mission-header">
       <div class="header-top-row">
         <p class="kicker">MAKMAL GRID KSSM // MATEMATIK TINGKATAN 2 BAB 7 (SP 7.1.4)</p>
         <div class="header-actions">
-          <button type="button" class="btn-neon is-cyan" id="btn-submit-teacher" onclick="submitReportToTeacher(true)">
-            Hantar Laporan ke Guru
-          </button>
           <button type="button" class="btn-neon" id="btn-reset-mission" onclick="handleResetClick(this)">
             Mula Semula Misi
           </button>
@@ -1145,7 +697,7 @@
       </div>
       <h1 class="mission-title">Escape Room Digital: Misi Menyelamat Grid</h1>
       <p class="mission-subtitle">
-        Anda ialah Pegawai Navigasi yang terperangkap di dalam Bilik Kawalan Grid. Selesaikan 15 kod PIN keselamatan berdasarkan jarak antara dua titik pada satah Cartes merentasi tiga aras sekuriti untuk menyahaktif pintu laser.
+        Pilih aras yang sesuai dengan tahap anda (Asas, Sederhana, atau Tinggi). Setiap aras mengandungi 10 kod PIN pelbagai jenis soalan koordinat dan jarak. Anda boleh menghantar keputusan selepas selesai mana-mana aras!
       </p>
     </header>
 
@@ -1180,14 +732,14 @@
         <span class="hud-caption">+100 mata setiap PIN tepat</span>
       </div>
       <div class="hud-tile is-cyan">
-        <span class="hud-label">PIN Berjaya Dibuka</span>
-        <span class="hud-value is-cyan" id="hud-progress">0 / 15</span>
-        <span class="hud-caption" id="hud-level-progress">Aras semasa: 0 / 5</span>
+        <span class="hud-label">Kemajuan Aras Semasa</span>
+        <span class="hud-value is-cyan" id="hud-level-progress">0 / 10</span>
+        <span class="hud-caption" id="hud-progress">Jumlah keseluruhan: 0 / 30</span>
       </div>
       <div class="hud-tile">
-        <span class="hud-label">Status Pintu Laser</span>
-        <span class="hud-value is-yellow" id="hud-door-status">TERKUNCI</span>
-        <span class="hud-caption" id="hud-door-caption">Selesaikan semua PIN untuk keluar</span>
+        <span class="hud-label">Status Aras Semasa</span>
+        <span class="hud-value is-yellow" id="hud-door-status">AKTIF</span>
+        <span class="hud-caption" id="hud-door-caption">Selesaikan soalan &amp; tekan Hantar Aras</span>
       </div>
     </section>
 
@@ -1195,25 +747,51 @@
     <section class="sector-bar" aria-label="Pemilih Aras dan Soalan">
       <div class="level-tabs" role="tablist" aria-label="Tiga Aras Kesukaran">
         <button type="button" role="tab" aria-selected="true" class="level-btn is-active" id="tab-level-0" onclick="selectLevel(0)">
-          <span class="level-btn-code">Sektor 01 // Aras Asas</span>
-          <span class="level-btn-title">Kuantum</span>
-          <span class="level-btn-meta" id="meta-level-0">0/5 PIN — Selari paksi & Sukuan I</span>
+          <div class="level-btn-header">
+            <span class="level-btn-code">Sektor 01 // Aras Asas</span>
+            <span class="level-submitted-tag hidden" id="badge-submitted-0">✓ DIHANTAR</span>
+          </div>
+          <span class="level-btn-title">Kuantum (Asas)</span>
+          <span class="level-btn-meta" id="meta-level-0">0/10 PIN — Semua jenis soalan (asas)</span>
         </button>
+
         <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-1" onclick="selectLevel(1)">
-          <span class="level-btn-code">Sektor 02 // Aras Sederhana</span>
-          <span class="level-btn-title">Vektor</span>
-          <span class="level-btn-meta" id="meta-level-1">0/5 PIN — Rumus jarak positif</span>
+          <div class="level-btn-header">
+            <span class="level-btn-code">Sektor 02 // Aras Sederhana</span>
+            <span class="level-submitted-tag hidden" id="badge-submitted-1">✓ DIHANTAR</span>
+          </div>
+          <span class="level-btn-title">Vektor (Sederhana)</span>
+          <span class="level-btn-meta" id="meta-level-1">0/10 PIN — Semua jenis soalan (perpuluhan)</span>
         </button>
+
         <button type="button" role="tab" aria-selected="false" class="level-btn" id="tab-level-2" onclick="selectLevel(2)">
-          <span class="level-btn-code">Sektor 03 // Aras Tinggi</span>
-          <span class="level-btn-title">Matriks</span>
-          <span class="level-btn-meta" id="meta-level-2">0/5 PIN — 4 sukuan & koordinat</span>
+          <div class="level-btn-header">
+            <span class="level-btn-code">Sektor 03 // Aras Tinggi</span>
+            <span class="level-submitted-tag hidden" id="badge-submitted-2">✓ DIHANTAR</span>
+          </div>
+          <span class="level-btn-title">Matriks (Tinggi)</span>
+          <span class="level-btn-meta" id="meta-level-2">0/10 PIN — 4 sukuan &amp; koordinat</span>
         </button>
       </div>
 
       <div class="pin-strip-row">
-        <span class="hud-label" id="sector-label">NOD KUNCI SEKTOR KUANTUM:</span>
+        <span class="hud-label" id="sector-label">NOD KUNCI SEKTOR KUANTUM (1–10):</span>
         <div class="pin-nodes" id="pin-nodes-container"></div>
+      </div>
+
+      <!-- Butang Hantar Khusus Untuk Aras Yang Dipilih -->
+      <div class="level-submit-bar">
+        <div>
+          <strong style="color: var(--secondary); font-family: var(--font-label); font-size: var(--label-size);" id="level-submit-title">
+            PENGESAHAN ARAS ASAS (KUANTUM)
+          </strong>
+          <p class="hud-caption" style="margin: 2px 0 0 0;" id="level-submit-desc">
+            Sudah selesai menjawab aras ini? Klik butang di sebelah kanan untuk menghantar keputusan aras ini kepada guru anda.
+          </p>
+        </div>
+        <button type="button" class="btn-neon is-cyan" id="btn-submit-current-level" onclick="submitCurrentLevelToTeacher()">
+          Hantar Keputusan Aras Asas
+        </button>
       </div>
     </section>
 
@@ -1251,7 +829,7 @@
             Papar / Sembunyi Rumus Rujukan
           </button>
           <div class="formula-box hidden" id="formula-drawer">
-            <span class="hud-label">Rumus Jarak & Teorem Pythagoras (Bab 7.1)</span>
+            <span class="hud-label">Rumus Jarak &amp; Teorem Pythagoras (Bab 7.1)</span>
             <div class="formula-math">1. Selari paksi-x (y sama): Jarak = |x₂ − x₁|</div>
             <div class="formula-math">2. Selari paksi-y (x sama): Jarak = |y₂ − y₁|</div>
             <div class="formula-math">3. Jarak condong: d = √[(x₂ − x₁)² + (y₂ − y₁)²]</div>
@@ -1272,7 +850,6 @@
 
         <div class="coords-pill-row" id="coords-chips"></div>
 
-        <!-- Interactive Hint Control -->
         <div>
           <button type="button" class="btn-neon is-yellow" id="btn-hint" onclick="toggleHint()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1285,11 +862,10 @@
         </div>
 
         <div class="hint-box hidden" id="hint-panel">
-          <p class="hint-title">Panduan Pengiraan & Petunjuk Visual Grid</p>
+          <p class="hint-title">Panduan Pengiraan &amp; Petunjuk Visual Grid</p>
           <p class="hint-text" id="hint-text"></p>
         </div>
 
-        <!-- Digital PIN Pad -->
         <form class="pin-form" id="pin-form" onsubmit="submitPinForm(event)">
           <div class="input-group">
             <label class="input-label" for="pin-input" id="pin-input-label">
@@ -1335,19 +911,16 @@
           </div>
         </form>
 
-        <!-- Instant Feedback -->
         <div class="feedback-banner hidden" id="feedback-banner" role="status" aria-live="polite">
           <p class="feedback-heading" id="feedback-heading"></p>
           <p class="hint-text" id="feedback-message"></p>
         </div>
 
-        <!-- Complete Step-by-Step Solution -->
         <div class="solution-card hidden" id="solution-card">
           <p class="solution-title">Langkah Penyelesaian Lengkap</p>
           <ol class="solution-steps" id="solution-steps"></ol>
         </div>
 
-        <!-- Prev / Next Navigation -->
         <div class="nav-actions-row">
           <button type="button" class="btn-neon" id="btn-prev-q" onclick="navigateQuestion(-1)">
             ← PIN Sebelumnya
@@ -1359,42 +932,19 @@
       </div>
     </section>
 
-    <!-- Mission Complete / Summary Panel -->
-    <section class="report-panel hidden" id="mission-complete-panel" aria-label="Ringkasan Misi Tamat">
-      <div class="panel-header">
-        <div>
-          <p class="kicker">AKSES PENUH DIBERIKAN // REKOD DIHANTAR KE GURU</p>
-          <h2 class="panel-title">Tahniah! Anda Berjaya Menyelamatkan Diri dari Bilik Kawalan Grid</h2>
-        </div>
-        <span class="badge-tag">15 / 15 PIN SELESAI</span>
-      </div>
-      <p class="mission-subtitle" id="completion-subtext">
-        Semua kunci keselamatan merentasi Sektor Kuantum, Vektor, dan Matriks telah berjaya dibuka dan laporan prestasi anda telah direkodkan. Sila tekan butang Log Keluar di bawah setelah selesai.
-      </p>
-      <div class="report-stats" id="report-stats"></div>
-      <div class="header-actions">
-        <button type="button" class="btn-neon is-cyan" onclick="finishAndLogoutStudent()">
-          Hantar Laporan & Log Keluar
-        </button>
-        <button type="button" class="btn-neon" onclick="handleResetClick(this)">
-          Main Semula Misi
-        </button>
-      </div>
-    </section>
-
     <footer class="mission-footer">
-      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) & Modul Kit Detektif Grid.</span>
+      <span>Sumber Kurikulum: DSKP KSSM Matematik Tingkatan 2 (Bab 7: Koordinat, SP 7.1.1–7.1.4) &amp; Modul Kit Detektif Grid.</span>
       <span>Makmal Grid Digital // KSSM Matematik Tingkatan 2.</span>
     </footer>
   </main>
 
-  <!-- Modal 1: Pendaftaran Profil Murid (Sentiasa dibuka setiap kali pautan baru dibuka / selepas Log Keluar) -->
+  <!-- Modal 1: Pendaftaran Profil Murid -->
   <div class="modal-backdrop hidden" id="student-modal" role="dialog" aria-modal="true" aria-labelledby="student-modal-title">
     <div class="modal-card">
       <p class="kicker">PENGESAHAN IDENTITI PEGAWAI NAVIGASI</p>
-      <h2 class="panel-title" id="student-modal-title">Daftar Maklumat Murid Sebelum Mula</h2>
+      <h2 class="panel-title" id="student-modal-title">Daftar Maklumat Murid &amp; Pilih Aras</h2>
       <p class="mission-subtitle">
-        Masukkan nama penuh, kelas, dan Kod Sesi yang diberikan oleh guru anda.
+        Masukkan maklumat anda dan pilih aras permulaan yang ditetapkan oleh guru.
       </p>
       <form class="pin-form" id="student-register-form" onsubmit="saveStudentProfile(event)">
         <div class="input-group">
@@ -1410,6 +960,14 @@
           <input type="text" id="input-session-code" class="text-input" placeholder="Masukkan kod sesi daripada guru anda" autocomplete="off" required>
           <span class="hud-caption" id="session-lock-note">Pastikan ejaan Kod Sesi tepat seperti yang diberikan oleh guru anda.</span>
         </div>
+        <div class="input-group">
+          <label class="input-label" for="input-start-level">Pilih Aras Mula Anda</label>
+          <select id="input-start-level" class="text-input">
+            <option value="0">Aras Asas — Sektor Kuantum (10 Soalan)</option>
+            <option value="1">Aras Sederhana — Sektor Vektor (10 Soalan)</option>
+            <option value="2">Aras Tinggi — Sektor Matriks (10 Soalan)</option>
+          </select>
+        </div>
         <div class="header-actions" style="justify-content: flex-end;">
           <button type="submit" class="btn-neon is-cyan">Mula Misi Sekarang</button>
         </div>
@@ -1417,7 +975,30 @@
     </div>
   </div>
 
-  <!-- Modal 2: Akses Guru (HANYA MUNCUL JIKA URL MEMPUNYAI ?mod=guru) -->
+  <!-- Modal 2: Pengesahan Selepas Hantar Keputusan Aras -->
+  <div class="modal-backdrop hidden" id="level-submitted-modal" role="dialog" aria-modal="true" aria-labelledby="lvl-sub-modal-title">
+    <div class="modal-card">
+      <p class="kicker" id="lvl-sub-kicker">REKOD ARAS BERJAYA DIHANTAR KE GOOGLE SHEETS</p>
+      <h2 class="panel-title" id="lvl-sub-modal-title">Keputusan Aras Telah Direkodkan!</h2>
+      <p class="mission-subtitle" id="lvl-sub-summary">
+        Markah anda bagi aras ini telah disimpan ke Google Sheets guru anda.
+      </p>
+      <div class="report-stats" id="lvl-sub-stats"></div>
+      <div class="header-actions" style="justify-content: flex-end; margin-top: 0.5rem;">
+        <button type="button" class="btn-neon" onclick="closeLevelSubmittedModal()">
+          Semak Semula Aras Ini
+        </button>
+        <button type="button" class="btn-neon is-yellow hidden" id="btn-proceed-next-level" onclick="proceedToNextLevel()">
+          Teruskan ke Aras Seterusnya →
+        </button>
+        <button type="button" class="btn-neon is-cyan" onclick="finishAndLogoutStudent()">
+          Selesai &amp; Log Keluar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Akses Guru (?mod=guru) -->
   <div class="modal-backdrop hidden" id="teacher-login-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-login-title">
     <div class="modal-card">
       <p class="kicker">PORTAL GURU // PENGURUSAN SESI SEKOLAH</p>
@@ -1432,7 +1013,6 @@
         </button>
       </div>
 
-      <!-- Form A: Log Masuk Sesi Sedia Ada -->
       <form class="pin-form" id="form-teacher-login" onsubmit="verifyTeacherLogin(event)">
         <p class="hud-caption" style="margin: 0;">
           Masukkan Kod Sesi sekolah/kelas anda dan kata laluan rahsia yang anda tetapkan semasa pendaftaran sesi.
@@ -1452,14 +1032,13 @@
         </div>
       </form>
 
-      <!-- Form B: Cipta Bilik Sesi Sekolah Baharu -->
       <form class="pin-form hidden" id="form-teacher-create" onsubmit="createTeacherRoom(event)">
         <p class="hud-caption" style="margin: 0;">
-          Cipta kod sesi khas untuk sekolah atau kelas anda. Data murid anda hanya akan dipaparkan di bawah kod sesi ini.
+          Cipta kod sesi khas untuk sekolah atau kelas anda. Data murid anda (di kelas atau di rumah) akan dipaparkan di bawah kod sesi ini.
         </p>
         <div class="input-group">
-          <label class="input-label" for="create-school-name">Nama Sekolah & Guru</label>
-          <input type="text" id="create-school-name" class="text-input" placeholder="Contoh: SMK Taman Permai (Cikgu Aminah)" required>
+          <label class="input-label" for="create-school-name">Nama Sekolah &amp; Guru</label>
+          <input type="text" id="create-school-name" class="text-input" placeholder="Contoh: SMK Taman Permai (Cikgu Arissa)" required>
         </div>
         <div class="input-group">
           <label class="input-label" for="create-session-code">Cipta Kod Sesi Unik (Tanpa Jarak)</label>
@@ -1473,18 +1052,18 @@
         <p class="hint-text hidden" id="teacher-create-error" style="color: var(--error);"></p>
         <div class="header-actions" style="justify-content: flex-end;">
           <button type="button" class="btn-neon" onclick="exitTeacherModeToStudent()">Kembali ke Mod Murid</button>
-          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar & Masuk Dashboard</button>
+          <button type="submit" class="btn-neon is-cyan" id="btn-teacher-create-submit">Daftar &amp; Masuk Dashboard</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 3: Dashboard Laporan Guru -->
+  <!-- Modal 4: Dashboard Laporan Guru -->
   <div class="modal-backdrop hidden" id="teacher-dashboard-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-dash-title">
     <div class="modal-card is-wide">
       <div class="panel-header">
         <div>
-          <p class="kicker" id="dash-school-kicker">SISTEM ANALITIK GURU // PAPARAN REKOD MURID</p>
+          <p class="kicker" id="dash-school-kicker">SISTEM ANALITIK GURU // PAPARAN REKOD MURID (LANGSUNG)</p>
           <h2 class="panel-title" id="teacher-dash-title">Dashboard Prestasi Murid</h2>
         </div>
         <div class="header-actions">
@@ -1506,7 +1085,6 @@
         </div>
       </div>
 
-      <!-- Laci Tukar Kata Laluan / PIN Guru -->
       <div class="formula-box hidden" id="change-pin-drawer" style="border-left-color: var(--primary);">
         <div class="panel-header">
           <span class="hud-label" style="color: var(--primary);">TETAPAN KESELAMATAN // TUKAR KATA LALUAN GURU</span>
@@ -1530,10 +1108,8 @@
         <p class="hint-text hidden" id="change-pin-status" style="margin-top: 0.5rem;"></p>
       </div>
 
-      <!-- Summary KPI for Teacher -->
       <div class="report-stats" id="teacher-kpi-row"></div>
 
-      <!-- Filter Toolbar -->
       <div class="teacher-toolbar">
         <div class="toolbar-inputs">
           <div class="input-group">
@@ -1552,7 +1128,6 @@
         </div>
       </div>
 
-      <!-- Student Records Table -->
       <div class="table-wrap">
         <table class="teacher-table">
           <thead>
@@ -1560,19 +1135,19 @@
               <th>Bil</th>
               <th>Nama Murid</th>
               <th>Kelas</th>
-              <th>Status</th>
+              <th>Status Hantar</th>
               <th>Skor</th>
-              <th>PIN Selesai</th>
-              <th>Kuantum / Vektor / Matriks</th>
+              <th>Asas (10)</th>
+              <th>Sederhana (10)</th>
+              <th>Tinggi (10)</th>
               <th>Masa</th>
-              <th>Petunjuk / Cubaan</th>
-              <th>Masa Hantar</th>
+              <th>Kemas Kini Terakhir</th>
             </tr>
           </thead>
           <tbody id="teacher-table-body">
             <tr>
               <td colspan="10" style="text-align: center; padding: 1.5rem; color: var(--on-surface-variant);">
-                Memuatkan rekod murid...
+                Memuatkan rekod murid dari Google Sheets...
               </td>
             </tr>
           </tbody>
@@ -1583,10 +1158,9 @@
 
   <script>
     // =========================================================================
-    // KONFIGURASI GOOGLE SHEETS
-    // Tampal URL Web App Google Apps Script selepas deploy.
+    // KONFIGURASI GOOGLE SHEETS (DIKEMAS KINI DENGAN URL DEPLOYMENT TERKINI ANDA)
     // =========================================================================
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0F_jbembvZOW18SS6gx7bagibiQ_sRl2EnHz8Rdh3XZDM9u16wz_tv5JN-2TZvTAWhw/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzMRpYmA1NuVaFgHLvgMS6MZ8OMiQMr4QtamdOW4RKcG41Wkv_P1x9FUz_yATIkb-zCjw/exec";
 
     function googleSheetGet(params) {
       return new Promise(function (resolve, reject) {
@@ -1620,6 +1194,12 @@
           data: JSON.stringify(payload[dataKey])
         });
       }
+      if (payload.action === "deleteSubmissions" && payload.sessionCode) {
+        return await googleSheetGet({
+          action: "deleteSubmissions",
+          sessionCode: payload.sessionCode
+        });
+      }
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -1632,13 +1212,16 @@
     let teacherRefreshTimer = null;
     const TEACHER_REFRESH_INTERVAL_MS = 5000;
 
-    const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v2";
-    const LOCAL_ROOMS_KEY = "kssm_grid_escape_rooms_v2";
-    const LEGACY_STATE_KEY = "kssm_grid_escape_player_state_v2";
+    const LOCAL_DB_KEY = "kssm_grid_escape_submissions_v3";
+    const LOCAL_ROOMS_KEY = "kssm_grid_escape_rooms_v3";
+    const LEGACY_STATE_KEY = "kssm_grid_escape_player_state_v3";
     const LOCKOUT_STORAGE_KEY = "kssm_grid_teacher_lockout_v1";
     const MAX_LOGIN_ATTEMPTS = 3;
     const LOCKOUT_DURATION_MS = 5 * 60 * 1000;
 
+    // =========================================================================
+    // BANK 30 SOALAN (10 SETIAP ARAS: PELBAGAI JENIS SOALAN DALAM SETIAP ARAS)
+    // =========================================================================
     const LEVELS = [
       {
         id: `kuantum`,
@@ -1650,108 +1233,165 @@
         showQuadrants: false,
         questions: [
           {
-            id: `Q1`,
-            title: `Isyarat Pemulihan Aras Mengufuk`,
-            scenario: `Pegawai Navigasi di stesen kawalan A(2, 3) perlu menghantar isyarat pemulihan ke panel suis B(9, 3) pada aras mengufuk yang sama. Tentukan jarak antara titik A dengan titik B (dalam unit).`,
-            coords: [`A(2, 3)`, `B(9, 3)`],
-            points: [
-              { label: `A`, x: 2, y: 3, role: `start` },
-              { label: `B`, x: 9, y: 3, role: `target` }
-            ],
-            hintVisual: { type: `horizontal`, x1: 2, y1: 3, x2: 9, y2: 3 },
-            hintText: `Perhatikan kedua-dua titik berkongsi koordinat-y yang sama (y = 3). Ini bermakna garis AB selari dengan paksi-x. Kira perbezaan koordinat-x: |x₂ − x₁| atau bilang petak grid secara mengufuk dari x = 2 ke x = 9.`,
+            id: `A1`,
+            title: `Isyarat Mengufuk Stesen Kawalan`,
+            scenario: `Isyarat dihantar dari stesen A(2, 4) ke panel suis B(9, 4) pada aras mengufuk yang sama. Kira jarak mengufuk AB (dalam unit).`,
+            coords: [`A(2, 4)`, `B(9, 4)`],
+            points: [{ label: `A`, x: 2, y: 4, role: `start` }, { label: `B`, x: 9, y: 4, role: `target` }],
+            hintVisual: { type: `horizontal`, x1: 2, y1: 4, x2: 9, y2: 4 },
+            hintText: `Kedua-dua titik mempunyai koordinat-y yang sama (y = 4). Kira |x₂ − x₁| = |9 − 2|.`,
             answer: 7,
             tolerance: 0.01,
             inputNote: `Masukkan jawapan integer tepat (unit).`,
             solutionSteps: [
-              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>y = 3</code>.`,
-              `Oleh itu, jarak AB ialah jarak mengufuk selari dengan paksi-x.`,
-              `Kira jarak mengufuk: <code>|x₂ − x₁| = |9 − 2| = 7 unit</code>.`,
-              `Kod PIN Keselamatan ialah <code>7</code>.`
+              `Koordinat-y adalah sama (<code>y = 4</code>), maka garis AB selari dengan paksi-x.`,
+              `Jarak AB = <code>|9 − 2| = 7 unit</code>.`
             ]
           },
           {
-            id: `Q2`,
-            title: `Sensor Pengesan Aras Mencancang`,
-            scenario: `Pintu laser kedua memerlukan nilai ketinggian tegak dari nod bawah P(5, 1) ke pengesan atas Q(5, 9). Kira jarak mencancang antara P dengan Q (dalam unit).`,
-            coords: [`P(5, 1)`, `Q(5, 9)`],
-            points: [
-              { label: `P`, x: 5, y: 1, role: `start` },
-              { label: `Q`, x: 5, y: 9, role: `target` }
-            ],
-            hintVisual: { type: `vertical`, x1: 5, y1: 1, x2: 5, y2: 9 },
-            hintText: `Koordinat-x bagi P dan Q adalah sama (x = 5), jadi laluan ini selari dengan paksi-y. Hitung jarak mencancang dengan menolak nilai y yang lebih kecil daripada nilai y yang lebih besar.`,
-            answer: 8,
-            tolerance: 0.01,
-            inputNote: `Masukkan jawapan integer tepat (unit).`,
-            solutionSteps: [
-              `Kenal pasti koordinat yang sama: kedua-dua titik mempunyai <code>x = 5</code>.`,
-              `Oleh itu, jarak PQ ialah jarak mencancang selari dengan paksi-y.`,
-              `Kira jarak mencancang: <code>|y₂ − y₁| = |9 − 1| = 8 unit</code>.`,
-              `Kod PIN Keselamatan ialah <code>8</code>.`
-            ]
-          },
-          {
-            id: `Q3`,
-            title: `Terowong Kecemasan Detektif Grid`,
-            scenario: `Token Detektif A(1, 2) mesti bergerak mengikut laluan terus paling singkat untuk menyelamatkan mangsa di B(4, 6). Tentukan jarak terpendek antara A dengan B.`,
+            id: `A2`,
+            title: `Terowong Kecemasan Segitiga (Pythagoras Asas)`,
+            scenario: `Token penyelamat A(1, 2) bergerak terus mengikut laluan condong terpendek ke B(4, 6). Gunakan Teorem Pythagoras untuk mencari jarak AB.`,
             coords: [`A(1, 2)`, `B(4, 6)`],
-            points: [
-              { label: `A`, x: 1, y: 2, role: `start` },
-              { label: `B`, x: 4, y: 6, role: `target` }
-            ],
+            points: [{ label: `A`, x: 1, y: 2, role: `start` }, { label: `B`, x: 4, y: 6, role: `target` }],
             hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 4, y2: 6, cx: 4, cy: 2 },
-            hintText: `Bina sebuah segi tiga bersudut tegak dengan bucu sudut tegak C(4, 2). Hitung panjang tapak mengufuk (4 − 1) dan tinggi mencancang (6 − 2), kemudian gunakan Teorem Pythagoras c = √(a² + b²).`,
+            hintText: `Jarak mengufuk a = 4 − 1 = 3 unit, jarak mencancang b = 6 − 2 = 4 unit. Kira √(3² + 4²).`,
             answer: 5,
             tolerance: 0.01,
             inputNote: `Masukkan jawapan integer tepat (unit).`,
             solutionSteps: [
-              `Hitung jarak mengufuk: <code>a = 4 − 1 = 3 unit</code>.`,
-              `Hitung jarak mencancang: <code>b = 6 − 2 = 4 unit</code>.`,
-              `Gunakan Teorem Pythagoras: <code>AB = √(3² + 4²) = √(9 + 16) = √25</code>.`,
-              `Maka, jarak <code>AB = 5 unit</code>.`
+              `Jarak mengufuk: <code>a = 4 − 1 = 3 unit</code>; jarak mencancang: <code>b = 6 − 2 = 4 unit</code>.`,
+              `Teorem Pythagoras: <code>AB = √(3² + 4²) = √(9 + 16) = √25 = 5 unit</code>.`
             ]
           },
           {
-            id: `Q4`,
-            title: `Lintasan Dron Peninjau Sektor I`,
-            scenario: `Dron peninjau berlepas dari pad pelancaran J(2, 1) menuju terus ke menara pemancar K(8, 9). Berapakah jarak penerbangan lurus dron tersebut?`,
-            coords: [`J(2, 1)`, `K(8, 9)`],
-            points: [
-              { label: `J`, x: 2, y: 1, role: `start` },
-              { label: `K`, x: 8, y: 9, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 2, y1: 1, x2: 8, y2: 9, cx: 8, cy: 1 },
-            hintText: `Cari beza koordinat-x (8 − 2) dan beza koordinat-y (9 − 1) terlebih dahulu. Jumlah kuasa dua kedua-dua sisi ini akan menghasilkan nombor kuasa dua sempurna.`,
+            id: `A3`,
+            title: `Sensor Pengesan Aras Mencancang`,
+            scenario: `Pintu laser memerlukan ketinggian tegak dari nod bawah P(6, 2) ke pengesan atas Q(6, 11). Tentukan jarak PQ.`,
+            coords: [`P(6, 2)`, `Q(6, 11)`],
+            points: [{ label: `P`, x: 6, y: 2, role: `start` }, { label: `Q`, x: 6, y: 11, role: `target` }],
+            hintVisual: { type: `vertical`, x1: 6, y1: 2, x2: 6, y2: 11 },
+            hintText: `Koordinat-x adalah sama (x = 6). Kira jarak mencancang |y₂ − y₁| = |11 − 2|.`,
+            answer: 9,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Koordinat-x adalah sama (<code>x = 6</code>), maka garis PQ selari dengan paksi-y.`,
+              `Jarak PQ = <code>|11 − 2| = 9 unit</code>.`
+            ]
+          },
+          {
+            id: `A4`,
+            title: `Kabel Kuasa dari Titik Asalan`,
+            scenario: `Kabel kuasa ditarik terus dari titik asalan O(0, 0) ke terminal utama N(6, 8). Kira panjang kabel ON.`,
+            coords: [`O(0, 0)`, `N(6, 8)`],
+            points: [{ label: `O`, x: 0, y: 0, role: `start` }, { label: `N`, x: 6, y: 8, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 6, y2: 8, cx: 6, cy: 0 },
+            hintText: `Dari asalan (0, 0), tapak a = 6 unit dan tinggi b = 8 unit. Kira √(6² + 8²).`,
             answer: 10,
             tolerance: 0.01,
             inputNote: `Masukkan jawapan integer tepat (unit).`,
             solutionSteps: [
-              `Jarak mengufuk: <code>x₂ − x₁ = 8 − 2 = 6 unit</code>.`,
-              `Jarak mencancang: <code>y₂ − y₁ = 9 − 1 = 8 unit</code>.`,
-              `Kira hipotenus: <code>JK = √(6² + 8²) = √(36 + 64) = √100</code>.`,
-              `Maka, jarak <code>JK = 10 unit</code>.`
+              `Jarak mengufuk = <code>6 unit</code>, jarak mencancang = <code>8 unit</code>.`,
+              `<code>ON = √(6² + 8²) = √(36 + 64) = √100 = 10 unit</code>.`
             ]
           },
           {
-            id: `Q5`,
-            title: `Kabel Kuasa dari Titik Asalan`,
-            scenario: `Untuk menyahaktif Kunci Kuantum terakhir, kabel kuasa perlu ditarik terus dari titik asalan M(0, 0) ke terminal utama N(5, 12). Kira panjang kabel minimum yang diperlukan.`,
-            coords: [`M(0, 0)`, `N(5, 12)`],
-            points: [
-              { label: `M`, x: 0, y: 0, role: `start` },
-              { label: `N`, x: 5, y: 12, role: `target` }
-            ],
-            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 5, y2: 12, cx: 5, cy: 0 },
-            hintText: `Titik M ialah asalan (0, 0), jadi jarak mengufuk ialah 5 unit dan jarak mencancang ialah 12 unit. Hitung √(5² + 12²) menggunakan Teorem Pythagoras.`,
+            id: `A5`,
+            title: `Lintasan Dron Peninjau (Pythagoras Asas)`,
+            scenario: `Dron berlepas dari J(2, 1) menuju terus ke menara K(7, 13). Berapakah jarak penerbangan lurus JK?`,
+            coords: [`J(2, 1)`, `K(7, 13)`],
+            points: [{ label: `J`, x: 2, y: 1, role: `start` }, { label: `K`, x: 7, y: 13, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 2, y1: 1, x2: 7, y2: 13, cx: 7, cy: 1 },
+            hintText: `Cari beza x (7 − 2 = 5) dan beza y (13 − 1 = 12). Kira √(5² + 12²).`,
             answer: 13,
             tolerance: 0.01,
             inputNote: `Masukkan jawapan integer tepat (unit).`,
             solutionSteps: [
-              `Jarak mengufuk dari asalan: <code>5 − 0 = 5 unit</code>.`,
-              `Jarak mencancang dari asalan: <code>12 − 0 = 12 unit</code>.`,
-              `Gunakan Teorem Pythagoras: <code>MN = √(5² + 12²) = √(25 + 144) = √169</code>.`,
-              `Maka, panjang kabel minimum ialah <code>13 unit</code>.`
+              `Beza mengufuk: <code>7 − 2 = 5 unit</code>; beza mencancang: <code>13 − 1 = 12 unit</code>.`,
+              `<code>JK = √(5² + 12²) = √(25 + 144) = √169 = 13 unit</code>.`
+            ]
+          },
+          {
+            id: `A6`,
+            title: `Laluan Dua Peringkat L-Grid`,
+            scenario: `Robot bergerak secara mengufuk dari M(1, 3) ke sudut C(8, 3), kemudian naik secara mencancang ke T(8, 10). Hitung jumlah jarak perjalanan robot.`,
+            coords: [`M(1, 3)`, `C(8, 3)`, `T(8, 10)`],
+            points: [{ label: `M`, x: 1, y: 3, role: `start` }, { label: `C`, x: 8, y: 3, role: `helper` }, { label: `T`, x: 8, y: 10, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 1, y1: 3, x2: 8, y2: 10, cx: 8, cy: 3 },
+            hintText: `Jumlahkan jarak mengufuk MC (8 − 1) dan jarak mencancang CT (10 − 3).`,
+            answer: 14,
+            tolerance: 0.01,
+            inputNote: `Masukkan jumlah jarak dalam unit (integer).`,
+            solutionSteps: [
+              `Jarak mengufuk MC = <code>8 − 1 = 7 unit</code>.`,
+              `Jarak mencancang CT = <code>10 − 3 = 7 unit</code>.`,
+              `Jumlah jarak = <code>7 + 7 = 14 unit</code>.`
+            ]
+          },
+          {
+            id: `A7`,
+            title: `Pancaran Laser Menurun (Pythagoras Asas)`,
+            scenario: `Laser dipancarkan dari atas D(3, 10) ke pengesan bawah E(11, 4). Kira jarak condong DE.`,
+            coords: [`D(3, 10)`, `E(11, 4)`],
+            points: [{ label: `D`, x: 3, y: 10, role: `start` }, { label: `E`, x: 11, y: 4, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 3, y1: 10, x2: 11, y2: 4, cx: 11, cy: 10 },
+            hintText: `Jarak mengufuk = 11 − 3 = 8 unit, jarak mencancang = 10 − 4 = 6 unit. Kira √(8² + 6²).`,
+            answer: 10,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak mengufuk = <code>11 − 3 = 8 unit</code>; jarak mencancang = <code>|4 − 10| = 6 unit</code>.`,
+              `<code>DE = √(8² + 6²) = √(64 + 36) = √100 = 10 unit</code>.`
+            ]
+          },
+          {
+            id: `A8`,
+            title: `Menjejak Koordinat-x Pada Garis Mengufuk`,
+            scenario: `Titik R(3, 7) dan titik S(x, 7) berada pada aras mengufuk yang sama dengan jarak RS = 8 unit (x > 3). Cari nilai koordinat-x bagi S.`,
+            coords: [`R(3, 7)`, `S(x, 7)`, `Jarak RS = 8`],
+            points: [{ label: `R`, x: 3, y: 7, role: `start` }],
+            solvedPoints: [{ label: `S`, x: 11, y: 7, role: `target` }],
+            hintVisual: { type: `horizontal`, x1: 3, y1: 7, x2: 11, y2: 7 },
+            hintText: `Oleh sebab y sama (y = 7) dan x > 3, tambahkan 8 unit ke kanan dari x = 3: x = 3 + 8.`,
+            answer: 11,
+            tolerance: 0.01,
+            inputNote: `Masukkan nilai koordinat-x (integer).`,
+            solutionSteps: [
+              `Garis RS mengufuk pada <code>y = 7</code>.`,
+              `<code>x − 3 = 8</code> → <code>x = 3 + 8 = 11</code>.`
+            ]
+          },
+          {
+            id: `A9`,
+            title: `Jambatan Tenaga Segitiga Kecil`,
+            scenario: `Jambatan tenaga menghubungkan P(5, 3) ke Q(8, 7). Hitung panjang jambatan PQ menggunakan Teorem Pythagoras.`,
+            coords: [`P(5, 3)`, `Q(8, 7)`],
+            points: [{ label: `P`, x: 5, y: 3, role: `start` }, { label: `Q`, x: 8, y: 7, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 5, y1: 3, x2: 8, y2: 7, cx: 8, cy: 3 },
+            hintText: `Beza x = 8 − 5 = 3 dan beza y = 7 − 3 = 4. Kira √(3² + 4²).`,
+            answer: 5,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Beza x = <code>8 − 5 = 3 unit</code>; beza y = <code>7 − 3 = 4 unit</code>.`,
+              `<code>PQ = √(3² + 4²) = √25 = 5 unit</code>.`
+            ]
+          },
+          {
+            id: `A10`,
+            title: `Kunci Akhir Sektor Kuantum`,
+            scenario: `Isyarat akhir dipancarkan dari titik asalan O(0, 0) ke menara utama W(9, 12). Tentukan jarak OW.`,
+            coords: [`O(0, 0)`, `W(9, 12)`],
+            points: [{ label: `O`, x: 0, y: 0, role: `start` }, { label: `W`, x: 9, y: 12, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 9, y2: 12, cx: 9, cy: 0 },
+            hintText: `Kira √(9² + 12²) = √(81 + 144) = √225.`,
+            answer: 15,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak mengufuk = <code>9 unit</code>; jarak mencancang = <code>12 unit</code>.`,
+              `<code>OW = √(9² + 12²) = √(81 + 144) = √225 = 15 unit</code>.`
             ]
           }
         ]
@@ -1766,109 +1406,163 @@
         showQuadrants: false,
         questions: [
           {
-            id: `Q6`,
+            id: `S1`,
             title: `Lintasan Laser Cermin Vektor`,
-            scenario: `Sektor Vektor memerlukan panjang tepat lintasan laser antara cermin P(2, 3) dengan penerima Q(7, 6). Gunakan rumus jarak dan bundarkan jawapan kepada 2 tempat perpuluhan.`,
+            scenario: `Kira panjang lintasan laser antara cermin P(2, 3) dengan penerima Q(7, 6). Bundarkan jawapan kepada 2 tempat perpuluhan.`,
             coords: [`P(2, 3)`, `Q(7, 6)`],
-            points: [
-              { label: `P`, x: 2, y: 3, role: `start` },
-              { label: `Q`, x: 7, y: 6, role: `target` }
-            ],
+            points: [{ label: `P`, x: 2, y: 3, role: `start` }, { label: `Q`, x: 7, y: 6, role: `target` }],
             hintVisual: { type: `triangle`, x1: 2, y1: 3, x2: 7, y2: 6, cx: 7, cy: 3 },
-            hintText: `Gantikan (x₁, y₁) = (2, 3) dan (x₂, y₂) = (7, 6) ke dalam rumus d = √[(x₂ − x₁)² + (y₂ − y₁)²]. Anda akan memperoleh punca kuasa dua bagi 34; bundarkan kepada 2 tempat perpuluhan.`,
+            hintText: `d = √[(7 − 2)² + (6 − 3)²] = √(5² + 3²) = √34. Bundarkan kepada 2 tempat perpuluhan.`,
             answer: 5.83,
             tolerance: 0.02,
             inputNote: `Bundarkan kepada 2 tempat perpuluhan (cth: 5.83).`,
             solutionSteps: [
-              `Gunakan rumus jarak: <code>d = √[(x₂ − x₁)² + (y₂ − y₁)²]</code>.`,
-              `Gantikan nilai: <code>PQ = √[(7 − 2)² + (6 − 3)²] = √(5² + 3²)</code>.`,
-              `Ringkaskan: <code>PQ = √(25 + 9) = √34</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 5.83 unit</code>.`
+              `<code>PQ = √[(7 − 2)² + (6 − 3)²] = √(25 + 9) = √34</code>.`,
+              `<code>PQ ≈ 5.83 unit</code>.`
             ]
           },
           {
-            id: `Q7`,
+            id: `S2`,
             title: `Laluan Kapsul Kecemasan`,
-            scenario: `Kapsul kecemasan bergerak secara terus dari stesen A(3, 8) ke pintu keluar B(8, 6). Hitung jarak laluan kapsul tersebut (bundarkan kepada 2 tempat perpuluhan).`,
+            scenario: `Kapsul bergerak terus dari stesen A(3, 8) ke pintu keluar B(8, 6). Hitung jarak AB (2 tempat perpuluhan).`,
             coords: [`A(3, 8)`, `B(8, 6)`],
-            points: [
-              { label: `A`, x: 3, y: 8, role: `start` },
-              { label: `B`, x: 8, y: 6, role: `target` }
-            ],
+            points: [{ label: `A`, x: 3, y: 8, role: `start` }, { label: `B`, x: 8, y: 6, role: `target` }],
             hintVisual: { type: `triangle`, x1: 3, y1: 8, x2: 8, y2: 6, cx: 8, cy: 8 },
-            hintText: `Perhatikan koordinat-y menurun dari 8 ke 6, jadi (y₂ − y₁) = 6 − 8 = −2. Apabila dikuasa duakan, (−2)² bernilai positif (+4). Hitung √(5² + (−2)²).`,
+            hintText: `Beza x = 8 − 3 = 5, beza y = 6 − 8 = −2. Hitung √[5² + (−2)²] = √29.`,
             answer: 5.39,
             tolerance: 0.02,
             inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
             solutionSteps: [
-              `Kira beza koordinat: <code>x₂ − x₁ = 8 − 3 = 5</code> dan <code>y₂ − y₁ = 6 − 8 = −2</code>.`,
-              `Gantikan ke dalam rumus jarak: <code>AB = √[5² + (−2)²]</code>.`,
-              `Ringkaskan: <code>AB = √(25 + 4) = √29</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>AB ≈ 5.39 unit</code>.`
+              `<code>AB = √[(8 − 3)² + (6 − 8)²] = √[5² + (−2)²] = √29</code>.`,
+              `<code>AB ≈ 5.39 unit</code>.`
             ]
           },
           {
-            id: `Q8`,
-            title: `Pengesanan Nod Tenaga Berganda`,
-            scenario: `Radar mengesan dua nod tenaga pada kedudukan R(1, 9) dan S(7, 3). Kira jarak antara kedua-dua nod tersebut dalam unit (2 tempat perpuluhan).`,
+            id: `S3`,
+            title: `Jarak Antara Dua Nod Tenaga`,
+            scenario: `Radar mengesan dua nod pada kedudukan R(1, 9) dan S(7, 3). Kira jarak RS (2 tempat perpuluhan).`,
             coords: [`R(1, 9)`, `S(7, 3)`],
-            points: [
-              { label: `R`, x: 1, y: 9, role: `start` },
-              { label: `S`, x: 7, y: 3, role: `target` }
-            ],
+            points: [{ label: `R`, x: 1, y: 9, role: `start` }, { label: `S`, x: 7, y: 3, role: `target` }],
             hintVisual: { type: `triangle`, x1: 1, y1: 9, x2: 7, y2: 3, cx: 7, cy: 9 },
-            hintText: `Hitung (7 − 1) untuk jarak mengufuk dan (3 − 9) untuk jarak mencancang. Kedua-dua beza ini memberi magnitud 6 unit. Maka, hitungkan √(6² + (−6)²).`,
+            hintText: `Hitung √[(7 − 1)² + (3 − 9)²] = √(36 + 36) = √72.`,
             answer: 8.49,
             tolerance: 0.02,
             inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
             solutionSteps: [
-              `Kira beza koordinat: <code>x₂ − x₁ = 7 − 1 = 6</code>, <code>y₂ − y₁ = 3 − 9 = −6</code>.`,
-              `Gantikan ke dalam rumus: <code>RS = √[6² + (−6)²] = √(36 + 36)</code>.`,
-              `Maka <code>RS = √72</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>RS ≈ 8.49 unit</code>.`
+              `<code>RS = √[6² + (−6)²] = √72</code>.`,
+              `<code>RS ≈ 8.49 unit</code>.`
             ]
           },
           {
-            id: `Q9`,
-            title: `Optimasi Laluan Robot Penyelamat`,
-            scenario: `Robot boleh bergerak melalui sudut C(10, 2) dari T(2, 2) ke U(10, 8), atau bergerak terus secara condong dari T ke U. Berapakah beza jarak (penjimatan laluan) apabila menggunakan laluan terus TU berbanding melalui C?`,
+            id: `S4`,
+            title: `Penjimatan Laluan Robot Penyelamat`,
+            scenario: `Robot boleh bergerak melalui sudut C(10, 2) dari T(2, 2) ke U(10, 8), atau bergerak terus secara condong dari T ke U. Berapakah penjimatan jarak apabila bergerak terus TU berbanding melalui C?`,
             coords: [`T(2, 2)`, `C(10, 2)`, `U(10, 8)`],
-            points: [
-              { label: `T`, x: 2, y: 2, role: `start` },
-              { label: `C`, x: 10, y: 2, role: `helper` },
-              { label: `U`, x: 10, y: 8, role: `target` }
-            ],
+            points: [{ label: `T`, x: 2, y: 2, role: `start` }, { label: `C`, x: 10, y: 2, role: `helper` }, { label: `U`, x: 10, y: 8, role: `target` }],
             hintVisual: { type: `triangle`, x1: 2, y1: 2, x2: 10, y2: 8, cx: 10, cy: 2 },
-            hintText: `Langkah 1: Jumlahkan jarak mengufuk TC dan jarak mencancang CU. Langkah 2: Hitung jarak terus TU menggunakan rumus jarak. Langkah 3: Tolakkan jarak terus daripada jumlah jarak melalui C.`,
+            hintText: `Jarak melalui C = (10 − 2) + (8 − 2) = 14. Jarak terus TU = √(8² + 6²) = 10. Cari beza 14 − 10.`,
             answer: 4,
             tolerance: 0.01,
-            inputNote: `Masukkan beza jarak dalam unit (integer tepat).`,
+            inputNote: `Masukkan beza jarak dalam unit (integer).`,
             solutionSteps: [
-              `Jarak melalui C: <code>TC = 10 − 2 = 8 unit</code>, <code>CU = 8 − 2 = 6 unit</code>.`,
-              `Jumlah jarak melalui C ialah <code>8 + 6 = 14 unit</code>.`,
-              `Jarak terus TU: <code>TU = √[(10 − 2)² + (8 − 2)²] = √(8² + 6²) = √100 = 10 unit</code>.`,
-              `Beza jarak (penjimatan) = <code>14 − 10 = 4 unit</code>.`
+              `Melalui C: <code>8 + 6 = 14 unit</code>. Terus TU: <code>√(8² + 6²) = 10 unit</code>.`,
+              `Penjimatan jarak = <code>14 − 10 = 4 unit</code>.`
             ]
           },
           {
-            id: `Q10`,
-            title: `Penyahaktifan Teras Sektor Vektor`,
-            scenario: `Kunci terakhir Sektor Vektor akan terbuka apabila jarak antara teras tenaga X(1, 2) dengan penerima Y(9, 7) dimasukkan. Kira jarak XY (2 tempat perpuluhan).`,
+            id: `S5`,
+            title: `Pancaran Tenaga Teras Vektor`,
+            scenario: `Kira jarak antara teras tenaga X(1, 2) dengan penerima Y(9, 7) (2 tempat perpuluhan).`,
             coords: [`X(1, 2)`, `Y(9, 7)`],
-            points: [
-              { label: `X`, x: 1, y: 2, role: `start` },
-              { label: `Y`, x: 9, y: 7, role: `target` }
-            ],
+            points: [{ label: `X`, x: 1, y: 2, role: `start` }, { label: `Y`, x: 9, y: 7, role: `target` }],
             hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 9, y2: 7, cx: 9, cy: 2 },
-            hintText: `Hitung Δx = 9 − 1 dan Δy = 7 − 2. Kuasa duakan kedua-dua nilai tersebut, jumlahkan untuk mendapat 89, kemudian cari punca kuasa dua √89.`,
+            hintText: `Hitung √[(9 − 1)² + (7 − 2)²] = √(64 + 25) = √89.`,
             answer: 9.43,
             tolerance: 0.02,
             inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
             solutionSteps: [
-              `Hitung beza koordinat: <code>x₂ − x₁ = 9 − 1 = 8</code>, <code>y₂ − y₁ = 7 − 2 = 5</code>.`,
-              `Gantikan ke dalam rumus: <code>XY = √(8² + 5²) = √(64 + 25)</code>.`,
-              `Maka <code>XY = √89</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>XY ≈ 9.43 unit</code>.`
+              `<code>XY = √(8² + 5²) = √89</code>.`,
+              `<code>XY ≈ 9.43 unit</code>.`
+            ]
+          },
+          {
+            id: `S6`,
+            title: `Penerbangan Dron dari Titik Asalan`,
+            scenario: `Dron berlepas dari asalan O(0, 0) ke stesen tinjau G(4, 9). Kira jarak penerbangan OG (2 tempat perpuluhan).`,
+            coords: [`O(0, 0)`, `G(4, 9)`],
+            points: [{ label: `O`, x: 0, y: 0, role: `start` }, { label: `G`, x: 4, y: 9, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 0, y1: 0, x2: 4, y2: 9, cx: 4, cy: 0 },
+            hintText: `Hitung √(4² + 9²) = √(16 + 81) = √97.`,
+            answer: 9.85,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `<code>OG = √(4² + 9²) = √97</code>.`,
+              `<code>OG ≈ 9.85 unit</code>.`
+            ]
+          },
+          {
+            id: `S7`,
+            title: `Menjejak Koordinat-y Tidak Diketahui`,
+            scenario: `Jarak antara nod H(2, 3) dengan sasaran K(6, y) ialah 5 unit (y > 3). Cari nilai koordinat-y bagi titik K.`,
+            coords: [`H(2, 3)`, `K(6, y)`, `Jarak HK = 5`],
+            points: [{ label: `H`, x: 2, y: 3, role: `start` }],
+            solvedPoints: [{ label: `K`, x: 6, y: 6, role: `target` }],
+            hintVisual: { type: `locus-y`, fixedX: 2, fixedY: 3, targetX: 6 },
+            hintText: `5² = (6 − 2)² + (y − 3)² → 25 = 16 + (y − 3)² → (y − 3)² = 9. Oleh sebab y > 3, y − 3 = 3.`,
+            answer: 6,
+            tolerance: 0.01,
+            inputNote: `Masukkan nilai koordinat-y (integer).`,
+            solutionSteps: [
+              `<code>25 = 4² + (y − 3)²</code> → <code>(y − 3)² = 9</code>.`,
+              `<code>y − 3 = 3</code> → <code>y = 6</code>.`
+            ]
+          },
+          {
+            id: `S8`,
+            title: `Laluan Segitiga Penderia`,
+            scenario: `Kira jarak antara penderia L(2, 11) dan M(10, 5) pada grid keselamatan.`,
+            coords: [`L(2, 11)`, `M(10, 5)`],
+            points: [{ label: `L`, x: 2, y: 11, role: `start` }, { label: `M`, x: 10, y: 5, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 2, y1: 11, x2: 10, y2: 5, cx: 10, cy: 11 },
+            hintText: `Beza x = 10 − 2 = 8, beza y = 5 − 11 = −6. Kira √[8² + (−6)²].`,
+            answer: 10,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `<code>LM = √[(10 − 2)² + (5 − 11)²] = √(64 + 36) = √100 = 10 unit</code>.`
+            ]
+          },
+          {
+            id: `S9`,
+            title: `Kabel Pemancar Condong`,
+            scenario: `Tentukan panjang kabel dari terminal N(4, 1) ke menara W(11, 5) (2 tempat perpuluhan).`,
+            coords: [`N(4, 1)`, `W(11, 5)`],
+            points: [{ label: `N`, x: 4, y: 1, role: `start` }, { label: `W`, x: 11, y: 5, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 4, y1: 1, x2: 11, y2: 5, cx: 11, cy: 1 },
+            hintText: `Hitung √[(11 − 4)² + (5 − 1)²] = √(7² + 4²) = √65.`,
+            answer: 8.06,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `<code>NW = √(7² + 4²) = √65 ≈ 8.06 unit</code>.`
+            ]
+          },
+          {
+            id: `S10`,
+            title: `Kunci Akhir Sektor Vektor`,
+            scenario: `Dua isyarat dipancarkan dari S(5, 5) ke A(1, 2) dan B(10, 5). Hitung jumlah kedua-dua jarak (SA + SB).`,
+            coords: [`S(5, 5)`, `A(1, 2)`, `B(10, 5)`],
+            points: [{ label: `S`, x: 5, y: 5, role: `start` }, { label: `A`, x: 1, y: 2, role: `helper` }, { label: `B`, x: 10, y: 5, role: `target` }],
+            hintVisual: { type: `triangle`, x1: 1, y1: 2, x2: 5, y2: 5, cx: 5, cy: 2 },
+            hintText: `Kira SA = √[(1 − 5)² + (2 − 5)²] = 5 unit, dan SB (mengufuk pada y = 5) = 10 − 5 = 5 unit. Jumlahkan SA + SB.`,
+            answer: 10,
+            tolerance: 0.01,
+            inputNote: `Masukkan jumlah jarak (integer).`,
+            solutionSteps: [
+              `<code>SA = √[(−4)² + (−3)²] = 5 unit</code>.`,
+              `<code>SB = |10 − 5| = 5 unit</code>.`,
+              `Jumlah jarak = <code>5 + 5 = 10 unit</code>.`
             ]
           }
         ]
@@ -1883,113 +1577,161 @@
         showQuadrants: true,
         questions: [
           {
-            id: `Q11`,
+            id: `T1`,
             title: `Isyarat Rentas Sukuan II ke Sukuan I`,
-            scenario: `Isyarat kecemasan dipancarkan dari titik P(−2, 6) di Sukuan II ke stesen penerimaan Q(4, 1) di Sukuan I. Tentukan jarak PQ dalam unit (2 tempat perpuluhan).`,
+            scenario: `Isyarat dipancarkan dari P(−2, 6) di Sukuan II ke stesen Q(4, 1) di Sukuan I. Kira jarak PQ (2 tempat perpuluhan).`,
             coords: [`P(−2, 6)`, `Q(4, 1)`],
-            points: [
-              { label: `P`, x: -2, y: 6, role: `start` },
-              { label: `Q`, x: 4, y: 1, role: `target` }
-            ],
+            points: [{ label: `P`, x: -2, y: 6, role: `start` }, { label: `Q`, x: 4, y: 1, role: `target` }],
             hintVisual: { type: `triangle`, x1: -2, y1: 6, x2: 4, y2: 1, cx: 4, cy: 6 },
-            hintText: `Berhati-hati dengan tanda negatif! Untuk beza koordinat-x: [4 − (−2)] = 4 + 2 = 6. Untuk beza koordinat-y: (1 − 6) = −5. Gantikan ke dalam rumus √[6² + (−5)²].`,
+            hintText: `Beza x = 4 − (−2) = 6; beza y = 1 − 6 = −5. Kira √[6² + (−5)²] = √61.`,
             answer: 7.81,
             tolerance: 0.02,
             inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
             solutionSteps: [
-              `Hitung beza koordinat-x: <code>4 − (−2) = 4 + 2 = 6</code>.`,
-              `Hitung beza koordinat-y: <code>1 − 6 = −5</code>.`,
-              `Gantikan ke dalam rumus jarak: <code>PQ = √[6² + (−5)²] = √(36 + 25) = √61</code>.`,
-              `Bundarkan kepada 2 tempat perpuluhan: <code>PQ ≈ 7.81 unit</code>.`
+              `<code>PQ = √[(4 − (−2))² + (1 − 6)²] = √[6² + (−5)²] = √61</code>.`,
+              `<code>PQ ≈ 7.81 unit</code>.`
             ]
           },
           {
-            id: `Q12`,
-            title: `Terowong Matriks Sukuan III ke Sukuan I`,
-            scenario: `Terowong matriks bawah tanah menghubungkan bilik kuasa di A(−4, −3) pada Sukuan III ke pintu keluar di B(8, 2) pada Sukuan I. Berapakah panjang tepat terowong AB?`,
+            id: `T2`,
+            title: `Terowong Sukuan III ke Sukuan I`,
+            scenario: `Terowong matriks menghubungkan A(−4, −3) pada Sukuan III ke pintu keluar B(8, 2) pada Sukuan I. Kira panjang terowong AB.`,
             coords: [`A(−4, −3)`, `B(8, 2)`],
-            points: [
-              { label: `A`, x: -4, y: -3, role: `start` },
-              { label: `B`, x: 8, y: 2, role: `target` }
-            ],
+            points: [{ label: `A`, x: -4, y: -3, role: `start` }, { label: `B`, x: 8, y: 2, role: `target` }],
             hintVisual: { type: `triangle`, x1: -4, y1: -3, x2: 8, y2: 2, cx: 8, cy: -3 },
-            hintText: `Menolak nombor negatif bersamaan dengan menambah! Hitung [8 − (−4)] = 12 dan [2 − (−3)] = 5. Kemudian gunakan Teorem Pythagoras √(12² + 5²).`,
+            hintText: `Beza x = 8 − (−4) = 12; beza y = 2 − (−3) = 5. Kira √(12² + 5²).`,
             answer: 13,
             tolerance: 0.01,
             inputNote: `Masukkan jawapan integer tepat (unit).`,
             solutionSteps: [
-              `Beza koordinat-x: <code>8 − (−4) = 8 + 4 = 12 unit</code>.`,
-              `Beza koordinat-y: <code>2 − (−3) = 2 + 3 = 5 unit</code>.`,
-              `Gunakan rumus jarak: <code>AB = √(12² + 5²) = √(144 + 25) = √169</code>.`,
-              `Maka, panjang terowong ialah <code>13 unit</code>.`
+              `<code>AB = √[(8 − (−4))² + (2 − (−3))²] = √(12² + 5²) = √169 = 13 unit</code>.`
             ]
           },
           {
-            id: `Q13`,
+            id: `T3`,
             title: `Menjejak Koordinat-x Tersembunyi`,
-            scenario: `Jarak antara kunci magnetik A(2, −3) dengan sasaran B(x, 5) ialah 10 unit. Diberi titik B berada di Sukuan I (nilai x positif). Cari nilai koordinat-x tersebut untuk membuka kod PIN!`,
+            scenario: `Jarak antara kunci magnetik A(2, −3) dengan sasaran B(x, 5) ialah 10 unit. Titik B terletak di Sukuan I (x > 0). Cari nilai koordinat-x tersebut.`,
             coords: [`A(2, −3)`, `B(x, 5)`, `Jarak AB = 10`],
-            points: [
-              { label: `A`, x: 2, y: -3, role: `start` }
-            ],
-            solvedPoints: [
-              { label: `B`, x: 8, y: 5, role: `target` }
-            ],
+            points: [{ label: `A`, x: 2, y: -3, role: `start` }],
+            solvedPoints: [{ label: `B`, x: 8, y: 5, role: `target` }],
             hintVisual: { type: `locus-x`, fixedX: 2, fixedY: -3, targetY: 5 },
-            hintText: `Gunakan rumus jarak dan kuasa duakan kedua-dua belah persamaan: 10² = (x − 2)² + [5 − (−3)]². Oleh sebab [5 − (−3)] = 8, anda akan mendapat (x − 2)² = 100 − 64 = 36. Pilih nilai x yang positif (Sukuan I).`,
+            hintText: `10² = (x − 2)² + [5 − (−3)]² → 100 = (x − 2)² + 64 → (x − 2)² = 36. Pilih nilai x positif (Sukuan I).`,
             answer: 8,
             tolerance: 0.01,
             inputNote: `Masukkan nilai koordinat-x (integer).`,
             solutionSteps: [
-              `Susun persamaan jarak: <code>10 = √[(x − 2)² + (5 − (−3))²]</code>.`,
-              `Kuasa duakan kedua-dua belah: <code>100 = (x − 2)² + 8²</code> → <code>100 = (x − 2)² + 64</code>.`,
-              `Selesaikan: <code>(x − 2)² = 36</code> → <code>x − 2 = ±6</code>, maka <code>x = 8</code> atau <code>x = −4</code>.`,
-              `Oleh sebab B di Sukuan I (x > 0), nilai koordinat-x ialah <code>8</code>.`
+              `<code>100 = (x − 2)² + 8²</code> → <code>(x − 2)² = 36</code>.`,
+              `<code>x − 2 = ±6</code> → <code>x = 8</code> atau <code>x = −4</code>. Di Sukuan I, <code>x = 8</code>.`
             ]
           },
           {
-            id: `Q14`,
+            id: `T4`,
             title: `Menjejak Koordinat-y Negatif (Sukuan IV)`,
-            scenario: `Penderia laser di K(−2, 1) berjarak tepat 10 unit dari nod keselamatan L(4, y) yang terletak di Sukuan IV (y < 0). Masukkan nilai koordinat-y (termasuk tanda negatif) sebagai kod PIN.`,
+            scenario: `Penderia laser di K(−2, 1) berjarak tepat 10 unit dari nod keselamatan L(4, y) di Sukuan IV (y < 0). Masukkan nilai koordinat-y (termasuk tanda negatif).`,
             coords: [`K(−2, 1)`, `L(4, y)`, `Jarak KL = 10`],
-            points: [
-              { label: `K`, x: -2, y: 1, role: `start` }
-            ],
-            solvedPoints: [
-              { label: `L`, x: 4, y: -7, role: `target` }
-            ],
+            points: [{ label: `K`, x: -2, y: 1, role: `start` }],
+            solvedPoints: [{ label: `L`, x: 4, y: -7, role: `target` }],
             hintVisual: { type: `locus-y`, fixedX: -2, fixedY: 1, targetX: 4 },
-            hintText: `Bentukkan persamaan 10² = [4 − (−2)]² + (y − 1)². Beza x ialah 6, jadi 100 = 36 + (y − 1)², memberikan (y − 1)² = 64. Maka y − 1 = +8 atau −8. Pilih nilai y yang negatif (Sukuan IV).`,
+            hintText: `10² = [4 − (−2)]² + (y − 1)² → 100 = 36 + (y − 1)² → (y − 1)² = 64. Pilih nilai y negatif.`,
             answer: -7,
             tolerance: 0.01,
             inputNote: `Masukkan nilai integer negatif (gunakan butang −).`,
             solutionSteps: [
-              `Bentukkan persamaan jarak: <code>10² = [4 − (−2)]² + (y − 1)²</code>.`,
-              `Ringkaskan: <code>100 = 6² + (y − 1)²</code> → <code>(y − 1)² = 100 − 36 = 64</code>.`,
-              `Ambil punca kuasa dua: <code>y − 1 = ±8</code>, maka <code>y = 9</code> atau <code>y = −7</code>.`,
-              `Oleh sebab L di Sukuan IV (y < 0), nilai koordinat-y ialah <code>−7</code>.`
+              `<code>100 = 6² + (y − 1)²</code> → <code>(y − 1)² = 64</code>.`,
+              `<code>y − 1 = ±8</code> → <code>y = 9</code> atau <code>y = −7</code>. Di Sukuan IV, <code>y = −7</code>.`
             ]
           },
           {
-            id: `Q15`,
+            id: `T5`,
+            title: `Jarak Mengufuk Rentas Paksi-y`,
+            scenario: `Dua pengawal keselamatan berada pada kedudukan M(−7, −4) di Sukuan III dan N(6, −4) di Sukuan IV. Kira jarak mengufuk MN.`,
+            coords: [`M(−7, −4)`, `N(6, −4)`],
+            points: [{ label: `M`, x: -7, y: -4, role: `start` }, { label: `N`, x: 6, y: -4, role: `target` }],
+            hintVisual: { type: `horizontal`, x1: -7, y1: -4, x2: 6, y2: -4 },
+            hintText: `Koordinat-y adalah sama (y = −4). Kira |6 − (−7)| = 6 + 7.`,
+            answer: 13,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak MN = <code>|6 − (−7)| = 6 + 7 = 13 unit</code>.`
+            ]
+          },
+          {
+            id: `T6`,
+            title: `Isyarat Sukuan II ke Sukuan IV`,
+            scenario: `Pancaran laser bergerak dari E(−5, 4) ke F(3, −2). Tentukan panjang pancaran EF.`,
+            coords: [`E(−5, 4)`, `F(3, −2)`],
+            points: [{ label: `E`, x: -5, y: 4, role: `start` }, { label: `F`, x: 3, y: -2, role: `target` }],
+            hintVisual: { type: `triangle`, x1: -5, y1: 4, x2: 3, y2: -2, cx: 3, cy: 4 },
+            hintText: `Beza x = 3 − (−5) = 8; beza y = −2 − 4 = −6. Kira √[8² + (−6)²].`,
+            answer: 10,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `<code>EF = √[(3 − (−5))² + (−2 − 4)²] = √(8² + (−6)²) = √100 = 10 unit</code>.`
+            ]
+          },
+          {
+            id: `T7`,
+            title: `Menjejak Koordinat-x Negatif (Sukuan II)`,
+            scenario: `Jarak antara titik P(x, 4) di Sukuan II (x < 0) dengan titik Q(1, −4) ialah 10 unit. Cari nilai koordinat-x bagi P.`,
+            coords: [`P(x, 4)`, `Q(1, −4)`, `Jarak PQ = 10`],
+            points: [{ label: `Q`, x: 1, y: -4, role: `start` }],
+            solvedPoints: [{ label: `P`, x: -5, y: 4, role: `target` }],
+            hintVisual: { type: `locus-x`, fixedX: 1, fixedY: -4, targetY: 4 },
+            hintText: `10² = (1 − x)² + (−4 − 4)² → 100 = (1 − x)² + 64 → (1 − x)² = 36. Pilih nilai x negatif.`,
+            answer: -5,
+            tolerance: 0.01,
+            inputNote: `Masukkan nilai integer negatif (gunakan butang −).`,
+            solutionSteps: [
+              `<code>100 = (1 − x)² + (−8)²</code> → <code>(1 − x)² = 36</code>.`,
+              `<code>1 − x = ±6</code> → <code>x = −5</code> atau <code>x = 7</code>. Di Sukuan II, <code>x = −5</code>.`
+            ]
+          },
+          {
+            id: `T8`,
+            title: `Jarak Mencancang Rentas Paksi-x`,
+            scenario: `Kabel tegak dipasang dari R(−3, −6) di Sukuan III ke S(−3, 7) di Sukuan II. Kira panjang kabel RS.`,
+            coords: [`R(−3, −6)`, `S(−3, 7)`],
+            points: [{ label: `R`, x: -3, y: -6, role: `start` }, { label: `S`, x: -3, y: 7, role: `target` }],
+            hintVisual: { type: `vertical`, x1: -3, y1: -6, x2: -3, y2: 7 },
+            hintText: `Koordinat-x adalah sama (x = −3). Kira |7 − (−6)| = 7 + 6.`,
+            answer: 13,
+            tolerance: 0.01,
+            inputNote: `Masukkan jawapan integer tepat (unit).`,
+            solutionSteps: [
+              `Jarak RS = <code>|7 − (−6)| = 7 + 6 = 13 unit</code>.`
+            ]
+          },
+          {
+            id: `T9`,
+            title: `Lintasan Pepenjuru Sukuan III ke Sukuan IV`,
+            scenario: `Kira jarak antara stesen bawah tanah U(−6, −2) dan V(2, −7) (bundarkan kepada 2 tempat perpuluhan).`,
+            coords: [`U(−6, −2)`, `V(2, −7)`],
+            points: [{ label: `U`, x: -6, y: -2, role: `start` }, { label: `V`, x: 2, y: -7, role: `target` }],
+            hintVisual: { type: `triangle`, x1: -6, y1: -2, x2: 2, y2: -7, cx: 2, cy: -2 },
+            hintText: `Beza x = 2 − (−6) = 8; beza y = −7 − (−2) = −5. Kira √[8² + (−5)²] = √89.`,
+            answer: 9.43,
+            tolerance: 0.02,
+            inputNote: `Bundarkan kepada 2 tempat perpuluhan.`,
+            solutionSteps: [
+              `<code>UV = √[(2 − (−6))² + (−7 − (−2))²] = √(8² + (−5)²) = √89 ≈ 9.43 unit</code>.`
+            ]
+          },
+          {
+            id: `T10`,
             title: `Misi Akhir: Kapsul Penyelamat Terdekat`,
-            scenario: `Pintu Utama Bilik Kawalan terletak di titik asalan O(0, 0). Dua kapsul penyelamat dikesan di P(−6, 8) dan Q(3, −8). Kira jarak dari O ke kapsul yang lebih dekat (bundarkan kepada 2 tempat perpuluhan).`,
+            scenario: `Pintu Utama terletak di asalan O(0, 0). Dua kapsul penyelamat dikesan di P(−6, 8) dan Q(3, −8). Kira jarak dari O ke kapsul yang lebih dekat (2 tempat perpuluhan).`,
             coords: [`O(0, 0)`, `P(−6, 8)`, `Q(3, −8)`],
-            points: [
-              { label: `O`, x: 0, y: 0, role: `start` },
-              { label: `P`, x: -6, y: 8, role: `helper` },
-              { label: `Q`, x: 3, y: -8, role: `target` }
-            ],
+            points: [{ label: `O`, x: 0, y: 0, role: `start` }, { label: `P`, x: -6, y: 8, role: `helper` }, { label: `Q`, x: 3, y: -8, role: `target` }],
             hintVisual: { type: `dual-origin`, p1: { x: -6, y: 8 }, p2: { x: 3, y: -8 } },
-            hintText: `Hitung jarak setiap kapsul dari asalan O(0, 0) menggunakan d = √(x² + y²): kira jarak OP = √[(−6)² + 8²] dan jarak OQ = √[3² + (−8)²]. Bandingkan kedua-duanya dan masukkan jarak yang lebih pendek.`,
+            hintText: `Kira OP = √[(−6)² + 8²] = 10 unit dan OQ = √[3² + (−8)²] = √73 ≈ 8.54 unit. Pilih jarak yang lebih dekat.`,
             answer: 8.54,
             tolerance: 0.02,
             inputNote: `Bundarkan jarak terdekat kepada 2 tempat perpuluhan.`,
             solutionSteps: [
-              `Jarak kapsul P dari asalan O(0, 0): <code>OP = √[(−6)² + 8²] = √(36 + 64) = √100 = 10 unit</code>.`,
-              `Jarak kapsul Q dari asalan O(0, 0): <code>OQ = √[3² + (−8)²] = √(9 + 64) = √73 ≈ 8.54 unit</code>.`,
-              `Bandingkan jarak: <code>8.54 < 10</code>, maka kapsul Q lebih dekat.`,
-              `Kod PIN Pembebasan Utama ialah <code>8.54</code>.`
+              `<code>OP = √(36 + 64) = 10 unit</code>; <code>OQ = √(9 + 64) = √73 ≈ 8.54 unit</code>.`,
+              `Kapsul Q lebih dekat dengan jarak <code>8.54 unit</code>.`
             ]
           }
         ]
@@ -2006,6 +1748,7 @@
       currentLevel: 0,
       currentQ: 0,
       solved: {},
+      submittedLevels: { 0: false, 1: false, 2: false },
       hintsUsed: {},
       attempts: {},
       score: 0,
@@ -2054,23 +1797,16 @@
     function formatTime(totalSec) {
       const mins = Math.floor(totalSec / 60);
       const secs = totalSec % 60;
-      const mStr = String(mins).padStart(2, `0`);
-      const sStr = String(secs).padStart(2, `0`);
-      return `${mStr}:${sStr}`;
+      return `${String(mins).padStart(2, `0`)}:${String(secs).padStart(2, `0`)}`;
     }
 
     function startTimer() {
       if (timerInterval) clearInterval(timerInterval);
       timerInterval = setInterval(function () {
         if (!appState.studentName || appState.isTeacherPortalUrl) return;
-        if (getTotalSolvedCount() < 15) {
-          appState.elapsedSeconds += 1;
-          const timerEl = document.getElementById(`hud-timer`);
-          if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
-        } else {
-          const statusEl = document.getElementById(`hud-timer-status`);
-          if (statusEl) statusEl.textContent = `Misi tamat`;
-        }
+        appState.elapsedSeconds += 1;
+        const timerEl = document.getElementById(`hud-timer`);
+        if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
       }, 1000);
     }
 
@@ -2093,7 +1829,7 @@
     }
 
     // =========================================================================
-    // PENGURUSAN BILIK SESI SEKOLAH & KESELAMATAN LOG MASUK GURU
+    // PENGURUSAN BILIK SESI SEKOLAH & LOG MASUK GURU
     // =========================================================================
     function getLoginGuardState() {
       try {
@@ -2179,7 +1915,7 @@
 
       const existing = await getRoomMetadata(sessionCode);
       if (existing) {
-        errEl.textContent = `Kod Sesi "${sessionCode}" telah didaftarkan. Sila pilih kod unik lain (contohnya tambah nama kelas atau tahun).`;
+        errEl.textContent = `Kod Sesi "${sessionCode}" telah didaftarkan. Sila pilih kod unik lain.`;
         errEl.classList.remove(`hidden`);
         submitBtn.disabled = false;
         submitBtn.textContent = `Daftar & Masuk Dashboard`;
@@ -2214,7 +1950,7 @@
       const now = Date.now();
       if (guard.lockedUntil && now < guard.lockedUntil) {
         const minsLeft = Math.ceil((guard.lockedUntil - now) / 60000);
-        errEl.textContent = `Akses disekat sementara atas faktor keselamatan. Sila cuba lagi dalam ${minsLeft} minit.`;
+        errEl.textContent = `Akses disekat sementara. Sila cuba lagi dalam ${minsLeft} minit.`;
         errEl.classList.remove(`hidden`);
         return;
       }
@@ -2237,7 +1973,7 @@
         } else {
           setLoginGuardState({ fails: newFails, lockedUntil: 0 });
           const baki = MAX_LOGIN_ATTEMPTS - newFails;
-          errEl.textContent = `Pengesahan gagal. Kod Sesi atau Kata Laluan tidak sah (Baki cubaan: ${baki}).`;
+          errEl.textContent = `Kod Sesi atau Kata Laluan tidak sah (Baki cubaan: ${baki}).`;
         }
         errEl.classList.remove(`hidden`);
         submitBtn.disabled = false;
@@ -2300,7 +2036,7 @@
 
       if (newPin !== confirmPin) {
         statusEl.style.color = `var(--error)`;
-        statusEl.textContent = `Ralat: Kata laluan baharu dan pengesahan tidak sepadan.`;
+        statusEl.textContent = `Ralat: Kata laluan baharu tidak sepadan.`;
         return;
       }
 
@@ -2364,7 +2100,7 @@
     }
 
     // =========================================================================
-    // PENYIMPANAN & LOG KELUAR / RESET AUTOMATIK PROFIL MURID
+    // PENYIMPANAN & PENGHANTARAN KEPUTUSAN MENGIKUT ARAS KE GOOGLE SHEETS
     // =========================================================================
     function setSyncBadge(status, label) {
       const pill = document.getElementById(`sync-status-pill`);
@@ -2375,7 +2111,6 @@
     }
 
     function resetFullStudentSession() {
-      // Padam sebarang sisa profil lama dalam localStorage / sessionStorage
       try {
         localStorage.removeItem(LEGACY_STATE_KEY);
         sessionStorage.removeItem(LEGACY_STATE_KEY);
@@ -2392,6 +2127,7 @@
       appState.currentLevel = 0;
       appState.currentQ = 0;
       appState.solved = {};
+      appState.submittedLevels = { 0: false, 1: false, 2: false };
       appState.hintsUsed = {};
       appState.attempts = {};
       appState.score = 0;
@@ -2406,13 +2142,18 @@
     function initializeFreshPageSession() {
       const urlParams = new URLSearchParams(window.location.search);
       const urlMod = urlParams.get(`mod`);
-
       if (urlMod && urlMod.trim().toLowerCase() === `guru`) {
         appState.isTeacherPortalUrl = true;
       }
-
-      // Setiap kali pautan dibuka semula, mulakan dengan profil kosong
       resetFullStudentSession();
+    }
+
+    function getSubmittedLevelsSummaryText() {
+      const names = [];
+      if (appState.submittedLevels[0]) names.push(`Asas (${getLevelSolvedCount(0)}/10)`);
+      if (appState.submittedLevels[1]) names.push(`Sederhana (${getLevelSolvedCount(1)}/10)`);
+      if (appState.submittedLevels[2]) names.push(`Tinggi (${getLevelSolvedCount(2)}/10)`);
+      return names.length > 0 ? `DIHANTAR: ` + names.join(`, `) : `SEDANG MENJAWAB`;
     }
 
     function buildSubmissionPayload() {
@@ -2431,47 +2172,129 @@
         sessionCode: (appState.sessionCode || ``).trim().toUpperCase(),
         score: appState.score,
         solvedCount: totalSolved,
-        totalQuestions: 15,
+        totalQuestions: 30,
         level0Solved: getLevelSolvedCount(0),
         level1Solved: getLevelSolvedCount(1),
         level2Solved: getLevelSolvedCount(2),
+        submittedLevels: appState.submittedLevels,
         elapsedSeconds: appState.elapsedSeconds,
         elapsedFormatted: formatTime(appState.elapsedSeconds),
         hintsUsed: hintsCount,
         totalAttempts: totalAttempts,
-        status: totalSolved === 15 ? `SELESAI` : `SEDANG MENJAWAB`,
+        status: getSubmittedLevelsSummaryText(),
         submittedAt: new Date().toLocaleString(`ms-MY`, { hour12: true }),
         updatedTimestamp: Date.now()
       };
     }
 
-    async function submitReportToTeacher(isManualClick) {
-      if (!appState.studentName || !appState.sessionCode) { openStudentModal(); return; }
+    async function syncProgressToCloud() {
+      if (!appState.studentName || !appState.sessionCode) return false;
       const payload = buildSubmissionPayload();
       const sessionKey = payload.sessionCode;
-      setSyncBadge(`sending`, `Menghantar data ke Google Sheets...`);
+      setSyncBadge(`sending`, `Menyimpan rekod ke Google Sheets...`);
+
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
         if (!allLocal[sessionKey]) allLocal[sessionKey] = {};
         allLocal[sessionKey][payload.studentId] = payload;
         localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(allLocal));
       } catch (e) {}
+
       let cloudSaved = false;
       if (GOOGLE_SCRIPT_URL) {
-        try { await googleSheetPost({ action: "saveSubmission", submission: payload }); cloudSaved = true; }
-        catch (err) { console.warn(`Gagal hantar ke Google Sheets:`, err); }
+        try {
+          await googleSheetPost({ action: "saveSubmission", submission: payload });
+          cloudSaved = true;
+        } catch (err) {
+          console.warn(`Gagal hantar ke Google Sheets:`, err);
+        }
       }
+
       const timeNow = new Date().toLocaleTimeString(`ms-MY`, { hour: `2-digit`, minute: `2-digit` });
       setSyncBadge(cloudSaved ? `synced` : `idle`, cloudSaved
-        ? `Data dihantar ke Google Sheets (${timeNow})`
-        : `Disimpan pada peranti ini sahaja — sambungan Google Sheets belum berjaya`);
-      if (isManualClick) {
-        const btn = document.getElementById(`btn-submit-teacher`);
-        if (btn) {
-          const orig = btn.textContent;
-          btn.textContent = cloudSaved ? `✓ Laporan Dihantar ke Guru` : `Laporan Disimpan Pada Peranti`;
-          setTimeout(function () { btn.textContent = orig; }, 3000);
+        ? `Direkodkan di Google Sheets (${timeNow})`
+        : `Disimpan pada peranti — semak sambungan internet`);
+      return cloudSaved;
+    }
+
+    async function submitCurrentLevelToTeacher() {
+      if (!appState.studentName || !appState.sessionCode) {
+        openStudentModal();
+        return;
+      }
+
+      const lvlIdx = appState.currentLevel;
+      const lvlObj = LEVELS[lvlIdx];
+      const solvedInLvl = getLevelSolvedCount(lvlIdx);
+
+      const submitBtn = document.getElementById(`btn-submit-current-level`);
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = `Menghantar ${lvlObj.label}...`;
+      }
+
+      appState.submittedLevels[lvlIdx] = true;
+      const cloudOk = await syncProgressToCloud();
+      refreshAll();
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = `Hantar Semula ${lvlObj.label}`;
+      }
+
+      const modal = document.getElementById(`level-submitted-modal`);
+      const kickerEl = document.getElementById(`lvl-sub-kicker`);
+      const titleEl = document.getElementById(`lvl-sub-modal-title`);
+      const summaryEl = document.getElementById(`lvl-sub-summary`);
+      const statsEl = document.getElementById(`lvl-sub-stats`);
+      const nextLvlBtn = document.getElementById(`btn-proceed-next-level`);
+
+      if (kickerEl) {
+        kickerEl.textContent = cloudOk
+          ? `BERJAYA DIHANTAR KE GOOGLE SHEETS GURU`
+          : `DISIMPAN PADA PERANTI (SEMAK INTERNET)`;
+      }
+      if (titleEl) {
+        titleEl.textContent = `Keputusan ${lvlObj.label} (${lvlObj.name}) Telah Dihantar!`;
+      }
+      if (summaryEl) {
+        summaryEl.textContent = `Tahniah ${appState.studentName}! Anda telah menyelesaikan ${solvedInLvl} daripada 10 soalan dalam ${lvlObj.label}. Guru anda kini boleh melihat keputusan anda secara langsung.`;
+      }
+      if (statsEl) {
+        statsEl.innerHTML = `
+          <div class="hud-tile is-cyan">
+            <span class="hud-label">PIN Selesai (${lvlObj.label})</span>
+            <span class="hud-value is-cyan">${solvedInLvl} / 10</span>
+            <span class="hud-caption">Sektor ${lvlObj.name}</span>
+          </div>
+          <div class="hud-tile">
+            <span class="hud-label">Jumlah Skor Terkumpul</span>
+            <span class="hud-value is-pink">${appState.score}</span>
+            <span class="hud-caption">Masa: ${formatTime(appState.elapsedSeconds)}</span>
+          </div>
+        `;
+      }
+      if (nextLvlBtn) {
+        if (lvlIdx < 2) {
+          const nextName = LEVELS[lvlIdx + 1].label;
+          nextLvlBtn.textContent = `Teruskan ke ${nextName} →`;
+          nextLvlBtn.classList.remove(`hidden`);
+        } else {
+          nextLvlBtn.classList.add(`hidden`);
         }
+      }
+      if (modal) modal.classList.remove(`hidden`);
+    }
+
+    function closeLevelSubmittedModal() {
+      const modal = document.getElementById(`level-submitted-modal`);
+      if (modal) modal.classList.add(`hidden`);
+    }
+
+    function proceedToNextLevel() {
+      closeLevelSubmittedModal();
+      if (appState.currentLevel < 2) {
+        selectLevel(appState.currentLevel + 1);
       }
     }
 
@@ -2539,10 +2362,12 @@
       const nameInput = document.getElementById(`input-student-name`);
       const classInput = document.getElementById(`input-student-class`);
       const codeInput = document.getElementById(`input-session-code`);
+      const levelSelect = document.getElementById(`input-start-level`);
 
       const newName = nameInput.value.trim();
       const newClass = classInput.value.trim();
       const newCode = codeInput.value.trim().toUpperCase();
+      const chosenLevel = levelSelect ? Number(levelSelect.value) : 0;
 
       if (!newName || !newClass || !newCode) return;
 
@@ -2550,13 +2375,14 @@
       appState.studentName = newName;
       appState.studentClass = newClass;
       appState.sessionCode = newCode;
+      appState.currentLevel = chosenLevel;
+      appState.currentQ = 0;
 
-      updateStudentHeaderBar();
+      refreshAll();
       closeStudentModal();
-      submitReportToTeacher(false);
+      syncProgressToCloud();
     }
 
-    // Fungsi Log Keluar Murid: hantar markah semasa, kosongkan sesi & buka skrin daftar semula
     async function logoutAndResetStudent(btn) {
       if (btn && btn.dataset.armed !== `true`) {
         btn.dataset.armed = `true`;
@@ -2575,17 +2401,17 @@
       }
 
       if (appState.studentName && appState.sessionCode) {
-        await submitReportToTeacher(false);
+        await syncProgressToCloud();
       }
 
       resetFullStudentSession();
       openStudentModal();
     }
 
-    // Log keluar segera selepas tamat misi 15/15
     async function finishAndLogoutStudent() {
+      closeLevelSubmittedModal();
       if (appState.studentName && appState.sessionCode) {
-        await submitReportToTeacher(false);
+        await syncProgressToCloud();
       }
       resetFullStudentSession();
       openStudentModal();
@@ -2621,8 +2447,8 @@
       if (!activeTeacherSession) return;
       const sessionCode = activeTeacherSession.sessionCode;
       const tbody = document.getElementById(`teacher-table-body`);
-      if (tbody) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Mengemas kini rekod bagi sesi ${escapeHtml(sessionCode)}...</td></tr>`;
+      if (tbody && teacherSubmissionsCache.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.25rem; color:var(--secondary);">Memuat turun rekod murid dari Google Sheets bagi sesi ${escapeHtml(sessionCode)}...</td></tr>`;
       }
       teacherSubmissionsCache = await fetchSubmissionsForSession(sessionCode);
       renderTeacherTable();
@@ -2641,7 +2467,9 @@
       const kpiContainer = document.getElementById(`teacher-kpi-row`);
       if (kpiContainer) {
         const totalStudents = filtered.length;
-        const completedCount = filtered.filter(function (s) { return s.solvedCount === 15; }).length;
+        const submittedCount = filtered.filter(function (s) {
+          return String(s.status || ``).startsWith(`DIHANTAR`);
+        }).length;
         const avgScore = totalStudents
           ? Math.round(filtered.reduce(function (acc, s) { return acc + (Number(s.score) || 0); }, 0) / totalStudents)
           : 0;
@@ -2653,12 +2481,12 @@
           <div class="hud-tile is-cyan">
             <span class="hud-label">Jumlah Murid Sesi Ini</span>
             <span class="hud-value is-cyan">${totalStudents}</span>
-            <span class="hud-caption">${completedCount} orang tamat penuh</span>
+            <span class="hud-caption">${submittedCount} murid telah menekan Hantar</span>
           </div>
           <div class="hud-tile">
             <span class="hud-label">Purata Skor Kelas</span>
             <span class="hud-value is-pink">${avgScore}</span>
-            <span class="hud-caption">Daripada 1500 mata maksimum</span>
+            <span class="hud-caption">1000 mata setiap aras penuh</span>
           </div>
           <div class="hud-tile is-cyan">
             <span class="hud-label">Purata Masa Misi</span>
@@ -2672,13 +2500,13 @@
       if (!tbody) return;
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:var(--on-surface-variant);">Tiada rekod penghantaran murid ditemui bagi sesi ini. Klik "Salin Pautan Khas Murid" di atas dan kongsikan kepada kelas anda.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:1.5rem; color:var(--on-surface-variant);">Tiada rekod murid ditemui bagi sesi ini lagi. Kongsikan "Pautan Khas Murid" kepada pelajar di kelas atau di rumah.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = filtered.map(function (row, idx) {
-        const isDone = Number(row.solvedCount) === 15;
-        const badgeCls = isDone ? `is-done` : `is-progress`;
+        const isSubmitted = String(row.status || ``).startsWith(`DIHANTAR`);
+        const badgeCls = isSubmitted ? `is-done` : `is-progress`;
         return `
           <tr>
             <td>${idx + 1}</td>
@@ -2686,10 +2514,10 @@
             <td>${escapeHtml(row.studentClass)}</td>
             <td><span class="status-chip ${badgeCls}">${escapeHtml(row.status)}</span></td>
             <td><strong style="color: var(--primary);">${row.score}</strong></td>
-            <td>${row.solvedCount} / 15</td>
-            <td>K:${row.level0Solved}/5 | V:${row.level1Solved}/5 | M:${row.level2Solved}/5</td>
+            <td><strong>${row.level0Solved || 0} / 10</strong></td>
+            <td><strong>${row.level1Solved || 0} / 10</strong></td>
+            <td><strong>${row.level2Solved || 0} / 10</strong></td>
             <td>${escapeHtml(row.elapsedFormatted || formatTime(row.elapsedSeconds))}</td>
-            <td>${row.hintsUsed} hint / ${row.totalAttempts} cuba</td>
             <td>${escapeHtml(row.submittedAt || `—`)}</td>
           </tr>
         `;
@@ -2698,10 +2526,10 @@
 
     function escapeHtml(str) {
       return String(str || ``)
-        .replace(/&/g, `&`)
-        .replace(/</g, `<`)
-        .replace(/>/g, `>`)
-        .replace(/"/g, `"`);
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
     }
 
     function exportTeacherCsv() {
@@ -2714,16 +2542,13 @@
         `Kelas`,
         `Sekolah`,
         `Kod Sesi`,
-        `Status`,
-        `Skor`,
-        `PIN Selesai`,
-        `Kuantum (Asas)`,
-        `Vektor (Sederhana)`,
-        `Matriks (Tinggi)`,
+        `Status Hantar`,
+        `Jumlah Skor`,
+        `Aras Asas (10)`,
+        `Aras Sederhana (10)`,
+        `Aras Tinggi (10)`,
         `Masa Misi`,
-        `Bilangan Petunjuk`,
-        `Jumlah Cubaan`,
-        `Masa Dihantar`
+        `Masa Kemas Kini`
       ];
 
       const rows = teacherSubmissionsCache.map(function (r, idx) {
@@ -2735,18 +2560,16 @@
           `"${sessionCode}"`,
           `"${r.status}"`,
           r.score,
-          `${r.solvedCount}/15`,
-          `${r.level0Solved}/5`,
-          `${r.level1Solved}/5`,
-          `${r.level2Solved}/5`,
+          `${r.level0Solved || 0}/10`,
+          `${r.level1Solved || 0}/10`,
+          `${r.level2Solved || 0}/10`,
           `"${r.elapsedFormatted || formatTime(r.elapsedSeconds)}"`,
-          r.hintsUsed,
-          r.totalAttempts,
           `"${r.submittedAt || ``}"`
         ].join(`,`);
       });
 
-      const csvContent = `\uFEFF` + [headers.join(`,`)].concat(rows).join(`\n`);
+      const csvContent = `﻿` + [headers.join(`,`)].concat(rows).join(`
+`);
       const blob = new Blob([csvContent], { type: `text/csv;charset=utf-8;` });
       const url = URL.createObjectURL(blob);
       const a = document.createElement(`a`);
@@ -2775,7 +2598,6 @@
       btn.textContent = `Padam Rekod Sesi Ini`;
 
       const sessionCode = activeTeacherSession.sessionCode;
-
       try {
         const allLocal = JSON.parse(localStorage.getItem(LOCAL_DB_KEY) || `{}`);
         delete allLocal[sessionCode];
@@ -2786,6 +2608,7 @@
         try { await googleSheetPost({ action: "deleteSubmissions", sessionCode: sessionCode }); }
         catch (e) { console.warn("Gagal memadam rekod daripada Google Sheets:", e); }
       }
+      teacherSubmissionsCache = [];
       refreshTeacherSubmissions();
     }
 
@@ -2794,7 +2617,10 @@
     // =========================================================================
     function updateHud() {
       const totalSolved = getTotalSolvedCount();
-      const levelSolved = getLevelSolvedCount(appState.currentLevel);
+      const lvlIdx = appState.currentLevel;
+      const lvlObj = LEVELS[lvlIdx];
+      const levelSolved = getLevelSolvedCount(lvlIdx);
+      const isLvlSubmitted = Boolean(appState.submittedLevels[lvlIdx]);
 
       const timerEl = document.getElementById(`hud-timer`);
       if (timerEl) timerEl.textContent = formatTime(appState.elapsedSeconds);
@@ -2802,92 +2628,71 @@
       const scoreEl = document.getElementById(`hud-score`);
       if (scoreEl) scoreEl.textContent = String(appState.score);
 
-      const progEl = document.getElementById(`hud-progress`);
-      if (progEl) progEl.textContent = `${totalSolved} / 15`;
-
       const lvlProgEl = document.getElementById(`hud-level-progress`);
-      if (lvlProgEl) lvlProgEl.textContent = `Aras semasa: ${levelSolved} / 5`;
+      if (lvlProgEl) lvlProgEl.textContent = `${levelSolved} / 10`;
+
+      const progEl = document.getElementById(`hud-progress`);
+      if (progEl) progEl.textContent = `Jumlah keseluruhan: ${totalSolved} / 30`;
 
       const doorEl = document.getElementById(`hud-door-status`);
       const doorCapEl = document.getElementById(`hud-door-caption`);
       if (doorEl && doorCapEl) {
-        if (totalSolved === 15) {
-          doorEl.textContent = `TERBUKA`;
+        if (isLvlSubmitted) {
+          doorEl.textContent = `DIHANTAR`;
           doorEl.className = `hud-value is-cyan`;
-          doorCapEl.textContent = `Semua 15 pintu laser dinyahaktif`;
-        } else if (levelSolved === 5) {
-          doorEl.textContent = `SEKTOR BEBAS`;
+          doorCapEl.textContent = `Rekod ${lvlObj.label} telah diterima guru`;
+        } else if (levelSolved === 10) {
+          doorEl.textContent = `SEDIA HANTAR`;
           doorEl.className = `hud-value is-cyan`;
-          doorCapEl.textContent = `Teruskan ke sektor seterusnya`;
+          doorCapEl.textContent = `Klik "Hantar Keputusan ${lvlObj.label}" sekarang`;
         } else {
-          doorEl.textContent = `TERKUNCI`;
+          doorEl.textContent = `AKTIF`;
           doorEl.className = `hud-value is-yellow`;
-          doorCapEl.textContent = `${15 - totalSolved} lagi PIN diperlukan`;
+          doorCapEl.textContent = `${10 - levelSolved} soalan lagi dalam aras ini`;
         }
+      }
+
+      const subTitleEl = document.getElementById(`level-submit-title`);
+      const subDescEl = document.getElementById(`level-submit-desc`);
+      const subBtnEl = document.getElementById(`btn-submit-current-level`);
+      if (subTitleEl) {
+        subTitleEl.textContent = `PENGESAHAN ${lvlObj.label.toUpperCase()} (${lvlObj.name.toUpperCase()}) — ${levelSolved}/10 SELESAI`;
+      }
+      if (subDescEl) {
+        subDescEl.textContent = isLvlSubmitted
+          ? `Keputusan anda bagi ${lvlObj.label} telah dihantar ke Google Sheets guru. Anda boleh terus ke aras lain atau log keluar.`
+          : `Sudah selesai menjawab soalan aras ini? Tekan butang di sebelah kanan untuk menghantar keputusan ${lvlObj.label} ke Google Sheets guru.`;
+      }
+      if (subBtnEl) {
+        subBtnEl.textContent = isLvlSubmitted
+          ? `✓ ${lvlObj.label} Dihantar (Hantar Semula)`
+          : `Hantar Keputusan ${lvlObj.label}`;
       }
 
       LEVELS.forEach(function (lvl, idx) {
         const metaEl = document.getElementById(`meta-level-${idx}`);
         const solvedInLvl = getLevelSolvedCount(idx);
         const descriptions = [
-          `Selari paksi & Sukuan I`,
-          `Rumus jarak positif`,
-          `4 sukuan & koordinat`
+          `Semua jenis soalan (asas)`,
+          `Semua jenis soalan (perpuluhan)`,
+          `4 sukuan & cari koordinat`
         ];
         if (metaEl) {
-          metaEl.textContent = `${solvedInLvl}/5 PIN — ${descriptions[idx]}`;
+          metaEl.textContent = `${solvedInLvl}/10 PIN — ${descriptions[idx]}`;
         }
 
         const tabBtn = document.getElementById(`tab-level-${idx}`);
+        const subBadge = document.getElementById(`badge-submitted-${idx}`);
         if (tabBtn) {
           const active = idx === appState.currentLevel;
           tabBtn.classList.toggle(`is-active`, active);
+          tabBtn.classList.toggle(`is-submitted`, Boolean(appState.submittedLevels[idx]));
           tabBtn.setAttribute(`aria-selected`, active ? `true` : `false`);
         }
-      });
-
-      const completePanel = document.getElementById(`mission-complete-panel`);
-      if (completePanel) {
-        if (totalSolved === 15) {
-          completePanel.classList.remove(`hidden`);
-          renderCompletionStats();
-        } else {
-          completePanel.classList.add(`hidden`);
+        if (subBadge) {
+          subBadge.classList.toggle(`hidden`, !appState.submittedLevels[idx]);
         }
-      }
-    }
-
-    function renderCompletionStats() {
-      const container = document.getElementById(`report-stats`);
-      if (!container) return;
-      const hintsCount = Object.keys(appState.hintsUsed).filter(function (k) {
-        return appState.hintsUsed[k];
-      }).length;
-      const totalAttempts = Object.values(appState.attempts).reduce(function (acc, n) {
-        return acc + (Number(n) || 0);
-      }, 0);
-      container.innerHTML = `
-        <div class="hud-tile is-cyan">
-          <span class="hud-label">Skor Akhir</span>
-          <span class="hud-value is-cyan">${appState.score}</span>
-          <span class="hud-caption">Maksimum 1500 mata</span>
-        </div>
-        <div class="hud-tile">
-          <span class="hud-label">Masa Diambil</span>
-          <span class="hud-value is-pink">${formatTime(appState.elapsedSeconds)}</span>
-          <span class="hud-caption">Masa penyahaktifan penuh</span>
-        </div>
-        <div class="hud-tile is-cyan">
-          <span class="hud-label">Petunjuk Digunakan</span>
-          <span class="hud-value is-cyan">${hintsCount} / 15</span>
-          <span class="hud-caption">Panduan visual & teks</span>
-        </div>
-        <div class="hud-tile">
-          <span class="hud-label">Jumlah Cubaan PIN</span>
-          <span class="hud-value is-yellow">${totalAttempts}</span>
-          <span class="hud-caption">Ketepatan penyelesaian</span>
-        </div>
-      `;
+      });
     }
 
     function renderPinNodes() {
@@ -2895,7 +2700,7 @@
       const sectorLabel = document.getElementById(`sector-label`);
       const lvl = getCurrentLevel();
       if (sectorLabel) {
-        sectorLabel.textContent = `NOD KUNCI SEKTOR ${lvl.name.toUpperCase()}:`;
+        sectorLabel.textContent = `NOD KUNCI SEKTOR ${lvl.name.toUpperCase()} (1–10):`;
       }
       if (!container) return;
       container.innerHTML = ``;
@@ -2925,7 +2730,7 @@
       const isSolved = Boolean(appState.solved[key]);
 
       const codeBadge = document.getElementById(`question-code-badge`);
-      if (codeBadge) codeBadge.textContent = `${lvl.name.toUpperCase()} // PIN 0${appState.currentQ + 1}`;
+      if (codeBadge) codeBadge.textContent = `${lvl.name.toUpperCase()} // PIN ${String(appState.currentQ + 1).padStart(2, `0`)}`;
 
       const statusBadge = document.getElementById(`question-status-badge`);
       if (statusBadge) {
@@ -2988,7 +2793,7 @@
           const fh = document.getElementById(`feedback-heading`);
           const fm = document.getElementById(`feedback-message`);
           if (fh) fh.textContent = `AKSES DIBENARKAN // KOD PIN ${q.answer} SAH`;
-          if (fm) fm.textContent = `Kunci keselamatan bagi nod ini telah berjaya dibuka. Semak langkah penyelesaian lengkap di bawah.`;
+          if (fm) fm.textContent = `Kunci keselamatan berjaya dibuka. Semak langkah penyelesaian di bawah.`;
         }
         if (solutionCard && solutionSteps) {
           solutionSteps.innerHTML = q.solutionSteps.map(function (s) {
@@ -3003,11 +2808,10 @@
 
       const prevBtn = document.getElementById(`btn-prev-q`);
       const nextBtn = document.getElementById(`btn-next-q`);
-      if (prevBtn) prevBtn.disabled = (appState.currentLevel === 0 && appState.currentQ === 0);
-      if (nextBtn) nextBtn.disabled = (appState.currentLevel === 2 && appState.currentQ === 4);
+      if (prevBtn) prevBtn.disabled = (appState.currentQ === 0);
+      if (nextBtn) nextBtn.disabled = (appState.currentQ === 9);
     }
 
-    // SVG Coordinate Mapping
     const SVG_W = 560;
     const SVG_H = 440;
     const PAD_L = 48;
@@ -3024,29 +2828,15 @@
       const offsetX = PAD_L + (plotW - size) / 2;
       const offsetY = PAD_T + (plotH - size) / 2;
       const unitPx = size / units;
-      return {
-        min: lvl.gridMin,
-        max: lvl.gridMax,
-        offsetX: offsetX,
-        offsetY: offsetY,
-        size: size,
-        unitPx: unitPx
-      };
+      return { min: lvl.gridMin, max: lvl.gridMax, offsetX: offsetX, offsetY: offsetY, size: size, unitPx: unitPx };
     }
 
-    function toSvgX(x, b) {
-      return b.offsetX + (x - b.min) * b.unitPx;
-    }
-
-    function toSvgY(y, b) {
-      return b.offsetY + (b.max - y) * b.unitPx;
-    }
+    function toSvgX(x, b) { return b.offsetX + (x - b.min) * b.unitPx; }
+    function toSvgY(y, b) { return b.offsetY + (b.max - y) * b.unitPx; }
 
     function svgEl(tag, attrs) {
       const el = document.createElementNS(`http://www.w3.org/2000/svg`, tag);
-      Object.keys(attrs).forEach(function (k) {
-        el.setAttribute(k, attrs[k]);
-      });
+      Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
       return el;
     }
 
@@ -3084,26 +2874,18 @@
 
         gridLayer.appendChild(svgEl(`line`, {
           x1: sx, y1: b.offsetY, x2: sx, y2: b.offsetY + b.size,
-          stroke: `var(--outline-variant)`,
-          'stroke-width': v === 0 ? `0` : `1`
+          stroke: `var(--outline-variant)`, 'stroke-width': v === 0 ? `0` : `1`
         }));
-
         gridLayer.appendChild(svgEl(`line`, {
           x1: b.offsetX, y1: sy, x2: b.offsetX + b.size, y2: sy,
-          stroke: `var(--outline-variant)`,
-          'stroke-width': v === 0 ? `0` : `1`
+          stroke: `var(--outline-variant)`, 'stroke-width': v === 0 ? `0` : `1`
         }));
 
-        const showTick = v % 2 === 0;
-        if (showTick) {
+        if (v % 2 === 0) {
           const xAxisY = toSvgY(0, b);
           const xTickLbl = svgEl(`text`, {
-            x: sx,
-            y: xAxisY + 15,
-            fill: `var(--on-surface-variant)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`,
-            'text-anchor': `middle`
+            x: sx, y: xAxisY + 15, fill: `var(--on-surface-variant)`,
+            'font-family': `var(--font-label)`, 'font-size': `10`, 'text-anchor': `middle`
           });
           xTickLbl.textContent = String(v);
           axesLayer.appendChild(xTickLbl);
@@ -3111,12 +2893,8 @@
           if (v !== 0) {
             const yAxisX = toSvgX(0, b);
             const yTickLbl = svgEl(`text`, {
-              x: yAxisX - 8,
-              y: sy + 3.5,
-              fill: `var(--on-surface-variant)`,
-              'font-family': `var(--font-label)`,
-              'font-size': `10`,
-              'text-anchor': `end`
+              x: yAxisX - 8, y: sy + 3.5, fill: `var(--on-surface-variant)`,
+              'font-family': `var(--font-label)`, 'font-size': `10`, 'text-anchor': `end`
             });
             yTickLbl.textContent = String(v);
             axesLayer.appendChild(yTickLbl);
@@ -3129,34 +2907,23 @@
 
       axesLayer.appendChild(svgEl(`line`, {
         x1: b.offsetX, y1: axisY0, x2: b.offsetX + b.size, y2: axisY0,
-        stroke: `var(--outline)`,
-        'stroke-width': `2`
+        stroke: `var(--outline)`, 'stroke-width': `2`
       }));
       axesLayer.appendChild(svgEl(`line`, {
         x1: axisX0, y1: b.offsetY, x2: axisX0, y2: b.offsetY + b.size,
-        stroke: `var(--outline)`,
-        'stroke-width': `2`
+        stroke: `var(--outline)`, 'stroke-width': `2`
       }));
 
       const xLabel = svgEl(`text`, {
-        x: b.offsetX + b.size + 12,
-        y: axisY0 + 4,
-        fill: `var(--secondary)`,
-        'font-family': `var(--font-label)`,
-        'font-size': `12`,
-        'font-weight': `700`
+        x: b.offsetX + b.size + 12, y: axisY0 + 4, fill: `var(--secondary)`,
+        'font-family': `var(--font-label)`, 'font-size': `12`, 'font-weight': `700`
       });
       xLabel.textContent = `x`;
       axesLayer.appendChild(xLabel);
 
       const yLabel = svgEl(`text`, {
-        x: axisX0,
-        y: b.offsetY - 10,
-        fill: `var(--secondary)`,
-        'font-family': `var(--font-label)`,
-        'font-size': `12`,
-        'font-weight': `700`,
-        'text-anchor': `middle`
+        x: axisX0, y: b.offsetY - 10, fill: `var(--secondary)`,
+        'font-family': `var(--font-label)`, 'font-size': `12`, 'font-weight': `700`, 'text-anchor': `middle`
       });
       yLabel.textContent = `y`;
       axesLayer.appendChild(yLabel);
@@ -3170,12 +2937,8 @@
         ];
         quads.forEach(function (qd) {
           const qt = svgEl(`text`, {
-            x: qd.x,
-            y: qd.y,
-            fill: `var(--outline)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`,
-            'text-anchor': `middle`
+            x: qd.x, y: qd.y, fill: `var(--outline)`,
+            'font-family': `var(--font-label)`, 'font-size': `10`, 'text-anchor': `middle`
           });
           qt.textContent = qd.txt;
           axesLayer.appendChild(qt);
@@ -3188,41 +2951,26 @@
           hintLayer.appendChild(svgEl(`line`, {
             x1: toSvgX(hv.x1, b), y1: toSvgY(hv.y1, b),
             x2: toSvgX(hv.x2, b), y2: toSvgY(hv.y2, b),
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2.5`,
-            'stroke-dasharray': `6 4`
+            stroke: `var(--tertiary)`, 'stroke-width': `2.5`, 'stroke-dasharray': `6 4`
           }));
         } else if (hv.type === `triangle`) {
-          const sx1 = toSvgX(hv.x1, b);
-          const sy1 = toSvgY(hv.y1, b);
-          const sx2 = toSvgX(hv.x2, b);
-          const sy2 = toSvgY(hv.y2, b);
-          const scx = toSvgX(hv.cx, b);
-          const scy = toSvgY(hv.cy, b);
+          const sx1 = toSvgX(hv.x1, b), sy1 = toSvgY(hv.y1, b);
+          const sx2 = toSvgX(hv.x2, b), sy2 = toSvgY(hv.y2, b);
+          const scx = toSvgX(hv.cx, b), scy = toSvgY(hv.cy, b);
 
           hintLayer.appendChild(svgEl(`line`, {
             x1: sx1, y1: sy1, x2: scx, y2: scy,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2`,
-            'stroke-dasharray': `5 4`
+            stroke: `var(--tertiary)`, 'stroke-width': `2`, 'stroke-dasharray': `5 4`
           }));
           hintLayer.appendChild(svgEl(`line`, {
             x1: scx, y1: scy, x2: sx2, y2: sy2,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `2`,
-            'stroke-dasharray': `5 4`
+            stroke: `var(--tertiary)`, 'stroke-width': `2`, 'stroke-dasharray': `5 4`
           }));
-          hintLayer.appendChild(svgEl(`circle`, {
-            cx: scx, cy: scy, r: `4`,
-            fill: `var(--tertiary)`
-          }));
+          hintLayer.appendChild(svgEl(`circle`, { cx: scx, cy: scy, r: `4`, fill: `var(--tertiary)` }));
+
           const cLbl = svgEl(`text`, {
-            x: scx + 8,
-            y: scy + (sy2 > scy ? -8 : 14),
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `11`,
-            'font-weight': `700`
+            x: scx + 8, y: scy + (sy2 > scy ? -8 : 14),
+            fill: `var(--tertiary)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `700`
           });
           cLbl.textContent = `C(${hv.cx}, ${hv.cy})`;
           hintLayer.appendChild(cLbl);
@@ -3230,54 +2978,39 @@
           if (!isSolved) {
             hintLayer.appendChild(svgEl(`line`, {
               x1: sx1, y1: sy1, x2: sx2, y2: sy2,
-              stroke: `var(--primary)`,
-              'stroke-width': `1.5`,
-              'stroke-dasharray': `3 4`
+              stroke: `var(--primary)`, 'stroke-width': `1.5`, 'stroke-dasharray': `3 4`
             }));
           }
         } else if (hv.type === `locus-x`) {
           const syTarget = toSvgY(hv.targetY, b);
           hintLayer.appendChild(svgEl(`line`, {
             x1: b.offsetX, y1: syTarget, x2: b.offsetX + b.size, y2: syTarget,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `1.5`,
-            'stroke-dasharray': `5 4`
+            stroke: `var(--tertiary)`, 'stroke-width': `1.5`, 'stroke-dasharray': `5 4`
           }));
           const lLbl = svgEl(`text`, {
-            x: b.offsetX + 8,
-            y: syTarget - 6,
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`
+            x: b.offsetX + 8, y: syTarget - 6,
+            fill: `var(--tertiary)`, 'font-family': `var(--font-label)`, 'font-size': `10`
           });
-          lLbl.textContent = `Garis y = ${hv.targetY} (B terletak pada garis ini)`;
+          lLbl.textContent = `Garis y = ${hv.targetY}`;
           hintLayer.appendChild(lLbl);
         } else if (hv.type === `locus-y`) {
           const sxTarget = toSvgX(hv.targetX, b);
           hintLayer.appendChild(svgEl(`line`, {
             x1: sxTarget, y1: b.offsetY, x2: sxTarget, y2: b.offsetY + b.size,
-            stroke: `var(--tertiary)`,
-            'stroke-width': `1.5`,
-            'stroke-dasharray': `5 4`
+            stroke: `var(--tertiary)`, 'stroke-width': `1.5`, 'stroke-dasharray': `5 4`
           }));
           const lLbl = svgEl(`text`, {
-            x: sxTarget + 6,
-            y: b.offsetY + 34,
-            fill: `var(--tertiary)`,
-            'font-family': `var(--font-label)`,
-            'font-size': `10`
+            x: sxTarget + 6, y: b.offsetY + 34,
+            fill: `var(--tertiary)`, 'font-family': `var(--font-label)`, 'font-size': `10`
           });
           lLbl.textContent = `x = ${hv.targetX}`;
           hintLayer.appendChild(lLbl);
         } else if (hv.type === `dual-origin`) {
-          const ox = toSvgX(0, b);
-          const oy = toSvgY(0, b);
+          const ox = toSvgX(0, b), oy = toSvgY(0, b);
           [hv.p1, hv.p2].forEach(function (pt) {
             hintLayer.appendChild(svgEl(`line`, {
               x1: ox, y1: oy, x2: toSvgX(pt.x, b), y2: toSvgY(pt.y, b),
-              stroke: `var(--tertiary)`,
-              'stroke-width': `2`,
-              'stroke-dasharray': `5 4`
+              stroke: `var(--tertiary)`, 'stroke-width': `2`, 'stroke-dasharray': `5 4`
             }));
           });
         }
@@ -3285,59 +3018,36 @@
 
       if (isSolved) {
         const allPts = q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
-        if (q.id === `Q15`) {
-          const ox = toSvgX(0, b);
-          const oy = toSvgY(0, b);
-          const qx = toSvgX(3, b);
-          const qy = toSvgY(-8, b);
+        if (q.id === `T10`) {
           solLayer.appendChild(svgEl(`line`, {
-            x1: ox, y1: oy, x2: qx, y2: qy,
-            stroke: `var(--primary)`,
-            'stroke-width': `3`,
-            'class': `svg-glow-line`
+            x1: toSvgX(0, b), y1: toSvgY(0, b), x2: toSvgX(3, b), y2: toSvgY(-8, b),
+            stroke: `var(--primary)`, 'stroke-width': `3`, 'class': `svg-glow-line`
           }));
         } else if (allPts.length >= 2) {
-          const pA = allPts[0];
-          const pB = allPts[allPts.length - 1];
+          const pA = allPts[0], pB = allPts[allPts.length - 1];
           solLayer.appendChild(svgEl(`line`, {
             x1: toSvgX(pA.x, b), y1: toSvgY(pA.y, b),
             x2: toSvgX(pB.x, b), y2: toSvgY(pB.y, b),
-            stroke: `var(--primary)`,
-            'stroke-width': `3`,
-            'class': `svg-glow-line`
+            stroke: `var(--primary)`, 'stroke-width': `3`, 'class': `svg-glow-line`
           }));
         }
       }
 
       const pointsToRender = isSolved && q.solvedPoints ? q.points.concat(q.solvedPoints) : q.points;
       pointsToRender.forEach(function (pt) {
-        const px = toSvgX(pt.x, b);
-        const py = toSvgY(pt.y, b);
+        const px = toSvgX(pt.x, b), py = toSvgY(pt.y, b);
         const color = pt.role === `start` ? `var(--secondary)` : (pt.role === `helper` ? `var(--tertiary)` : `var(--primary)`);
 
-        ptsLayer.appendChild(svgEl(`circle`, {
-          cx: px, cy: py, r: `8`,
-          fill: `var(--surface-container)`,
-          stroke: color,
-          'stroke-width': `2.5`
-        }));
-        ptsLayer.appendChild(svgEl(`circle`, {
-          cx: px, cy: py, r: `3.5`,
-          fill: color
-        }));
+        ptsLayer.appendChild(svgEl(`circle`, { cx: px, cy: py, r: `8`, fill: `var(--surface-container)`, stroke: color, 'stroke-width': `2.5` }));
+        ptsLayer.appendChild(svgEl(`circle`, { cx: px, cy: py, r: `3.5`, fill: color }));
 
         const labelX = pt.x >= b.max - 2 ? px - 10 : px + 10;
         const anchor = pt.x >= b.max - 2 ? `end` : `start`;
         const labelY = pt.y >= b.max - 1 ? py + 16 : py - 10;
 
         const txt = svgEl(`text`, {
-          x: labelX,
-          y: labelY,
-          fill: color,
-          'font-family': `var(--font-label)`,
-          'font-size': `12`,
-          'font-weight': `700`,
-          'text-anchor': anchor
+          x: labelX, y: labelY, fill: color,
+          'font-family': `var(--font-label)`, 'font-size': `12`, 'font-weight': `700`, 'text-anchor': anchor
         });
         txt.textContent = `${pt.label}(${pt.x}, ${pt.y})`;
         ptsLayer.appendChild(txt);
@@ -3358,19 +3068,12 @@
       }
 
       const b = getPlotBounds();
-      const cx = appState.cursorCoord.x;
-      const cy = appState.cursorCoord.y;
-      const sx = toSvgX(cx, b);
-      const sy = toSvgY(cy, b);
-
+      const cx = appState.cursorCoord.x, cy = appState.cursorCoord.y;
       readoutEl.textContent = `(x, y) = (${cx}, ${cy})`;
 
       cursorLayer.appendChild(svgEl(`circle`, {
-        cx: sx, cy: sy, r: `6`,
-        fill: `none`,
-        stroke: `var(--secondary)`,
-        'stroke-width': `1.5`,
-        'stroke-dasharray': `2 2`
+        cx: toSvgX(cx, b), cy: toSvgY(cy, b), r: `6`,
+        fill: `none`, stroke: `var(--secondary)`, 'stroke-width': `1.5`, 'stroke-dasharray': `2 2`
       }));
     }
 
@@ -3409,36 +3112,19 @@
     }
 
     function navigateQuestion(delta) {
-      let l = appState.currentLevel;
-      let q = appState.currentQ + delta;
-      if (q < 0) {
-        if (l > 0) {
-          l -= 1;
-          q = 4;
-        } else {
-          q = 0;
-        }
-      } else if (q > 4) {
-        if (l < 2) {
-          l += 1;
-          q = 0;
-        } else {
-          q = 4;
-        }
+      const nextQ = appState.currentQ + delta;
+      if (nextQ >= 0 && nextQ <= 9) {
+        appState.currentQ = nextQ;
+        appState.hintVisible = false;
+        appState.cursorCoord = null;
+        refreshAll();
       }
-      appState.currentLevel = l;
-      appState.currentQ = q;
-      appState.hintVisible = false;
-      appState.cursorCoord = null;
-      refreshAll();
     }
 
     function toggleHint() {
       const key = getQuestionKey(appState.currentLevel, appState.currentQ);
       appState.hintVisible = !appState.hintVisible;
-      if (appState.hintVisible) {
-        appState.hintsUsed[key] = true;
-      }
+      if (appState.hintVisible) appState.hintsUsed[key] = true;
       renderQuestionPanel();
       renderCartesianPlane();
     }
@@ -3446,20 +3132,14 @@
     function toggleFormulaDrawer() {
       appState.formulaVisible = !appState.formulaVisible;
       const drawer = document.getElementById(`formula-drawer`);
-      if (drawer) {
-        drawer.classList.toggle(`hidden`, !appState.formulaVisible);
-      }
+      if (drawer) drawer.classList.toggle(`hidden`, !appState.formulaVisible);
     }
 
     function pressKey(ch) {
       const input = document.getElementById(`pin-input`);
       if (!input || input.disabled) return;
       if (ch === `-`) {
-        if (input.value.startsWith(`-`)) {
-          input.value = input.value.slice(1);
-        } else {
-          input.value = `-` + input.value;
-        }
+        input.value = input.value.startsWith(`-`) ? input.value.slice(1) : `-` + input.value;
         return;
       }
       if (ch === `.` && input.value.includes(`.`)) return;
@@ -3503,7 +3183,7 @@
       if (!raw) {
         feedbackBanner.className = `feedback-banner is-error`;
         feedbackHeading.textContent = `RALAT INPUT // KOD PIN KOSONG`;
-        feedbackMsg.textContent = `Sila masukkan nilai jawapan menggunakan pad PIN digital atau papan kekunci sebelum mengesahkan.`;
+        feedbackMsg.textContent = `Sila masukkan nilai jawapan sebelum mengesahkan.`;
         return;
       }
 
@@ -3530,20 +3210,20 @@
         if (updatedHeading) updatedHeading.textContent = `AKSES DIBENARKAN // +${pointsEarned} MATA`;
         if (updatedMsg) {
           updatedMsg.textContent = usedHint
-            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Kemajuan diselaraskan ke sesi guru.`
-            : `Kod PIN ${q.answer} tepat pada percubaan tanpa petunjuk (+100 mata)! Kemajuan diselaraskan ke sesi guru.`;
+            ? `Kod PIN ${q.answer} tepat (80 mata kerana petunjuk digunakan). Kemajuan diselaraskan.`
+            : `Kod PIN ${q.answer} tepat (+100 mata)! Kemajuan diselaraskan ke Google Sheets.`;
         }
-        submitReportToTeacher(false);
+        syncProgressToCloud();
       } else {
         feedbackBanner.className = `feedback-banner is-error`;
         feedbackHeading.textContent = `AKSES DITOLAK // KOD PIN "${raw}" TIDAK SEPADAN`;
         let tip = `Semak semula pengiraan (x₂ − x₁)² dan (y₂ − y₁)².`;
         if (q.answer < 0 && numVal > 0) {
-          tip = `Perhatian: soalan ini memerlukan koordinat di Sukuan IV. Pastikan anda menyertakan tanda negatif (−).`;
+          tip = `Perhatian: soalan ini memerlukan nilai koordinat negatif. Pastikan anda menyertakan tanda negatif (−).`;
         } else if (String(q.answer).includes(`.`) && Number.isInteger(numVal)) {
           tip = `Jawapan memerlukan punca kuasa dua yang dibundarkan kepada 2 tempat perpuluhan.`;
         }
-        feedbackMsg.textContent = `${tip} Anda boleh menekan butang "Aktifkan Petunjuk" untuk melihat panduan langkah dan unjuran pada grid.`;
+        feedbackMsg.textContent = `${tip} Tekan "Aktifkan Petunjuk" untuk melihat panduan visual pada grid.`;
       }
     }
 
@@ -3555,16 +3235,16 @@
         setTimeout(function () {
           if (btn.dataset.armed === `true`) {
             btn.dataset.armed = `false`;
-            btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
+            btn.textContent = `Mula Semula Misi`;
           }
         }, 4000);
         return;
       }
       btn.dataset.armed = `false`;
-      btn.textContent = btn.id === `btn-reset-mission` ? `Mula Semula Misi` : `Main Semula Misi`;
-      appState.currentLevel = 0;
+      btn.textContent = `Mula Semula Misi`;
       appState.currentQ = 0;
       appState.solved = {};
+      appState.submittedLevels = { 0: false, 1: false, 2: false };
       appState.hintsUsed = {};
       appState.attempts = {};
       appState.score = 0;
@@ -3593,13 +3273,11 @@
 
       startTimer();
 
-      // Jika URL mempunyai ?mod=guru, buka Portal Guru secara automatik
       if (appState.isTeacherPortalUrl) {
         openTeacherLoginModal();
         return;
       }
 
-      // Setiap kali murid membuka link, sentiasa paparkan borang daftar baru
       openStudentModal();
     }
 
